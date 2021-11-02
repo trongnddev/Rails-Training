@@ -1,22 +1,22 @@
 # README
 
 * System dependencies
-  ######Ruby 3.0.1
-  ######Yarn 1.22
-  ######Rails 6.1.4
+  - Ruby 3.0.1
+  - Yarn 1.22
+  - Rails 6.1.4
 
 * Configuration
-  - [x]`git clone git@github.com:phamdat8/Rails-Training.git`
+  - `git clone git@github.com:phamdat8/Rails-Training.git`
   
-  - [x]`cd Rails-Training`
+  - `cd Rails-Training`
   
-  - [x]`bundle`
+  - `bundle`
 * Database creation
 
-  `cp config/database.example.yml config/database.yml`
+  - `cp config/database.example.yml config/database.yml`
   
   Setup your local postgres database 
-  `nano config/database.yml`
+  - `nano config/database.yml`
 
 * Database initialization
 
