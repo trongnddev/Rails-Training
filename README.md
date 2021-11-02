@@ -10,8 +10,7 @@
   
   - `cd Rails-Training`
   
-  - 
-```ruby
+```console
 bundle install
 ```
 * Database creation
