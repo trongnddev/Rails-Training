@@ -22,7 +22,7 @@ bundle install
 cp config/database.example.yml config/database.yml
 ```
   
-  Setup your local postgres database 
+ - [X] Setup your local postgres database 
 ```console
 nano config/database.yml
 ```
