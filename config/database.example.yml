@@ -1,0 +1,26 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: Rails_Training_development
+  username: your_username
+  password: your_password
+  port: 5432
+  timeout: 5000
+
+test:
+  <<: *default
+  username: your_username
+  password: your_password
+  password: ''
+  port: 5432
+  timeout: 5000
+
+production:
+  <<: *default
+  database: Rails_Training_production
+  username: Rails_Training
+  password: <%= ENV['RAILS_TRAINING_DATABASE_PASSWORD'] %>
