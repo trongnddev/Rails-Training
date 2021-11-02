@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @book.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @book.description %>
+</p>
+
+<p>
+  <strong>Published date:</strong>
+  <%= @book.published_date %>
+</p>
+
+<p>
+  <strong>Publisher:</strong>
+  <%= @book.publisher %>
+</p>
+
+<p>
+  <strong>Borrow fee:</strong>
+  <%= @book.borrow_fee %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @book.quantity %>
+</p>
+
+<p>
+  <strong>Quantity in stock:</strong>
+  <%= @book.quantity_in_stock %>
+</p>
+<p>
+  <%= image_tag(@book.image)%>
+</p>
+<% if user_signed_in? %>
+<%= link_to 'Edit', edit_book_path(@book) %> |
+<%end%>
+<%= link_to 'Back', books_path %>
