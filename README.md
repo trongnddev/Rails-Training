@@ -18,18 +18,27 @@ cd Rails-Training
 bundle install
 ```
 * Database creation
-
-  - `cp config/database.example.yml config/database.yml`
+```console
+cp config/database.example.yml config/database.yml
+```
   
   Setup your local postgres database 
-  - `nano config/database.yml`
+```console
+nano config/database.yml
+```
 
 * Database initialization
 
-  - `rails db:create`
+```console
+rails db:create
+```
   
-  - `rails db:migrate`
+```console
+rails db:migrate
+```
 * Run server
 
-  - `rails s`
+```console
+rails s
+```
 
