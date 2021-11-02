@@ -1,24 +1,28 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
 * System dependencies
+  Ruby 3.0.1
+  Yarn 1.22
+  Rails 6.1.4
 
 * Configuration
-
+  `git clone git@github.com:phamdat8/Rails-Training.git`
+  
+  `cd Rails-Training`
+  
+  `bundle`
 * Database creation
+
+  Clone file 'config/database.example' and name 'config/database.yml'
+  
+  Setup your local postgres database in 'config/database.yml'
 
 * Database initialization
 
-* How to run the test suite
+  `rails db:create`
+  
+  `rails db:migrate`
+* Run server
 
-* Services (job queues, cache servers, search engines, etc.)
+`rails s`
 
-* Deployment instructions
-
-* ...
