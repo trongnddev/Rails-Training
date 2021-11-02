@@ -5,7 +5,7 @@
   - Yarn 1.22
   - Rails 6.1.4
 
-* Configuration
+* Clone and Configuration
   - `git clone git@github.com:phamdat8/Rails-Training.git`
   
   - `cd Rails-Training`
@@ -20,10 +20,10 @@
 
 * Database initialization
 
-  `rails db:create`
+  - `rails db:create`
   
-  `rails db:migrate`
+  - `rails db:migrate`
 * Run server
 
-`rails s`
+  - `rails s`
 
