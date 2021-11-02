@@ -17,7 +17,7 @@ cd Rails-Training
 ```console
 bundle install
 ```
-* Database creation
+
 ```console
 cp config/database.example.yml config/database.yml
 ```
@@ -27,8 +27,6 @@ cp config/database.example.yml config/database.yml
 nano config/database.yml
 ```
 
-* Database initialization
-
 ```console
 rails db:create
 ```
@@ -36,7 +34,6 @@ rails db:create
 ```console
 rails db:migrate
 ```
-* Run server
 
 ```console
 rails s
