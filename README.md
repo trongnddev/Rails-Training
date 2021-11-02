@@ -10,7 +10,9 @@
   
   - `cd Rails-Training`
   
-  - ```bundle```
+  - ```ruby
+  bundle
+  ```
 * Database creation
 
   - `cp config/database.example.yml config/database.yml`
