@@ -15,7 +15,6 @@ test:
   <<: *default
   username: your_username
   password: your_password
-  password: ''
   port: 5432
   timeout: 5000
 
