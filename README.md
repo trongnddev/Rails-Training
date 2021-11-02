@@ -6,9 +6,13 @@
   - Rails 6.1.4
 
 * Clone and Configuration
-  - `git clone git@github.com:phamdat8/Rails-Training.git`
-  
-  - `cd Rails-Training`
+```console
+git clone git@github.com:phamdat8/Rails-Training.git
+```
+
+```console
+cd Rails-Training
+```
   
 ```console
 bundle install
