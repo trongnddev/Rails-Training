@@ -82,6 +82,8 @@ AllCops:
     - 'config/environments/development.rb'
     - 'Rakefile'
     - 'Gemfile'
+    - 'db/*'
+    - 'db/*/*'
   NewCops: enable
   SuggestExtensions: false
 Style/FrozenStringLiteralComment:
