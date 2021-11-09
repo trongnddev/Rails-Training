@@ -13,7 +13,6 @@ class AuthorsController < ApplicationController
   # GET /authors/new
   def new
     @author = Author.new
-  
   end
 
   # GET /authors/1/edit
@@ -53,13 +52,17 @@ class AuthorsController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
+  # Use callbacks to share common setup or constraints between actions.
   def set_author
-    @author = Author.find(params[:id])    
+    @author = Author.find(params[:id])
   end
 
-    # Only allow a list of trusted parameters through.
+  # Only allow a list of trusted parameters through.
   def author_params
-    params.require(:author).permit(:author_name, :birthday, author_books_attributes: [:id, book_attributes: [:id, :name]])
+    params.require(:author).permit(
+      :author_name,
+      :birthday,
+      author_books_attributes: [:id, book_attributes: [:id, :name]]
+    )
   end
 end
