@@ -11,14 +11,14 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class:"form-control" %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :description %>
-    <%= form.text_area :description %>
+    <%= form.text_area :description ,class:"form-control"%>
   </div>
  <div class="authorbooks">
   <%= form.fields_for :author_books do |author_books_form| %>
@@ -28,29 +28,29 @@
   <%= link_to_add_association 'add author', form, :author_books, wrap_object: Proc.new { |author_book| author_book.build_author; author_book },form_name: 'form' %>
   </div>
   </div>
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :published_date %>
-    <%= form.date_select :published_date %>
+    <%= form.date_field :published_date,class:"form-control" %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :publisher %>
-    <%= form.text_field :publisher %>
+    <%= form.text_field :publisher,class:"form-control" %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :borrow_fee %>
-    <%= form.text_field :borrow_fee %>
+    <%= form.text_field :borrow_fee ,class:"form-control"%>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :quantity %>
-    <%= form.number_field :quantity %>
+    <%= form.number_field :quantity ,class:"form-control"%>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :quantity_in_stock %>
-    <%= form.number_field :quantity_in_stock %>
+    <%= form.number_field :quantity_in_stock ,class:"form-control"%>
   </div>
   <div class="field">
     <%= form.label :image%>
@@ -58,6 +58,6 @@
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class:"btn btn-primary"%>
   </div>
 <% end %>
