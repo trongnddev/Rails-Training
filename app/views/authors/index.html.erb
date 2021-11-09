@@ -17,7 +17,7 @@
         <td><%= author.author_name %></td>
         <td><%= author.birthday %></td>
         <td><%= link_to 'Show', author %></td>
-        <%if user_signed_in?%>
+        <%if user_signed_in? && (can? :edit, @author)%>
         <td><%= link_to 'Edit', edit_author_path(author) %></td>
         <td><%= link_to 'Destroy', author, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <%end%>

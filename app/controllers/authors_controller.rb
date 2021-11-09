@@ -1,6 +1,10 @@
 class AuthorsController < ApplicationController
   before_action :set_author, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: %i[show index]
+  
+  #authorization with cancancan
+  load_and_authorize_resource
+  skip_load_and_authorize_resource only: :index
 
   # GET /authors or /authors.json
   def index

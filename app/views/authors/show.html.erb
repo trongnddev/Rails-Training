@@ -17,7 +17,7 @@
     </li>
   <% end %>
 </p>
-<%if user_signed_in?%>
+<%if user_signed_in? && (can? :update, @author)%>
 <%= link_to 'Edit', edit_author_path(@author) %> |
 <%end%>
 <%= link_to 'Back', authors_path %>

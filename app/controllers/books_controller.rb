@@ -2,6 +2,10 @@ class BooksController < ApplicationController
   before_action :set_book, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: %i[show index]
 
+  #authorization with cancancan
+  load_and_authorize_resource
+  skip_load_and_authorize_resource only: :index
+
   # GET /books or /books.json
   def index
     @books = Book.all
