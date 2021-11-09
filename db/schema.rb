@@ -69,8 +69,6 @@ ActiveRecord::Schema.define(version: 2021_11_08_071308) do
     t.integer "quantity_in_stock"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "author_id"
-    t.index ["author_id"], name: "index_books_on_author_id"
   end
 
   create_table "users", force: :cascade do |t|
