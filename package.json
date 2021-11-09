@@ -3,10 +3,12 @@
   "private": true,
   "dependencies": {
     "@nathanvda/cocoon": "^1.2.14",
+    "@popperjs/core": "^2.10.2",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.4.3",
+    "bootstrap": "5.0.0",
     "cocoon": "github:nathanvda/cocoon#c24ba53",
     "jquery": "^3.6.0",
     "turbolinks": "^5.2.0",
