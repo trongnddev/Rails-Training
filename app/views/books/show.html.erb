@@ -35,7 +35,14 @@
   <%= @book.quantity_in_stock %>
 </p>
 <p>
-  <%= image_tag(@book.image)%>
+  <strong>Authors:</strong>
+  <% @book.author_books.each do |author_book| %>
+    <li>
+      <%= author_book.author.author_name %>
+    </li>
+  <% end %>
+</p>
+  <%= image_tag(@book.image) if @book.image.present?%>
 </p>
 <% if user_signed_in? %>
 <%= link_to 'Edit', edit_book_path(@book) %> |

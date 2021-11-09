@@ -1,4 +1,6 @@
 class Book < ApplicationRecord
     has_one_attached :image
-    validates :name, :description, :published_date, :publisher, :borrow_fee,:quantity,:quantity_in_stock , presence: true
+    has_many :author_books,dependent: :destroy
+    has_many :authors, through: :author_books
+    accepts_nested_attributes_for :author_books
 end

@@ -1,0 +1,36 @@
+<%= form_for author do |form| %>
+  <% if author.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(author.errors.count, "error") %> prohibited this author from being saved:</h2>
+
+      <ul>
+        <% author.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :Author %>
+    <%= form.text_field :author_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :birthday %>
+    <%= form.date_field :birthday %>
+  </div>
+  <div class="authorbooks">
+  <%= form.fields_for :author_books do |author_books_form| %>
+    <%= render 'author_book_fields',form: author_books_form%>
+    <% end %>
+     <div class="links">
+  <%= link_to_add_association 'add book', form, :author_books, wrap_object: Proc.new { |author_book| author_book.build_book; author_book },form_name: 'form' %>
+  </div>
+  </div>
+    <br/>
+  <div class="actions">
+    <%= form.submit %>
+ 
+  </div>
+<% end %>

@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @author.author_name %>
+</p>
+
+<p>
+  <strong>Birthday:</strong>
+  <%= @author.birthday %>
+</p>
+<p>
+  <strong>Books:</strong>
+   <% @author.author_books.each do |author_book| %>
+    <li>
+      <%= author_book.book.name %> 
+    </li>
+  <% end %>
+</p>
+<%if user_signed_in?%>
+<%= link_to 'Edit', edit_author_path(@author) %> |
+<%end%>
+<%= link_to 'Back', authors_path %>
