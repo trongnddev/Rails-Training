@@ -20,6 +20,10 @@
     <%= form.label :description %>
     <%= form.text_area :description ,class:"form-control"%>
   </div>
+  <div class="field form-group">
+    <%= form.label :category%>
+    <%= form.collection_select :category_id, Category.all, :id, :name%>
+  </div>
  <div class="authorbooks">
   <%= form.fields_for :author_books do |author_books_form| %>
     <%= render 'author_book_fields',form: author_books_form%>

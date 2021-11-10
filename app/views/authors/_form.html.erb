@@ -11,14 +11,14 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :Author %>
-    <%= form.text_field :author_name %>
+    <%= form.text_field :author_name, class:"form-control" %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :birthday %>
-    <%= form.date_field :birthday %>
+    <%= form.date_field :birthday, class:"form-control" %>
   </div>
   <div class="authorbooks">
   <%= form.fields_for :author_books do |author_books_form| %>
@@ -30,7 +30,7 @@
   </div>
     <br/>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class:"btn btn-primary" %>
  
   </div>
 <% end %>
