@@ -1,10 +1,11 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Name:</strong>
   <%= @book.name %>
 </p>
-
+<p>
+  <strong>Category:</strong>
+  <%= Category.find(@book.category_id).name if @book.category_id %>
+</p>
 <p>
   <strong>Description:</strong>
   <%= @book.description %>
