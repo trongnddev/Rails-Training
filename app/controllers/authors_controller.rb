@@ -22,7 +22,6 @@ class AuthorsController < ApplicationController
   # POST /authors or /authors.json
   def create
     @author = Author.new(author_params)
-
     respond_to do |format|
       if @author.save
         format.html { redirect_to @author, notice: "Author was successfully created." }
@@ -60,6 +59,6 @@ class AuthorsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
   def author_params
-    params.require(:author).permit(:author_name, :birthday, author_books_attributes: [:id, book_attributes: [:id, :name]])
+    params.require(:author).permit(:author_name, :birthday, author_books_attributes: [:id, :_destroy, book_attributes: [:id, :name]])
   end
 end
