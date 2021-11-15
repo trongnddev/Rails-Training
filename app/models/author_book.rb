@@ -1,7 +1,7 @@
 class AuthorBook < ApplicationRecord
   belongs_to :author, optional: true
   belongs_to :book, optional: true 
-  accepts_nested_attributes_for :book, allow_destroy: true, reject_if: proc { |att| att['name'].blank? }
+  accepts_nested_attributes_for :book
   accepts_nested_attributes_for :author
 
 

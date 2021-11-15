@@ -67,6 +67,6 @@ class BooksController < ApplicationController
        :quantity_in_stock,
        :image,
        :category_id,
-       author_books_attributes: [:id, :_destroy, author_attributes: [:id, :author_name]])
+       author_books_attributes: [:id, author_attributes: [:id, :author_name]])
   end
 end
