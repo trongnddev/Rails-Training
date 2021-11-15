@@ -15,7 +15,7 @@ class Ability
     elsif user.role == "Customer"
 
         can [:read, :update], User, id: user.id 
-        can [:read,], [AuthorBook,Book, Author]
+        can :read, [AuthorBook,Book, Author]
         
     end
     # Define abilities for the passed in user here. For example:
