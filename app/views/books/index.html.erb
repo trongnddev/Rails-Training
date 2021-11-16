@@ -22,7 +22,7 @@
         <td><%= book.name %></td>
         <td><%= book.description %></td>
         <td><%= book.published_date %></td>
-        <td><%= book.publisher %></td>
+        <td><%= Publisher.find(book.publisher_id).publisher_name if book.publisher_id %></td>
         <td><%= book.borrow_fee %></td>
         <td><%= book.quantity %></td>
         <td><%= book.quantity_in_stock %></td>

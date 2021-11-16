@@ -22,6 +22,16 @@
           <%end%>
         </div>
       </li>
+       <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+          NXB
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <% Publisher.all.each do |publisher|%>
+          <%= link_to "#{publisher.publisher_name}", "/publishers/#{publisher.id}", class:"dropdown-item"%>
+          <%end%>
+        </div>
+      </li>
       <%if user_signed_in?%>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
