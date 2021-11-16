@@ -39,7 +39,7 @@
 
   <div class="field form-group">
     <%= form.label :publisher %>
-    <%= form.text_field :publisher,class:"form-control" %>
+    <%= form.collection_select :publisher_id, Publisher.all, :id, :publisher_name %>
   </div>
 
   <div class="field form-group">

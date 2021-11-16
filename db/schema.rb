@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_10_081249) do
+ActiveRecord::Schema.define(version: 2021_11_16_010010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,19 +63,35 @@ ActiveRecord::Schema.define(version: 2021_11_10_081249) do
     t.string "name"
     t.text "description"
     t.date "published_date"
-    t.string "publisher"
     t.float "borrow_fee"
     t.integer "quantity"
     t.integer "quantity_in_stock"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "category_id"
+    t.bigint "publisher_id"
     t.index ["category_id"], name: "index_books_on_category_id"
+    t.index ["publisher_id"], name: "index_books_on_publisher_id"
   end
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "info", id: false, comment: "2172.915413663", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "phone"
+    t.string "address"
+    t.string "day_of_birth"
+    t.string "profile"
+  end
+
+  create_table "publishers", force: :cascade do |t|
+    t.string "publisher_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -97,4 +113,5 @@ ActiveRecord::Schema.define(version: 2021_11_10_081249) do
   add_foreign_key "author_books", "authors"
   add_foreign_key "author_books", "books"
   add_foreign_key "books", "categories"
+  add_foreign_key "books", "publishers"
 end
