@@ -7,6 +7,8 @@
     <tr>
       <th>Name</th>
       <th>Description</th>
+      <th>Author</th>
+      <th>Publish an article</th>
       <th>Published date</th>
       <th>Publisher</th>
       <th>Borrow fee</th>
@@ -21,6 +23,14 @@
       <tr>
         <td><%= book.name %></td>
         <td><%= book.description %></td>
+        <td>
+          <% book.author_books.each do |author_book|%>
+          <li>
+          <%= author_book.author.author_name%>
+          </li>
+          <%end%>
+        </td>
+        <td><%= book.created_at%></td>
         <td><%= book.published_date %></td>
         <td><%= Publisher.find(book.publisher_id).publisher_name if book.publisher_id %></td>
         <td><%= book.borrow_fee %></td>
@@ -40,4 +50,6 @@
 <%if user_signed_in?%>
 <%= link_to 'New Book', new_book_path %>
 <%end%>
+<%= will_paginate @books, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+
 </div>

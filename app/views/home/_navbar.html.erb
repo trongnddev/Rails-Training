@@ -53,7 +53,10 @@
       <li class="nav-item">
         <%= link_to 'About us',about_path,class:"nav-link"%>
       </li>
-      
     </ul>
   </div>
+    <%= form_tag(books_path, :method => "get") do %>
+    <%= text_field_tag :search, params[:search], placeholder: "Search book" %>
+    <%= submit_tag "Search",class:"btn btn-outline-success my-2 my-sm-0" %>
+    <% end %>
 </nav>
