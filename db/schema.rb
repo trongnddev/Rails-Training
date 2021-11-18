@@ -68,9 +68,7 @@ ActiveRecord::Schema.define(version: 2021_11_18_065757) do
     t.integer "quantity_in_stock"
     t.date "created_at", null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "category_id"
     t.bigint "publisher_id"
-    t.index ["category_id"], name: "index_books_on_category_id"
     t.index ["publisher_id"], name: "index_books_on_publisher_id"
   end
 
@@ -93,15 +91,6 @@ ActiveRecord::Schema.define(version: 2021_11_18_065757) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "info", id: false, comment: "2172.915413663", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "phone"
-    t.string "address"
-    t.string "day_of_birth"
-    t.string "profile"
-  end
-
   create_table "publishers", force: :cascade do |t|
     t.string "publisher_name"
     t.datetime "created_at", precision: 6, null: false
@@ -116,6 +105,8 @@ ActiveRecord::Schema.define(version: 2021_11_18_065757) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "role"
+    t.string "string"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -124,7 +115,6 @@ ActiveRecord::Schema.define(version: 2021_11_18_065757) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "author_books", "authors"
   add_foreign_key "author_books", "books"
-  add_foreign_key "books", "categories"
   add_foreign_key "books", "publishers"
   add_foreign_key "borrows", "books"
   add_foreign_key "borrows", "users"
