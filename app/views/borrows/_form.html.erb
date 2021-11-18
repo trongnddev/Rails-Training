@@ -1,0 +1,32 @@
+<%= form_with(model: borrow) do |form| %>
+  <% if borrow.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(borrow.errors.count, "error") %> prohibited this borrow from being saved:</h2>
+
+      <ul>
+        <% borrow.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :returned_date %>
+    <%= form.date_select :returned_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :appointment_returned_date %>
+    <%= form.number_field :appointment_returned_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_field :status %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
