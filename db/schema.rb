@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 2021_11_18_065757) do
     t.integer "quantity"
     t.integer "quantity_in_stock"
     t.date "created_at", null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "updated_at", null: false
     t.bigint "category_id"
     t.bigint "publisher_id"
     t.index ["category_id"], name: "index_books_on_category_id"

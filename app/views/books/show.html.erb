@@ -45,11 +45,11 @@
 </p>
   <%= image_tag(@book.image) if @book.image.present?%>
 </p>
-<% if user_signed_in? %>
  <%= form_for ([@book, @book.borrows.build]) do |f|%>
     <%= f.hidden_field :status, value: "waiting accept"%>
     <%= f.submit "Borrow",class:"btn btn-success"%>
-    <%end%>
+<%end%>
+<% if user_signed_in? %>
 <%= link_to 'Edit', edit_book_path(@book) %> |
 <%end%>
 <%= link_to 'Back', books_path %>
