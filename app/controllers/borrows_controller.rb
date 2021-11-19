@@ -7,6 +7,22 @@ class BorrowsController < ApplicationController
     @borrows = Borrow.all.order("id DESC")
   end
 
+  def showborrow
+    if current_user.role == "staff"
+      @borrows = Borrow.search("accept").order("id DESC")
+    else
+      redirect_to root_path
+    end
+  end
+
+  def showreturn
+    if current_user.role == "staff"
+      @borrows = Borrow.search("returning").order("id DESC")
+    else
+      redirect_to root_path
+    end
+  end
+
   # GET /borrows/1 or /borrows/1.json
   def show
   end
@@ -29,7 +45,7 @@ class BorrowsController < ApplicationController
     @borrow.appointment_returned_date = 14
     respond_to do |format|
       if @borrow.save
-        format.html { redirect_to books_path, notice: "Book was successfully borrowed." }
+        format.html { redirect_to request.referrer, notice: "Book was successfully borrowed." }
       else
         format.html { render :new, status: :unprocessable_entity }
       end

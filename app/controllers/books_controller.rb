@@ -4,7 +4,20 @@ class BooksController < ApplicationController
 
   # GET /books or /books.json
   def index
-    @books = Book.search(params[:search]).paginate(page: params[:page], per_page: 10).order("books.created_at DESC")
+    if user_signed_in?
+      if current_user.role == "user" 
+        @books = Book.search(params[:search]).paginate(page: params[:page], per_page: 10).order("books.created_at DESC")
+        render :index
+      elsif current_user.role == "staff"
+        @books = Book.search(params[:search]).paginate(page: params[:page], per_page: 10).order("books.created_at DESC")
+        render :indexstaff
+      else
+        redirect_to root_path
+      end
+    else
+      @books = Book.search(params[:search]).paginate(page: params[:page], per_page: 10).order("books.created_at DESC")
+      render :index
+    end
   end
 
   # GET /books/1 or /books/1.json

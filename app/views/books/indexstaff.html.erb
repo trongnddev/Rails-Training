@@ -37,17 +37,18 @@
         <td><%= book.quantity %></td>
         <td><%= book.quantity_in_stock %></td>
         <td><%= link_to 'Show', book %></td>
-         <td>
-        <%= form_for ([book, book.borrows.build]) do |f|%>
-        <%= f.hidden_field :status, value: "waiting accept"%>
-         <%= f.submit "Borrow",class:"btn btn-success", data: { confirm: "Are you sure to borrow #{book.name} book "}%>
-         <%end%>
-        </td>
+        <% if user_signed_in? %>
+        <td><%= link_to 'Edit', edit_book_path(book) %></td>
+        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
+<%if user_signed_in?%>
+<%= link_to 'New Book', new_book_path %>
+<%end%>
 <%= will_paginate @books, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 </div>
