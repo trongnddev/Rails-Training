@@ -6,16 +6,16 @@ class BooksController < ApplicationController
   def index
     if user_signed_in?
       if current_user.role == "user" 
-        @books = Book.search(params[:search]).paginate(page: params[:page], per_page: 10).order("books.created_at DESC")
+        @books = Book.all
         render :index
       elsif current_user.role == "staff"
-        @books = Book.search(params[:search]).paginate(page: params[:page], per_page: 10).order("books.created_at DESC")
+        @books = Book.all
         render :indexstaff
       else
         redirect_to root_path
       end
     else
-      @books = Book.search(params[:search]).paginate(page: params[:page], per_page: 10).order("books.created_at DESC")
+      @books = Book.all
       render :index
     end
   end
@@ -37,7 +37,7 @@ class BooksController < ApplicationController
     @book.created_at = Time.now
     respond_to do |format|
       if @book.save
-        format.html { redirect_to @book, notice: "Book was successfully created." }
+        format.html { redirect_to request.referrer}
       else
         format.html { render :new, status: :unprocessable_entity }
       end
