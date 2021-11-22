@@ -93,15 +93,6 @@ ActiveRecord::Schema.define(version: 2021_11_18_010245) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "info", id: false, comment: "2172.915413663", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "phone"
-    t.string "address"
-    t.string "day_of_birth"
-    t.string "profile"
-  end
-
   create_table "publishers", force: :cascade do |t|
     t.string "publisher_name"
     t.datetime "created_at", precision: 6, null: false
