@@ -13,3 +13,15 @@
  *= require_tree .
  *= require_self
  */
+
+ .admin-nav{
+     font-size: 30px;
+     text-decoration: none;
+     color: black;
+ }
+ .pagination{
+     padding-left: 400px;
+ }
+ .nav-link{
+     color:black
+ }
