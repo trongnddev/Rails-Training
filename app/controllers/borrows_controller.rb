@@ -72,16 +72,16 @@ class BorrowsController < ApplicationController
 
   # DELETE /borrows/1 or /borrows/1.json
   def destroy
-    if @borrow.status =="waiting accept" or "cancel"
-      @borrow.destroy
-      respond_to do |format|
-        format.html { redirect_to borrows_url, notice: "Book was successfully destroyed." }
-      end
-    elsif  @borrow.status == "accept"
-      update_stock = @borrow.book.quantity_in_stock
+    if @borrow.status =="accept"
+   
+      current_quantity = @borrow.book.quantity_in_stock
       current_book = Book.find(@borrow.book.id)
-      current_book.update_attribute :quantity_in_stock, (update_stock  + 1)
-      @borrow.destroy
+      current_book.update_attribute :quantity_in_stock, current_quantity + 1
+    end
+
+    @borrow.destroy
+    respond_to do |format|
+      format.html { redirect_to borrows_url, notice: "Book was successfully destroyed." }
     end
       
   end
