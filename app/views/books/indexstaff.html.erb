@@ -1,6 +1,6 @@
 <div class="container">
 
-<h1>Books</h1>
+<h1>Book Management</h1>
 <select id="dropdown1">
   <option value="0,asc">Book : A-Z</option>
   <option value="0,desc">Book : Z-A</option>
@@ -9,9 +9,8 @@
   <option value="3,desc">Newest</option>
   <option value="3,asc">Oldest</option>
 </select>
-<table id="example" class="table">
-  <thead>
-    <tr>
+  <table id="example" class="table">
+    <thead>
       <th>Name</th>
       <th>Description</th>
       <th>Author</th>
@@ -21,13 +20,13 @@
       <th>Borrow fee</th>
       <th>Quantity</th>
       <th>Quantity in stock</th>
-	  <th>Show</th>
-      <th>Borrow</th>
-    </tr>
-  </thead>
-
+      <th>Show</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </thead>
+   
   <tbody>
-    <% @books.each do |book| %>
+      <% @books.each do |book| %>
       <tr>
         <td><%= book.name %></td>
         <td><%= book.description %></td>
@@ -45,16 +44,18 @@
         <td><%= book.quantity %></td>
         <td><%= book.quantity_in_stock %></td>
         <td><%= link_to 'Show', book %></td>
-         <td>
-        <%= form_for ([book, book.borrows.build]) do |f|%>
-        <%= f.hidden_field :status, value: "waiting accept"%>
-         <%= f.submit "Borrow",class:"btn btn-success", data: { confirm: "Are you sure to borrow #{book.name} book "}%>
-         <%end%>
-        </td>
+        <% if user_signed_in? %>
+        <td><%= link_to 'Edit', edit_book_path(book) %></td>
+        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      
       </tr>
-    <% end %>
+      <% end %>
   </tbody>
 </table>
+<% if user_signed_in? %>
+ <%= link_to 'New book',new_book_path%>
+<%end%>
 </div>
 <script type="text/javascript">
  var table = $('#example').DataTable({"bLengthChange": false});
