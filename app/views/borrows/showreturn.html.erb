@@ -10,6 +10,7 @@
       <th>Borrowed date</th>
       <th>Appointment returned date</th>
       <th>Returned date</th>
+      <th>Penalty fee</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -23,10 +24,11 @@
         <td><%=borrow.borrowed_date%></td>
         <td><%=borrow.borrowed_date + 14%></td>
         <td><%=borrow.returned_date%></td>
+        <td><%=borrow.penalty_fee%></td>
         <td>
             <%= form_for borrow do |f| %>
             <%= f.hidden_field :status, value: "returned"%>
-            <%= f.submit "accept",class:"btn btn-success"%>
+            <%= f.submit "Confirm",class:"btn btn-success"%>
             <%end%>
         </td>
       </tr>

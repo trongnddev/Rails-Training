@@ -7,7 +7,7 @@ class BorrowsController < ApplicationController
     if current_user.role == "user"
       @borrows = Borrow.where(user_id: current_user.id).order("id DESC")
     elsif current_user.role  == "staff"
-      @borrows = Borrow.where.not(status: "cancel").order("id DESC")
+      @borrows = Borrow.where(status: "waiting accept").order("id DESC")
     end
   end
 

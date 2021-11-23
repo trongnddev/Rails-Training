@@ -1,7 +1,7 @@
 class PublishersController < ApplicationController
   before_action :set_publisher, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: %i[show index]
-
+  add_flash_types :success, :warning, :danger, :info
   # GET /publishers or /publishers.json
   def index
     @publishers = Publisher.all
@@ -21,33 +21,29 @@ class PublishersController < ApplicationController
   # POST /publishers or /publishers.json
   def create
     @publisher = Publisher.new(publisher_params)
-
-    respond_to do |format|
       if @publisher.save
-        format.html { redirect_to @publisher, notice: "Publisher was successfully created." }
+        redirect_to request.referrer 
+        flash[:success] = "Publisher was successfully created!#{view_context.link_to("Do you want to check the #{@publisher.publisher_name}","#{@publisher.id}")}" 
       else
-        format.html { render :new, status: :unprocessable_entity }
+        flash[:danger] = "Something went wrong!"
       end
-    end
   end
 
   # PATCH/PUT /publishers/1 or /publishers/1.json
   def update
-    respond_to do |format|
       if @publisher.update(publisher_params)
-        format.html { redirect_to @publisher, notice: "Publisher was successfully updated." }
+        redirect_to @publisher
+        flash[:success] = "Publisher was successfully updated!" 
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        flash[:danger] = "Something went wrong!"
       end
-    end
   end
 
   # DELETE /publishers/1 or /publishers/1.json
   def destroy
     @publisher.destroy
-    respond_to do |format|
-      format.html { redirect_to publishers_url, notice: "Publisher was successfully destroyed." }
-    end
+     redirect_to publishers_url
+     flash[:info] = "Publisher was successfully destroyed!"
   end
 
   private

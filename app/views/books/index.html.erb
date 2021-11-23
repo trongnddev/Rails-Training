@@ -1,8 +1,15 @@
 <div class="container">
 
 <h1>Books</h1>
-
-<table class="table">
+<select id="dropdown1">
+  <option value="0,asc">Book : A-Z</option>
+  <option value="0,desc">Book : Z-A</option>
+  <option value="6,asc">Borrow fee : Low To High</option>
+  <option value="6,desc">Borrow fee : High To Low</option>
+  <option value="3,desc">Newest</option>
+  <option value="3,asc">Oldest</option>
+</select>
+<table id="example" class="table">
   <thead>
     <tr>
       <th>Name</th>
@@ -14,7 +21,8 @@
       <th>Borrow fee</th>
       <th>Quantity</th>
       <th>Quantity in stock</th>
-      <th colspan="3"></th>
+	  <th>Show</th>
+      <th>Borrow</th>
     </tr>
   </thead>
 
@@ -40,11 +48,14 @@
           <td>
             <%= form_for ([book, book.borrows.build]) do |f|%>
               <%= f.hidden_field :status, value: "waiting accept"%>
-              <% if current_user.borrows.where( {book_id: book.id, status: ["waiting accept", "accept"]}).exists?  %>
-                <%= f.submit "Borrow",class:"btn btn-success", :disabled => true,  data: { confirm: "Are you sure to borrow #{book.name} book "}%>
-              <% else %>
-                <%= f.submit "Borrow",class:"btn btn-success",  data: { confirm: "Are you sure to borrow #{book.name} book "}%>
-
+              <%if user_signed_in?%>
+                  <% if current_user.borrows.where( {book_id: book.id, status: ["waiting accept", "accept"]}).exists?  %>
+                    <%= f.submit "Borrow",class:"btn btn-success", :disabled => true%>
+                  <% else %>
+                      <%= f.submit "Borrow",class:"btn btn-success",  data: { confirm: "Are you sure to borrow #{book.name} book "}%>
+                  <%end%>
+              <%else%>
+                  <%= f.submit "Borrow",class:"btn btn-success"%>
               <% end %>
             <%end%>
           </td>
@@ -52,7 +63,12 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-<%= will_paginate @books, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 </div>
+<script type="text/javascript">
+ var table = $('#example').DataTable({"bLengthChange": false});
+
+$('#dropdown1').on('change', function () {
+        table.order([(this.value).split(",")]).draw();
+});
+
+</script>
