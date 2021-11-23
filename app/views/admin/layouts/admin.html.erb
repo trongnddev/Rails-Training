@@ -23,7 +23,14 @@
   <body>
     <%= render 'admin/layouts/header' %>
     <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+     <div class="container">
+     <% flash.each do |key, value| %>
+       <div id="flash" class="alert alert-<%= key %>">
+         <%= sanitize(value) %>
+         <a href="#" data-dismiss="alert">×</a>
+       </div>
+     <% end %>
+     </div>
     <div class="row">
       <div class="col-3" >
         <%= render 'admin/layouts/nav' %>

@@ -1,0 +1,45 @@
+<h1>Books</h1>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to 'Books',admin_books_path,class:"nav-link"%>
+  </li>
+  <li class="nav-item">
+     <%= link_to 'New book',new_admin_book_path,class:"nav-link"%>
+  </li>
+</ul>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Book</th>
+      <th scope="col">Publish an article</th>
+      <th scope="col">Published date</th>
+      <th scope="col">Borrow fee</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Quantity in stock</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @book.each do |book| %>
+      <tr>
+        <th scope="row"><%= book.id %></th>
+        <td><%= book.name %></td>
+        <td><%= book.created_at%></td>
+        <td><%= book.published_date%></td>
+        <td><%= book.borrow_fee%></td>
+        <td><%= book.quantity%></td>
+        <td><%= book.quantity_in_stock%></td>
+        <td class="px-5" style="text-align: right">
+          <a href="/admin/books/<%=book.id%>"><i class="fas fa-info-circle"></i></a>
+          <a href="/admin/books/<%=book.id%>/edit"><i class="far fa-edit"></i></a>
+          <a href="/admin/books/<%=book.id%>" data-method="delete"><i class="fas fa-trash-alt"></i></a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="page">
+  <%= will_paginate @book%>
+</div>
