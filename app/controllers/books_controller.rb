@@ -1,6 +1,7 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: %i[show index]
+  add_flash_types :success, :warning, :danger, :info
 
   # GET /books or /books.json
   def index
@@ -35,32 +36,29 @@ class BooksController < ApplicationController
   def create
     @book = Book.new(book_params)
     @book.created_at = Time.now
-    respond_to do |format|
       if @book.save
-        format.html { redirect_to request.referrer}
+        redirect_to request.referrer
+        flash[:success] = "Book was successfully created! #{view_context.link_to("Do you want check the #{@book.name} book", "#{@book.id}")}"
       else
-        format.html { render :new, status: :unprocessable_entity }
+        flash[:danger] = "Something went wrong!"
       end
-    end
   end
 
   # PATCH/PUT /books/1 or /books/1.json
   def update
-    respond_to do |format|
       if @book.update(book_params)
-        format.html { redirect_to @book, notice: "Book was successfully updated." }
+        redirect_to @book
+        flash[:success] = "Book was successfully updated!"
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        flash[:danger] = "Something went wrong!"
       end
-    end
   end
 
   # DELETE /books/1 or /books/1.json
   def destroy
     @book.destroy
-    respond_to do |format|
-      format.html { redirect_to books_url, notice: "Book was successfully destroyed." }
-    end
+    redirect_to request.referrer
+    flash[:info] = "Book was successfully destroyed!"
   end
 
   private
