@@ -4,7 +4,11 @@ class BorrowsController < ApplicationController
 
   # GET /borrows or /borrows.json
   def index
-    @borrows = Borrow.all.order("id DESC")
+    if current_user.role == "user"
+      @borrows = Borrow.where(user_id: current_user.id).order("id DESC")
+    elsif current_user.role  == "staff"
+      @borrows = Borrow.all.order("id DESC")
+    end
   end
 
   def showborrow
@@ -68,10 +72,17 @@ class BorrowsController < ApplicationController
 
   # DELETE /borrows/1 or /borrows/1.json
   def destroy
-    @borrow.destroy
-    respond_to do |format|
-      format.html {redirect_to borrows_url, notice: "Borrow was successfully destroyed."}
+    if @borrow.status == "waiting accept"
+      @borrow.destroy
     end
+    if  @borrow.status == "accept"
+      update_stock = @borrow.book.quantity_in_stock
+      current_book = Book.find(@borrow.book.id)
+      current_book.update_attribute :quantity_in_stock, update_stock  + 1 if @borrow.status.include? "accept"
+      @borrow.destroy
+    end
+      
+    
   end
 
   private

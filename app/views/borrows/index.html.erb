@@ -13,26 +13,28 @@
 
   <tbody>
     <% @borrows.each do |borrow| %>
-       <%if borrow.status.include? "waiting accept"%>
+       
       <tr>
         <td><%= borrow.book.name %></td>
         <td><%= borrow.user.email %></td>
         <td><%= borrow.status %></td>
         <td><%= link_to 'Show', borrow %></td>
+        
+        <% if @current_user.role == "staff" %>
         <td>
               <%= form_for borrow do |f| %>
              <%= f.hidden_field :status, value: "accept"%>
              <%= f.submit "accept",class:"btn btn-success"%>
              <%end%>
-        </td>
+        </td>  
         <td>
-              <%= form_for borrow do |f| %>
-             <%= f.hidden_field :status,value: "cancel"%>
-             <%= f.submit "cancel",class:"btn btn-danger"%>
-            <%end%>
-        </td>
+            <td><%= link_to 'Cancel', borrow, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </td>   
+        <% end %>
+        
+       
       </tr>
-     <%end%>
+     
     <% end %>
   </tbody>
 </table>
