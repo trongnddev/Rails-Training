@@ -33,8 +33,11 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'rubocop', '~> 1.22', require: false
 
 gem 'devise'
+
 gem 'cocoon'
+
 gem 'will_paginate'
+
 gem 'will_paginate-bootstrap4'
 
 group :development, :test do
