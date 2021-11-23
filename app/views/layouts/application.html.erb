@@ -19,12 +19,22 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">  
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
      <%= render 'home/navbar' %>
-      <div class="container">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-    </div>
+     <div class="container">
+     <% flash.each do |key, value| %>
+       <div id="flash" class="alert alert-<%= key %>">
+         <%= sanitize(value) %>
+         <a href="#" data-dismiss="alert">×</a>
+       </div>
+     <% end %>
+     </div>
      <%= yield %>
-    
+  <script type="text/javascript">
+    $(document).ready(function(){
+      setTimeout(function(){
+       $('#flash').remove();
+      }, 10000);
+    })
+  </script>
   </body>
 </html>
 

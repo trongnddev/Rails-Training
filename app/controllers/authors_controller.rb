@@ -1,6 +1,7 @@
 class AuthorsController < ApplicationController
   before_action :set_author, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: %i[show index]
+  add_flash_types :success, :warning, :danger, :info
 
   # GET /authors or /authors.json
   def index
@@ -22,32 +23,29 @@ class AuthorsController < ApplicationController
   # POST /authors or /authors.json
   def create
     @author = Author.new(author_params)
-    respond_to do |format|
       if @author.save
-        format.html { redirect_to @author, notice: "Author was successfully created." }
+        redirect_to request.referrer 
+        flash[:success]= "Author was successfully created!  #{view_context.link_to("Do you want check the #{@author.author_name}", "#{@author.id}")}"
       else
-        format.html { render :new, status: :unprocessable_entity }
+        flash[:danger] = "Something went wrong!"
       end
-    end
   end
 
   # PATCH/PUT /authors/1 or /authors/1.json
   def update
-    respond_to do |format|
       if @author.update(author_params)
-        format.html { redirect_to @author, notice: "Author was successfully updated." }
+       redirect_to @author, 
+       flash[:success] = "Author was successfully updated!"
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        flash[:danger] = "Something went wrong!"
       end
-    end
   end
 
   # DELETE /authors/1 or /authors/1.json
   def destroy
     @author.destroy
-    respond_to do |format|
-      format.html { redirect_to authors_url, notice: "Author was successfully destroyed." }
-    end
+     redirect_to authors_url
+     flash[:info] = "Author was successfully destroyed!"
   end
 
   private
