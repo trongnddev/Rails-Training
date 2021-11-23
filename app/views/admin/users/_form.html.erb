@@ -1,0 +1,19 @@
+<div class="row m-5">
+    <%= form_for [:admin, @user] do |form| %>
+        <div class="form-floating m-3">
+            <%= form.email_field :email, class:"form-control", id:"floatingInput" %>
+            <label for="floatingInput">Địa chỉ email</label>
+        </div>
+        <div class="form-floating m-3">
+            <%= form.password_field :password, class:"form-control", id:"floatingPassword" %>
+            <label for="floatingPassword">Mật khẩu</label>
+        </div>
+        <div class="form-floating m-3">
+            <%= form.password_field :password_confirmation, class:"form-control", id:"floatingPasswordc" %>
+            <label for="floatingPasswordc">Xác nhận mật khẩu</label>
+        </div>
+        <div class="actions m-3">
+            <%= form.submit class:"btn btn-primary"%>
+        </div>
+    <% end %>
+</div>

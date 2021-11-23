@@ -1,1 +1,44 @@
-This is index
+<h1>Danh sách tài khoản</h1>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="/admin/users"><i class="fas fa-list"></i> Danh sách</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/admin/users/new"><i class="fas fa-plus"></i> Tạo mới</a>
+  </li>
+</ul>
+<div class="p-4 bg-light">
+    <%= form_tag '/admin/users', method: 'get', class:"input-group" do %>
+        <input class="form-control input-small" name="search" placeholder="Tìm kiếm" type="search">
+        <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit">
+            Tìm kiếm
+            </button>
+        </span>
+    <% end %>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Email</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <th scope="row"><%= user.id %></th>
+        <td><%= user.email %></td>
+        <td class="px-5" style="text-align: right">
+          <a href="/admin/users/<%=user.id%>"><i class="fas fa-info-circle"></i></a>
+          <a href="/admin/users/<%=user.id%>/edit"><i class="far fa-edit"></i></a>
+          <a href="/admin/users/<%=user.id%>" data-method="delete"><i class="fas fa-trash-alt"></i></a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="page">
+  <%= will_paginate @users %>
+</div>

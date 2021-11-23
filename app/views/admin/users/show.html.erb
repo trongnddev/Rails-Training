@@ -1,0 +1,21 @@
+<h1>Thông tin tài khoản #<%=@user.id%></h1>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" href="/admin/users/<%=@user.id%>"><i class="fas fa-info-circle"></i> Chi tiết</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/users/<%=@user.id%>/edit"><i class="far fa-edit"></i> Chỉnh sửa</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/users/<%=@user.id%>" data-method="delete"><i class="fas fa-trash-alt"></i>  Xóa</a>
+    </li>
+</ul>
+<h3>Thông tin cơ bản</h3>
+<dt>
+    <span class="label label-info">
+        Email
+    </span>
+    <div class="p-4 bg-light">
+        <%= @user.email %>
+    </div>
+</dt>
