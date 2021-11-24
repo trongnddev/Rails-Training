@@ -48,14 +48,13 @@ class BooksController < ApplicationController
 
   # PATCH/PUT /books/1 or /books/1.json
   def update
+    respond_to do |format|
       if @book.update(book_params)
-        redirect_to books_path
-        flash[:success] = "Book was successfully updated!"
+        format.html {redirect_to books_path, success:"Book was successfully updated!"}
       else
-        respond_to do |format|
-          format.html { redirect_to request.referrer, danger:"Something went wrong!"}
-        end
+        format.html { redirect_to request.referrer, danger:"Something went wrong!"}
       end
+    end
   end
 
   # DELETE /books/1 or /books/1.json

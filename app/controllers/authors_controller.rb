@@ -27,18 +27,21 @@ class AuthorsController < ApplicationController
         redirect_to request.referrer 
         flash[:success]= "Author was successfully created!  #{view_context.link_to("Do you want check the #{@author.author_name}", "#{@author.id}")}"
       else
-        flash[:danger] = "Something went wrong!"
+        respond_to do |format|
+          format.html {redirect_to request.referrer, danger: "Something went wrong!"}
+        end
       end
   end
 
   # PATCH/PUT /authors/1 or /authors/1.json
   def update
+    respond_to do |format|
       if @author.update(author_params)
-       redirect_to @author, 
-       flash[:success] = "Author was successfully updated!"
+        format.html {redirect_to authors_path, success: "Author was successfully updated!"}
       else
-        flash[:danger] = "Something went wrong!"
+        format.html {redirect_to request.referrer, danger: "Something went wrong!"}
       end
+    end
   end
 
   # DELETE /authors/1 or /authors/1.json
