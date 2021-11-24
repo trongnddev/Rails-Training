@@ -7,7 +7,16 @@
      <%= link_to 'New book',new_admin_book_path,class:"nav-link"%>
   </li>
 </ul>
-
+<div class="p-4 bg-light">
+    <%= form_tag admin_books_path, method: 'get', class:"input-group" do %>
+        <input class="form-control input-small" name="search" placeholder="Search" type="search">
+        <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit">
+            Search
+            </button>
+        </span>
+    <% end %>
+</div>
 <table class="table table-striped">
   <thead>
     <tr>
