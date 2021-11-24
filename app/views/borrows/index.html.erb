@@ -13,26 +13,37 @@
 
   <tbody>
     <% @borrows.each do |borrow| %>
-       <%if borrow.status.include? "waiting accept"%>
+       
       <tr>
         <td><%= borrow.book.name %></td>
         <td><%= borrow.user.email %></td>
         <td><%= borrow.status %></td>
         <td><%= link_to 'Show', borrow %></td>
-        <td>
-              <%= form_for borrow do |f| %>
-             <%= f.hidden_field :status, value: "accept"%>
-             <%= f.submit "accept",class:"btn btn-success"%>
-             <%end%>
-        </td>
-        <td>
-              <%= form_for borrow do |f| %>
-             <%= f.hidden_field :status,value: "cancel"%>
-             <%= f.submit "cancel",class:"btn btn-danger"%>
-            <%end%>
-        </td>
+        <% if @current_user.role == "user" %>
+           <td><%= link_to 'Destroy', borrow, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+        
+        <% if @current_user.role == "staff" %>
+          <%if borrow.status.include? "waiting accept"%>
+            <td>
+                <%= form_for borrow do |f| %>
+                  <%= f.hidden_field :status, value: "accept"%>
+                  <%= f.submit "accept",class:"btn btn-success"%>
+                <%end%>
+            </td>
+            <td>
+                <%= form_for borrow do |f| %>
+                  <%= f.hidden_field :status,value: "cancel"%>
+                  <%= f.submit "cancel",class:"btn btn-danger"%>
+                <%end%>
+            </td>
+          
+          <%end%> 
+        <% end %>
+        
+       
       </tr>
-     <%end%>
+     
     <% end %>
   </tbody>
 </table>

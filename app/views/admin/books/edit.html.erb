@@ -1,0 +1,13 @@
+<h1>Edit book <%=@book.name%></h1>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="/admin/books/<%=@book.id%>"><i class="fas fa-info-circle"></i>Show</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="/admin/books/<%=@book.id%>/edit"><i class="far fa-edit"></i>Edit</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/admin/books/<%=@book.id%>" data-method="delete"><i class="fas fa-trash-alt"></i>Delete</a>
+  </li>
+</ul>
+<%= render 'form', book: @book %>
