@@ -25,12 +25,7 @@
         <td><%=borrow.borrowed_date + 14%></td>
         <td><%=borrow.returned_date%></td>
         <td><%=borrow.penalty_fee%></td>
-        <td>
-            <%= form_for borrow do |f| %>
-            <%= f.hidden_field :status, value: "returned"%>
-            <%= f.submit "Confirm",class:"btn btn-success"%>
-            <%end%>
-        </td>
+        
       </tr>
     <% end %>
   </tbody>
