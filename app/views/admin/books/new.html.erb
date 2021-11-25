@@ -1,0 +1,10 @@
+<h1>Create book</h1>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to 'Books',admin_books_path,class:"nav-link"%>
+  </li>
+  <li class="nav-item">
+     <%= link_to 'New book',new_admin_book_path,class:"nav-link"%>
+  </li>
+</ul>
+<%= render 'form', book: @book %>

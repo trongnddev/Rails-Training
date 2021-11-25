@@ -25,18 +25,21 @@ class PublishersController < ApplicationController
         redirect_to request.referrer 
         flash[:success] = "Publisher was successfully created!#{view_context.link_to("Do you want to check the #{@publisher.publisher_name}","#{@publisher.id}")}" 
       else
-        flash[:danger] = "Something went wrong!"
+        respond_to do |format|
+          format.html {redirect_to request.referrer, danger: "Something went wrong!"}
+        end
       end
   end
 
   # PATCH/PUT /publishers/1 or /publishers/1.json
   def update
+    respond_to do |format|
       if @publisher.update(publisher_params)
-        redirect_to @publisher
-        flash[:success] = "Publisher was successfully updated!" 
+        format.html { redirect_to publishers_url, success: "Publisher was successfully updated!"}
       else
-        flash[:danger] = "Something went wrong!"
+        format.html {redirect_to request.referrer, danger: "Something went wrong!"}
       end
+    end
   end
 
   # DELETE /publishers/1 or /publishers/1.json

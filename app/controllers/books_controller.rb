@@ -40,24 +40,27 @@ class BooksController < ApplicationController
         redirect_to request.referrer
         flash[:success] = "Book was successfully created! #{view_context.link_to("Do you want check the #{@book.name} book", "#{@book.id}")}"
       else
-        flash[:danger] = "Something went wrong!"
+        respond_to do |format|
+          format.html{ redirect_to request.referrer, danger: "Something went wrong!"}
+        end
       end
   end
 
   # PATCH/PUT /books/1 or /books/1.json
   def update
+    respond_to do |format|
       if @book.update(book_params)
-        redirect_to @book
-        flash[:success] = "Book was successfully updated!"
+        format.html {redirect_to books_path, success:"Book was successfully updated!"}
       else
-        flash[:danger] = "Something went wrong!"
+        format.html { redirect_to request.referrer, danger:"Something went wrong!"}
       end
+    end
   end
 
   # DELETE /books/1 or /books/1.json
   def destroy
     @book.destroy
-    redirect_to request.referrer
+    redirect_to books_path
     flash[:info] = "Book was successfully destroyed!"
   end
 
@@ -65,7 +68,7 @@ class BooksController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_book 
-    @book = Book.find(params[:id])
+    @book = Book.find(params[:id]) 
   end
 
   # Only allow a list of trusted parameters through.

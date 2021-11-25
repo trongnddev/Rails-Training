@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   namespace :admin do
     resources :users
+    resources :books
   end
   resources :borrows
   resources :publishers

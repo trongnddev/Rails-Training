@@ -11,11 +11,11 @@ class Book < ApplicationRecord
   before_create { |book| book.name = book.name.capitalize}
 
   
-  # def self.search(search)
-  #   if search
-  #     Book.includes(:authors).where("books.name LIKE '%#{search.capitalize}%' OR authors.author_name LIKE '%#{search.capitalize}%'").references(:author_books)
-  #   else
-  #     all
-  #   end  
-  # end
+  def self.search(search)
+    if search
+      where("books.name LIKE '%#{search.capitalize}%'") 
+    else
+      all
+    end  
+  end
 end
