@@ -1,0 +1,22 @@
+<%= form_for [@book, @book.reviews.build] do |f| %>
+  <div class="field form-group">
+  <div>
+    <%= f.label :Comment%>
+    <%= f.text_field :comment, class:"form-control"%>
+  </div>
+  <div class= "field form-group">
+       <b>Rate</b><br>
+    <%= f.radio_button :star, '5' %> <i class="far fa-star"></i> <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><br>
+    <%= f.radio_button :star, '4' %> <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><br/>
+    <%= f.radio_button :star, '3' %> <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><br/>
+    <%= f.radio_button :star, '2' %> <i class="far fa-star"></i><i class="far fa-star"></i><br/>
+    <%= f.radio_button :star, '1' %> <i class="far fa-star"></i><br/>
+  </div>
+  <div class="field form-group">
+    <%= f.submit "Review",class:"btn btn-info" %>
+  </div>
+
+
+
+<% end %>
+

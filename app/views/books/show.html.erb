@@ -49,6 +49,11 @@
     <%= f.hidden_field :status, value: "waiting accept"%>
     <%= f.submit "Borrow",class:"btn btn-success"%>
 <%end%>
+<h2>Rating : <%= @book.rating%>
+
+</h2>
+<br><%= render @book.reviews%>
+<%= render "reviews/form"%>
 <% if user_signed_in? %>
 <%= link_to 'Edit', edit_book_path(@book) %> |
 <%end%>
