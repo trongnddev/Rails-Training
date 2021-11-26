@@ -49,11 +49,17 @@
     <%= f.hidden_field :status, value: "waiting accept"%>
     <%= f.submit "Borrow",class:"btn btn-success"%>
 <%end%>
-<h2>Rating : <%= @book.rating%>
-
+<h2>Rating :
+<%if @book.rating.present?%> 
+<% for i in 0...@book.rating%>
+  <i class="fa fa-star checked" style="color:yellow"></i>
+<%end%>    
+<%end%>         
 </h2>
 <br><%= render @book.reviews%>
+<%if Borrow.where(user_id: current_user.id, book_id: @book.id).present?%>
 <%= render "reviews/form"%>
+<%end%>
 <% if user_signed_in? %>
 <%= link_to 'Edit', edit_book_path(@book) %> |
 <%end%>
