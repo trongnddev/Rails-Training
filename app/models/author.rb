@@ -4,4 +4,15 @@ class Author < ApplicationRecord
   accepts_nested_attributes_for :author_books
   validates_format_of :author_name, with: /\A[[:alpha:][:blank:]]+\z/
   before_create { |author| author.author_name= author.author_name.capitalize}
+
+  
+  def self.search(search)
+    if search
+      where("authors.author_name LIKE '%#{search.capitalize}%'") 
+    else
+      all
+    end  
+  end
+
+
 end

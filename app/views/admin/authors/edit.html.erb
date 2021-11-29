@@ -1,0 +1,13 @@
+<h1>Edit author <%=@author.author_name%></h1>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="/admin/authors/<%=@author.id%>"><i class="fas fa-info-circle"></i> Show</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="/admin/authors/<%=@author.id%>/edit"><i class="far fa-edit"></i> Edit</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/admin/authors/<%=@author.id%>" data-method="delete"><i class="fas fa-trash-alt"></i> Delete</a>
+  </li>
+</ul>
+<%= render 'form', author: @author %>
