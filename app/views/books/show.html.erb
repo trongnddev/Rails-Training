@@ -51,7 +51,7 @@
 <%end%>
 <h2>Rating :
 <%if @book.rating.present?%> 
-<% for i in 0...@book.rating%>
+<% @book.rating.times do%>
   <i class="fa fa-star checked" style="color:yellow"></i>
 <%end%>    
 <%end%>         
