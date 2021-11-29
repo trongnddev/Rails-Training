@@ -20,12 +20,11 @@
       <tr>
         <td><%= borrow.book.name %></td>
         <td><%= borrow.user.email %></td>
-        <td>Return</td>
-        <td><%=borrow.borrowed_date%></td>
-        <td><%=borrow.borrowed_date + 14%></td>
-        <td><%=borrow.returned_date%></td>
-        <td><%=borrow.penalty_fee%></td>
-        
+        <td><%= borrow.status%></td>
+        <td><%= borrow.borrowed_date%></td>
+        <td><%= borrow.borrowed_date + 14%></td>
+        <td><%= borrow.returned_date%></td>
+        <td><%= borrow.penalty_fee%></td>
       </tr>
     <% end %>
   </tbody>

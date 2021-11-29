@@ -25,25 +25,28 @@ class CategoriesController < ApplicationController
         redirect_to request.referrer 
         flash[:success] = "Category was successfully created!  #{view_context.link_to("Do you want check the #{@category.name}", "#{@category.id}")}"
       else
-        flash[:danger] = "Something went wrong!"
+        respond_to do |format|
+          format.html {redirect_to request.referrer, danger: "Something went wrong!"}
+        end
       end
   end
 
   # PATCH/PUT /categories/1 or /categories/1.json
   def update
+    respond_to do |format|
       if @category.update(category_params)
-        redirect_to @category 
-        flash[:success] = "Category was successfully updated!" 
+        format.html {redirect_to categories_url, success:"Category was successfully updated!"}
       else
-        flash[:danger] = "Something went wrong!"
+        format.html {redirect_to request.referrer, danger: "Something went wrong!"}
       end
+    end
   end
 
   # DELETE /categories/1 or /categories/1.json
   def destroy
     @category.destroy
     redirect_to categories_url
-    flash[:success] = "Category was successfully destroyed!"
+    flash[:info] = "Category was successfully destroyed!"
   end
 
   private

@@ -1,0 +1,36 @@
+<h1>Book <%=@book.name%></h1>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" href="/admin/books/<%=@book.id%>"><i class="fas fa-info-circle"></i> Show</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/books/<%=@book.id%>/edit"><i class="far fa-edit"></i> Edit</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/books/<%=@book.id%>" data-method="delete"><i class="fas fa-trash-alt"></i> Delete</a>
+    </li>
+</ul>
+<dt>
+    <span class="label label-info">
+        Author
+    </span>
+    <div class="p-4 bg-light">
+        <% @book.author_books.each do |author_book|%>
+        <li>
+            <%= author_book.author.author_name%>
+        </li>
+        <%end%>
+    </div>
+    <span class="label label-info">
+        Publisher
+    </span>
+    <div class="p-4 bg-light">
+        <%= Publisher.find(@book.publisher_id).publisher_name if @book.publisher_id%>
+    </div>
+    <span class="label label-info">
+        Category
+    </span>
+    <div class="p-4 bg-light">
+        <%= Category.find(@book.category_id).name if @book.category_id%>
+    </div>
+</dt>

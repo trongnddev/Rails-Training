@@ -23,12 +23,17 @@
   <body>
     <%= render 'admin/layouts/header' %>
     <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
     <div class="row">
       <div class="col-3" >
         <%= render 'admin/layouts/nav' %>
       </div>
       <div class="col-9">
+         <% flash.each do |key, value| %>
+            <div id="flash" class="alert alert-<%= key %>">
+            <%= sanitize(value) %>
+            <a href="#" data-dismiss="alert">×</a>
+            </div>
+         <% end %>
         <%= yield %>
       </div>
       

@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :borrows, dependent: :destroy
   has_many :books, through: :borrows
-
+  has_many :reviews, dependent: :destroy
   def self.search(search)
     if search
         where("email  LIKE ? OR id = #{search}", "%#{search}%")

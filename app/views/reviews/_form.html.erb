@@ -1,0 +1,44 @@
+<%= form_for [@book, @book.reviews.build] do |f| %>
+  <div class="field form-group">
+  <div>
+    <%= f.label :Comment%>
+    <%= f.text_field :comment, class:"form-control"%>
+  </div>
+  <div class= "field form-group">
+       <b>Rate</b><br>
+    <%= f.radio_button :star, '5' %>
+    <i class="fa fa-star checked" style="color:yellow"></i>
+    <i class="fa fa-star checked" style="color:yellow"></i>
+    <i class="fa fa-star checked" style="color:yellow"></i>
+    <i class="fa fa-star checked" style="color:yellow"></i>
+    <i class="fa fa-star checked" style="color:yellow"></i>
+   <br>
+    <%= f.radio_button :star, '4' %> 
+    <i class="fa fa-star checked" style="color:yellow"></i>
+    <i class="fa fa-star checked" style="color:yellow"></i>
+    <i class="fa fa-star checked" style="color:yellow"></i>
+    <i class="fa fa-star checked" style="color:yellow"></i>
+    <br/>
+    <%= f.radio_button :star, '3' %> 
+    <i class="fa fa-star checked" style="color:yellow"></i>
+    <i class="fa fa-star checked" style="color:yellow"></i>
+    <i class="fa fa-star checked" style="color:yellow"></i>
+    <br/>
+    <%= f.radio_button :star, '2' %> 
+    <i class="fa fa-star checked" style="color:yellow"></i>
+    <i class="fa fa-star checked" style="color:yellow"></i>
+    <br/>
+    <%= f.radio_button :star, '1' %> <i class="fa fa-star checked" style="color:yellow"></i><br/>
+  </div>
+  <div class="field form-group">
+  <%if Review.where(user_id: current_user.id, book_id: @book.id).present?%>
+    <%= f.submit "Reviewed", :disabled => true , class:"btn btn-info" %>
+  <%else%>
+    <%= f.submit "Review" , class:"btn btn-info" %>
+  <%end%>
+  </div>
+
+
+
+<% end %>
+
