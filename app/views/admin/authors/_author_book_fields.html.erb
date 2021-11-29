@@ -1,0 +1,5 @@
+<div class="books">
+  <%= form.fields_for :book do |book_form| %>
+  <%= render 'book_fields', form: book_form %>
+  <%end%>
+</div>
