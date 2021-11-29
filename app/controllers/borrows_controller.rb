@@ -67,7 +67,6 @@ class BorrowsController < ApplicationController
   def update
     update_stock = @borrow.book.quantity_in_stock
     current_book = Book.find(@borrow.book.id)
-
     respond_to do |format|
       if @borrow.update(borrow_params)
         if @borrow.status.include? "accept"

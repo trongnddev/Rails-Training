@@ -4,13 +4,15 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
     resources :books
+    resources :authors
   end
   resources :borrows
   resources :publishers
   resources :categories
   resources :authors
   resources :books do
-    resources :borrows 
+    resources :borrows
+    resources :reviews 
   end
   devise_for :users
   root to: "home#index"
