@@ -47,7 +47,15 @@
 </p>
  <%= form_for ([@book, @book.borrows.build]) do |f|%>
     <%= f.hidden_field :status, value: "waiting accept"%>
-    <%= f.submit "Borrow",class:"btn btn-success"%>
+    <%if user_signed_in?%>
+                  <% if current_user.borrows.where( {book_id: book.id, status: ["waiting accept", "accept"]}).exists?  %>
+                    <%= f.submit "Borrow",class:"btn btn-success", :disabled => true%>
+                  <% else %>
+                      <%= f.submit "Borrow",class:"btn btn-success",  data: { confirm: "Are you sure to borrow #{book.name} book "}%>
+                  <%end%>
+    <%else%>
+        <%= f.submit "Borrow",class:"btn btn-success"%>
+    <% end %>
 <%end%>
 <% if user_signed_in? %>
 <%= link_to 'Edit', edit_book_path(@book) %> |
