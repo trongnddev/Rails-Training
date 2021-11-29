@@ -65,47 +65,17 @@ class BorrowsController < ApplicationController
 
   # PATCH/PUT /borrows/1 or /borrows/1.json
   def update
-    update_stock = @borrow.book.quantity_in_stock
-    current_book = Book.find(@borrow.book.id)
-
     respond_to do |format|
       if @borrow.update(borrow_params)
-        if @borrow.status.include? "accept"
-          current_book.update_attribute :quantity_in_stock, update_stock - 1
-          @borrow.update_attribute :borrowed_date, Time.now
-          format.html { redirect_to borrows_path}
-
-        elsif @borrow.status.include? "returned"
-          @borrow.update_attribute :returned_date, Time.now
-          days_penalty = (@borrow.returned_date.day- @borrow.borrowed_date.day).to_i - @borrow.appointment_returned_date
-          
-          if days_penalty > 0
-            penalty_fee = days_penalty * @borrow.book.borrow_fee * 0.5
-          else
-            penalty_fee = 0
-          end
-
-          
-          @borrow.update_attribute :penalty_fee, penalty_fee
-          current_book.update_attribute :quantity_in_stock, update_stock + 1 
-          format.html { redirect_to request.referrer, success: "You had update status successfully" }
-        end
-
+        format.html { redirect_to request.referrer, success:"Borrow was updated!"}
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { redirect_to request.referrer, danger: :unprocessable_entity }
       end
     end
   end
 
   # DELETE /borrows/1 or /borrows/1.json
   def destroy
-    if @borrow.status =="accept"
-   
-      current_quantity = @borrow.book.quantity_in_stock
-      current_book = Book.find(@borrow.book.id)
-      current_book.update_attribute :quantity_in_stock, current_quantity + 1
-    end
-
     @borrow.destroy
     respond_to do |format|
       format.html { redirect_to borrows_url, notice: "Book was successfully destroyed." }
