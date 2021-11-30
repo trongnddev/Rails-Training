@@ -9,7 +9,7 @@
 </ul>
 <div class="p-4 bg-light">
     <%= form_tag admin_books_path, method: 'get', class:"input-group" do %>
-        <input class="form-control input-small" name="search" placeholder="Search" type="search">
+        <input id="bookinput" class="form-control input-small" name="search" placeholder="Search" type="search">
         <span class="input-group-btn">
             <button class="btn btn-primary" type="submit">
             Search
@@ -17,7 +17,7 @@
         </span>
     <% end %>
 </div>
-<table class="table table-striped">
+<table id="bookadmin" class="table table-striped">
   <thead>
     <tr>
       <th scope="col">ID</th>
@@ -52,3 +52,9 @@
 <div class="page">
   <%= will_paginate @book%>
 </div>
+<script type="text/javascript">
+ var table = $('#bookadmin').DataTable({"bLengthChange": false,"bPaginate": false,sDom: 'lrtip'});
+$('#bookinput').keyup(function(){
+      table.search($(this).val()).draw() ;
+})
+</script>

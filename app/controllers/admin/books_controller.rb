@@ -3,7 +3,7 @@ class Admin::BooksController < AdminController
   add_flash_types :success, :warning, :danger, :info
 
   def index 
-    @book = Book.search(params[:search]).paginate(:page => params[:page], :per_page => 10).order('created_at desc')
+    @book = Book.all.paginate(:page => params[:page], :per_page => 10).order('created_at desc')
   end
 
   def show
