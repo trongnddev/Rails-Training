@@ -9,7 +9,7 @@
 </ul>
 <div class="p-4 bg-light">
     <%= form_tag '/admin/users', method: 'get', class:"input-group" do %>
-        <input class="form-control input-small" name="search" placeholder="Tìm kiếm" type="search">
+        <input id="userinput" class="form-control input-small" name="search" placeholder="Tìm kiếm" type="search">
         <span class="input-group-btn">
             <button class="btn btn-primary" type="submit">
             Tìm kiếm
@@ -17,7 +17,7 @@
         </span>
     <% end %>
 </div>
-<table class="table table-striped">
+<table id="useradmin" class="table table-striped">
   <thead>
     <tr>
       <th scope="col">ID</th>
@@ -42,3 +42,9 @@
 <div class="page">
   <%= will_paginate @users %>
 </div>
+<script type="text/javascript">
+ var table = $('#useradmin').DataTable({"bLengthChange": false,"bPaginate": false,sDom: 'lrtip'});
+$('#userinput').keyup(function(){
+      table.search($(this).val()).draw() ;
+})
+</script>
