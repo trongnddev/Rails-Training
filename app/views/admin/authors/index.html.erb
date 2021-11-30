@@ -9,7 +9,7 @@
 </ul>
 <div class="p-4 bg-light">
     <%= form_tag admin_authors_path, method: 'get', class:"input-group" do %>
-        <input class="form-control input-small" name="search" placeholder="Search" type="search">
+        <input id="authorinput" class="form-control input-small" name="search" placeholder="Search" type="search">
         <span class="input-group-btn">
             <button class="btn btn-primary" type="submit">
             Search
@@ -17,7 +17,7 @@
         </span>
     <% end %>
 </div>
-<table class="table table-striped">
+<table id="authoradmin" class="table table-striped">
   <thead>
     <tr>
       <th scope="col">ID</th>
@@ -44,3 +44,9 @@
 <div class="page">
   <%= will_paginate @author%>
 </div>
+<script type="text/javascript">
+ var table = $('#authoradmin').DataTable({"bLengthChange": false,"bPaginate": false,sDom: 'lrtip'});
+$('#authorinput').keyup(function(){
+      table.search($(this).val()).draw() ;
+})
+</script>
