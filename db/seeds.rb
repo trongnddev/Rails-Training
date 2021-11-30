@@ -1,11 +1,13 @@
 require "csv"
 
+puts 'Deleting data...'
 Book.destroy_all
 Category.destroy_all
 Publisher.destroy_all
 Author.destroy_all
 AuthorBook.destroy_all
 User.destroy_all
+Review.destroy_all
 
 puts 'Scanning data...'
 User.create(email: "admin@email.com", password: "111111", password_confirmation: "111111", role: 'admin')
