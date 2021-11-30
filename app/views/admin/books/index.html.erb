@@ -22,7 +22,7 @@
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Book</th>
-      <th scope="col">Publish an article</th>
+      <th scope="col">Image</th>
       <th scope="col">Published date</th>
       <th scope="col">Borrow fee</th>
       <th scope="col">Quantity</th>
@@ -35,7 +35,7 @@
       <tr>
         <th scope="row"><%= book.id %></th>
         <td><%= book.name %></td>
-        <td><%= book.created_at%></td>
+        <td><%= image_tag book.image, class: "admin-book-img" if book.image.present?%></td>
         <td><%= book.published_date%></td>
         <td><%= book.borrow_fee%></td>
         <td><%= book.quantity%></td>
