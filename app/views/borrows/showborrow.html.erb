@@ -21,6 +21,14 @@
         <td>Borrowed</td>
         <td><%=borrow.borrowed_date%></td>
         <td><%=borrow.borrowed_date + 14%></td>
+         <% if @current_user.role == "staff" %>
+          <td>
+                <%= form_for borrow do |f| %>
+                  <%= f.hidden_field :status, value: "returned"%>
+                  <%= f.submit "returned",class:"btn btn-success", data: { confirm: "Are you sure to confirm returned borrow has id #{borrow.id}  "}%>
+                <%end%>
+            </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

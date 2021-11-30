@@ -1,19 +1,24 @@
 class BorrowsController < ApplicationController
   before_action :set_borrow, only: %i[show edit update destroy]
   before_action :authenticate_user!
+  add_flash_types :success, :warning, :danger, :info
 
   # GET /borrows or /borrows.json
   def index
     if current_user.role == "user"
       @borrows = Borrow.where(user_id: current_user.id).order("id DESC")
     elsif current_user.role  == "staff"
-      @borrows = Borrow.where.not(status: "cancel").order("id DESC")
+      @borrows = Borrow.where(status: "waiting accept").order("id DESC")
+    else 
+      redirect_to root_path
     end
   end
 
   def showborrow
     if current_user.role == "staff"
       @borrows = Borrow.search("accept").order("id DESC")
+    elsif current_user.role == "user"
+      @borrows = Borrow.where(user_id: current_user.id).order("id DESC")
     else
       redirect_to root_path
     end
@@ -21,7 +26,9 @@ class BorrowsController < ApplicationController
 
   def showreturn
     if current_user.role == "staff"
-      @borrows = Borrow.search("returning").order("id DESC")
+      @borrows = Borrow.search("returned").order("id DESC")
+    elsif current_user.role == "user"
+      @borrows = Borrow.where({user_id: current_user.id, status:  "returned"}).order("id DESC")
     else
       redirect_to root_path
     end
@@ -58,28 +65,20 @@ class BorrowsController < ApplicationController
 
   # PATCH/PUT /borrows/1 or /borrows/1.json
   def update
-    update_stock = @borrow.book.quantity_in_stock
-    current_book = Book.find(@borrow.book.id)
     respond_to do |format|
       if @borrow.update(borrow_params)
-        current_book.update_attribute :quantity_in_stock, update_stock  - 1 if @borrow.status.include? "accept"
-        format.html { redirect_to borrows_path}
+        format.html { redirect_to request.referrer, success:"Borrow was updated!"}
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { redirect_to request.referrer, danger: :unprocessable_entity }
       end
     end
   end
 
   # DELETE /borrows/1 or /borrows/1.json
   def destroy
-    if @borrow.status == "waiting accept"
-      @borrow.destroy
-    
-    elsif  @borrow.status == "accept"
-      update_stock = @borrow.book.quantity_in_stock
-      current_book = Book.find(@borrow.book.id)
-      current_book.update_attribute :quantity_in_stock, update_stock  + 1 if @borrow.status.include? "accept"
-      @borrow.destroy
+    @borrow.destroy
+    respond_to do |format|
+      format.html { redirect_to borrows_url, notice: "Book was successfully destroyed." }
     end
       
   end

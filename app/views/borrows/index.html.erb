@@ -24,7 +24,6 @@
         <% end %>
         
         <% if @current_user.role == "staff" %>
-          <%if borrow.status.include? "waiting accept"%>
             <td>
                 <%= form_for borrow do |f| %>
                   <%= f.hidden_field :status, value: "accept"%>
@@ -37,13 +36,8 @@
                   <%= f.submit "cancel",class:"btn btn-danger"%>
                 <%end%>
             </td>
-          
           <%end%> 
-        <% end %>
-        
-       
       </tr>
-     
     <% end %>
   </tbody>
 </table>

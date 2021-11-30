@@ -47,20 +47,30 @@
 </p>
  <%= form_for ([@book, @book.borrows.build]) do |f|%>
     <%= f.hidden_field :status, value: "waiting accept"%>
-    <%= f.submit "Borrow",class:"btn btn-success"%>
+    <%if user_signed_in?%>
+                  <% if current_user.borrows.where( {book_id: @book.id, status: ["waiting accept", "accept"]}).exists?  %>
+                    <%= f.submit "Borrow",class:"btn btn-success", :disabled => true%>
+                  <% else %>
+                      <%= f.submit "Borrow",class:"btn btn-success",  data: { confirm: "Are you sure to borrow #{@book.name} book "}%>
+                  <%end%>
+    <%else%>
+        <%= f.submit "Borrow",class:"btn btn-success"%>
+    <% end %>
 <%end%>
 <h2>Rating :
-<%if @book.rating.present?%> 
-<% @book.rating.times do%>
-  <i class="fa fa-star checked" style="color:yellow"></i>
-<%end%>    
-<%end%>         
+  <%if @book.rating.present?%> 
+    <% @book.rating.times do%>
+      <i class="fa fa-star checked" style="color:yellow"></i>
+    <%end%>    
+  <%end%>         
 </h2>
 <br><%= render @book.reviews%>
+<%if user_signed_in?%>
 <%if Borrow.where(user_id: current_user.id, book_id: @book.id).present?%>
-<%= render "reviews/form"%>
+    <%= render "reviews/form"%>
+<%end%>
 <%end%>
 <% if user_signed_in? %>
-<%= link_to 'Edit', edit_book_path(@book) %> |
+  <%= link_to 'Edit', edit_book_path(@book) %> |
 <%end%>
 <%= link_to 'Back', books_path %>
