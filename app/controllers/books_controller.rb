@@ -10,7 +10,7 @@ class BooksController < ApplicationController
         @books = Book.all
         render :index
       elsif current_user.role == "staff"
-        @books = Book.all
+        @books = Book.all.paginate(:page => params[:page], :per_page => 10)
         render :indexstaff
       else
         redirect_to root_path

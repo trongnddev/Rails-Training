@@ -13,7 +13,7 @@ puts 'Scanning data...'
 User.create(email: "admin@email.com", password: "111111", password_confirmation: "111111", role: 'admin')
 User.create(email: "staff@email.com", password: "111111", password_confirmation: "111111", role: 'staff')
 
-for i in 1..50
+for i in 1..20
     User.create(email: "user_#{i}@email.com", password: "111111", password_confirmation: "111111")
     puts "User #{i} created"
 end
@@ -28,10 +28,10 @@ csv.each do |row|
         downloaded_image =  URI.parse(row[3]).open
         book.image.attach(io: downloaded_image, filename: row[3])
         book.save(validate: false)
-        authors = row[5].split(", ")
+        authors = row[5].split(",")
         authors.each do |name|
+            name = name[1..-1] if name[0] == " "
             author = Author.find_or_create_by(author_name: name)
-            author.save(validate: false)
             AuthorBook.create(author_id: author.id, book_id: book.id)
         end
         puts "Created book #{row[0]}"  
