@@ -5,33 +5,15 @@ class BorrowsController < ApplicationController
 
   # GET /borrows or /borrows.json
   def index
-    if current_user.role == "user"
       @borrows = Borrow.where(user_id: current_user.id).order("id DESC")
-    elsif current_user.role  == "staff"
-      @borrows = Borrow.where(status: "waiting accept").order("id DESC")
-    else 
-      redirect_to root_path
-    end
   end
 
   def showborrow
-    if current_user.role == "staff"
-      @borrows = Borrow.search("accept").order("id DESC")
-    elsif current_user.role == "user"
       @borrows = Borrow.where(user_id: current_user.id).order("id DESC")
-    else
-      redirect_to root_path
-    end
   end
 
   def showreturn
-    if current_user.role == "staff"
-      @borrows = Borrow.search("returned").order("id DESC")
-    elsif current_user.role == "user"
       @borrows = Borrow.where({user_id: current_user.id, status:  "returned"}).order("id DESC")
-    else
-      redirect_to root_path
-    end
   end
 
   # GET /borrows/1 or /borrows/1.json
