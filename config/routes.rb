@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :users
     resources :books
     resources :authors
+    get '/dashboard', to: 'dashboard#home'
   end
   resources :borrows
   resources :publishers

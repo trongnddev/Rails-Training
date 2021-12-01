@@ -1,0 +1,79 @@
+<h1>Dashboard</h1>
+<div class="dashboard row">
+    <div class="col-3 p-0">
+        <div class="p-4 row block" style="background-color: #68B828">
+            <i class="far fa-user icon col-3"></i>
+            <div class="col">
+                <div class="num"><%= @total_users %></div>
+                <span>TOTAL USERS</span>
+            </div>
+            <hr/>
+            <small><%= @new_users %> NEW USERS TODAY</small>
+        </div>
+
+        <div class="p-4 row block" style="background-color: #00B19D">
+            <i class="fas fa-user-tag icon col-3"></i>
+            <div class="col">
+                <div class="num"><%= @total_authors %></div>
+                <span>TOTAL AUTHORS</span>
+            </div>
+            <hr/>
+            <span><%= @new_authors %> NEW AUTHORS TODAY</span>
+        </div>
+    </div>
+    <div class="col-3 p-0">
+        <div class="p-4 row block text-center" style="background-color: #CC3F44">
+            <i class="fas fa-book large-icon col-12"></i>
+            <div class="col">
+                <div class="large-num"><%= @total_books %></div>
+                <span>TOTAL BOOK</span>
+            </div>
+            <hr/>
+            <span><%= @new_books %> NEW BOOKS TODAY</span>
+        </div>
+    </div>
+    <div class="col-3 p-0">
+        <div class="p-4 row block" style="background-color: #7C38BC">
+            <i class="fas fa-upload icon col-3"></i>
+            <div class="col">
+                <div class="num"><%= @total_publishers %></div>
+                <span>TOTAL PUBLISHERS</span>
+            </div>
+            <hr/>
+            <span><%= @new_publishers %> NEW PUBLISHERS TODAY</span>
+        </div>
+
+        <div class="p-4 row block text-center" style="background-color: #55ACEE">
+            <h2>New books</h2>
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <% @books_list.each_with_index do |book, index| %>
+                        <div class="carousel-item <%= "active" if index == 0%>">
+                            <%= image_tag book.image, class: "d-block w-100"%>
+                        </div>
+                    <% end %>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-3 p-0">
+        <div class="p-4 row block" style="background-color: #F7AA47">
+            <i class="fas fa-list icon col-3"></i>
+            <div class="col">
+                <div class="num"><%= @total_categories %></div>
+                <span>TOTAL CATEGORIES</span>
+            </div>
+            <hr/>
+            <span><%= @new_categories %> NEW CATEGORIES TODAY</span>
+        </div>
+    </div>
+</div>
