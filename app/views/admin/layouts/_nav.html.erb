@@ -1,3 +1,7 @@
-<a class="admin-nav" href="/admin/users">Tài khoản</a><br>
-<a class="admin-nav" href="/admin/books">Books</a><br>
-<a class="admin-nav" href="/admin/authors">Authors</a><br>
+<div class="left-nav">
+    <div class="admin-nav <%= active_class("admin/dashboard") %>"><a href="/admin/dashboard"><i class="fas fa-chart-line mx-4"></i>Dashboard</a></div>
+    <div class="admin-nav <%= active_class("admin/user") %>"><a href="/admin/users"><i class="fas fa-users mx-4"></i>Users</a></div>
+    <div class="admin-nav <%= active_class("admin/book") %>"><a href="/admin/books"><i class="fas fa-book mx-4"></i> Books</a></div>
+    <div class="admin-nav <%= active_class("admin/author") %>"><a href="/admin/authors"><i class="fas fa-user-tag mx-4"></i>Authors</a></div>
+    <div class="admin-nav red"><a href="/users/sign_out" data-method="delete"><i class="fas fa-sign-out-alt mx-4"></i>Sign out</a></div>
+</div>

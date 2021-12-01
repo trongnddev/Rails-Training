@@ -38,7 +38,9 @@ class Admin::UsersController < AdminController
 
   def destroy
     @user.destroy
+    flash[:info] = "User was successfully destroyed!"
     render :index
+    
   end
 
   private
