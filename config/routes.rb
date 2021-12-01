@@ -6,6 +6,11 @@ Rails.application.routes.draw do
     resources :books
     resources :authors
     get '/dashboard', to: 'dashboard#home'
+    resources :categories
+    resources :publishers
+    resources :borrows
+    get "/showborrow", to:"borrows#showborrow"
+    get "/showreturn", to:"borrows#showreturn"
   end
   resources :borrows
   resources :publishers

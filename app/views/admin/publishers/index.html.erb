@@ -1,0 +1,50 @@
+<h1>Publishers</h1>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to 'Publishers',admin_publishers_path,class:"nav-link"%>
+  </li>
+  <li class="nav-item">
+     <%= link_to 'New publisher',new_admin_publisher_path,class:"nav-link"%>
+  </li>
+</ul>
+<div class="p-4 bg-light">
+    <%= form_tag admin_publishers_path, method: 'get', class:"input-group" do %>
+        <input id="pubinput" class="form-control input-small" name="search" placeholder="Search" type="search">
+        <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit">
+            Search
+            </button>
+        </span>
+    <% end %>
+</div>
+<table id="pubadmin" class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Publisher</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @publishers.each do |publisher| %>
+      <tr>
+        <th scope="row"><%= publisher.id %></th>
+        <td><%= publisher.publisher_name %></td>
+        <td class="px-5" style="text-align: right">
+          <a href="/admin/publishers/<%=publisher.id%>"><i class="fas fa-info-circle"></i></a>
+          <a href="/admin/publishers/<%=publisher.id%>/edit"><i class="far fa-edit"></i></a>
+          <a href="/admin/publishers/<%=publisher.id%>" data-method="delete"><i class="fas fa-trash-alt"></i></a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="page">
+  <%= will_paginate @publisher%>
+</div>
+<script type="text/javascript">
+ var table = $('#pubadmin').DataTable({"bLengthChange": false,"bPaginate": false,sDom: 'lrtip'});
+$('#pubinput').keyup(function(){
+      table.search($(this).val()).draw() ;
+})
+</script>

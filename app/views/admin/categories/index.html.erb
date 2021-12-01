@@ -1,0 +1,52 @@
+<h1>Categories</h1>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to 'Categories',admin_categories_path,class:"nav-link"%>
+  </li>
+  <li class="nav-item">
+     <%= link_to 'New category',new_admin_category_path,class:"nav-link"%>
+  </li>
+</ul>
+<div class="p-4 bg-light">
+    <%= form_tag admin_categories_path, method: 'get', class:"input-group" do %>
+        <input id="cateinput" class="form-control input-small" name="search" placeholder="Search" type="search">
+        <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit">
+            Search
+            </button>
+        </span>
+    <% end %>
+</div>
+<table id="cateadmin" class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <th scope="row"><%= category.id %></th>
+        <td><%= category.name %></td>
+        <td><%= category.description %></td>
+        <td class="px-5" style="text-align: right">
+          <a href="/admin/categories/<%=category.id%>"><i class="fas fa-info-circle"></i></a>
+          <a href="/admin/categories/<%=category.id%>/edit"><i class="far fa-edit"></i></a>
+          <a href="/admin/categories/<%=category.id%>" data-method="delete"><i class="fas fa-trash-alt"></i></a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="page">
+  <%= will_paginate @category%>
+</div>
+<script type="text/javascript">
+ var table = $('#cateadmin').DataTable({"bLengthChange": false,"bPaginate": false,sDom: 'lrtip'});
+$('#cateinput').keyup(function(){
+      table.search($(this).val()).draw() ;
+})
+</script>
