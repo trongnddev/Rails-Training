@@ -43,9 +43,12 @@
 <%if user_signed_in?%>
 <%= link_to 'New Author', new_author_path %>
 <%end%>
+<div class="page">
+  <%= will_paginate @authors%>
+</div>
 </div>
 <script type="text/javascript">
- var table = $('#author').DataTable({"bLengthChange": false});
+ var table = $('#author').DataTable({"bLengthChange": false, "bPaginate": false});
 
 $('#dropdown1').on('change', function () {
         table.order([(this.value).split(",")]).draw();
