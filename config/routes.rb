@@ -5,6 +5,11 @@ Rails.application.routes.draw do
     resources :users
     resources :books
     resources :authors
+    resources :categories
+    resources :publishers
+    resources :borrows
+    get "/showborrow", to:"borrows#showborrow"
+    get "/showreturn", to:"borrows#showreturn"
   end
   resources :borrows
   resources :publishers

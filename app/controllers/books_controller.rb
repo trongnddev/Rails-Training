@@ -5,20 +5,7 @@ class BooksController < ApplicationController
 
   # GET /books or /books.json
   def index
-    if user_signed_in?
-      if current_user.role == "user" 
-        @books = Book.all
-        render :index
-      elsif current_user.role == "staff"
-        @books = Book.all.paginate(:page => params[:page], :per_page => 10)
-        render :indexstaff
-      else
-        redirect_to root_path
-      end
-    else
       @books = Book.all
-      render :index
-    end
   end
 
   # GET /books/1 or /books/1.json

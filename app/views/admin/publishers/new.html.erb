@@ -1,0 +1,10 @@
+<h1>Create publisher</h1>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to 'Publishers',admin_publishers_path,class:"nav-link"%>
+  </li>
+  <li class="nav-item">
+     <%= link_to 'New publisher',new_admin_publisher_path,class:"nav-link"%>
+  </li>
+</ul>
+<%= render 'form', publisher: @publisher %>
