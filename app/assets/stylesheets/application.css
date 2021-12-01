@@ -26,7 +26,32 @@
  .nav-link{
      color:black
  }
+ 
  .admin-book-img{
      height: 100px;
  }
+ .left-nav {
+     background-color: #252B36;
+ }
+ .admin-nav a{
+     text-decoration: none;
+     font-size: 18px;
+     color: white;
+ }
+ .admin-nav{
+    width: 100%;
+    padding-left: 10px;
+    border-radius: 5px;
+    padding-bottom: 13px;
+ }
+ .admin-nav:hover{
+     background-color: #3b414a;
+ }
+ .left-nav .active{
+    background-color: #596782;
+ }
+ .left-nav .red a{
+    color: rgb(221, 170, 170)
+ }
+
  
