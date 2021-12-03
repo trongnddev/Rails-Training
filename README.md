@@ -28,12 +28,9 @@ nano config/database.yml
 ```
 
 ```console
-rails db:create
+rails db:setup
 ```
-  
-```console
-rails db:migrate
-```
+
 
 ```console
 rails s
