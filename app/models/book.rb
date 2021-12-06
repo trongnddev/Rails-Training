@@ -8,15 +8,16 @@ class Book < ApplicationRecord
   belongs_to :publisher, optional: true
   has_many :reviews, dependent: :destroy
   accepts_nested_attributes_for :author_books
-  validates_format_of :name, with: /\A(?![0-9]+$)[a-zA-Z0-9 ]{2,}\z/
-  before_create { |book| book.name = book.name.capitalize}
+
+  def self.hotbooks 
+    hot_array = Borrow.group(:book_id).count.sort.to_a
+    Book.find(hot_array[0][0])
+  end
+
+  def self.newest
+    Book.all.order("id DESC").limit(3) 
+  end
+
 
   
-  def self.search(search)
-    if search
-      where("books.name LIKE '%#{search.capitalize}%'") 
-    else
-      all
-    end  
-  end
 end

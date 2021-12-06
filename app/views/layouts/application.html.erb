@@ -21,6 +21,7 @@
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
      <%= render 'home/header' %>
      <%= yield %>
+     <%= render 'home/footer'%>
      <div class="container">
      <% flash.each do |key, value| %>
        <div id="flash" class="alert alert-<%= key %>">
