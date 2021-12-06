@@ -1,0 +1,65 @@
+<%= stylesheet_link_tag 'home'%>
+ <section class="dark">
+	<div class="container py-4">
+        <h1 class="h1 text-center" id="pageHeaderTitle">Most Borrowed Book</h1>
+		<article class="postcard dark blue">
+			<a class="postcard__img_link" href="/books/<%= @hot_book.id%>">
+				<img class="postcard__img" src="<%= url_for(@hot_book.image) if@hot_book.image.present?%>" alt="Image Title" />
+			</a>
+			<div class="postcard__text">
+				<h1 class="postcard__title blue"><a href="/books/<%= @hot_book.id%>"><%= @hot_book.name%></a></h1>
+				<div class="postcard__subtitle small">
+					<time datetime="2020-05-25 12:00:00">
+						<i class="fas fa-calendar-alt mr-2"></i> <%= @hot_book.created_at%>
+					</time>
+				</div>
+				<div class="postcard__bar"></div>
+				<div class="postcard__preview-txt"><%= @hot_book.description%></div>
+				<ul class="postcard__tagbox">
+                    <% @hot_book.author_books.each do |authorbook| %>
+					<li class="tag__item play blue">
+						<a href="/authors/<%= authorbook.author.id%>"><i class="fas fa-tag"></i> <%= authorbook.author.author_name%></a>
+					</li>
+                    <%end%>
+					<li class="tag__item play blue">
+						<a href="/publishers/<%= @hot_book.publisher_id%>"><i class="fas fa-tag"></i> <%= Publisher.find(@hot_book.publisher_id).publisher_name if @hot_book.publisher_id%></a>
+					</li>
+                    <li class="tag__item play blue">
+						<a href="/categories/<%= @hot_book.category_id%>"><i class="fas fa-tag"></i> <%= Category.find(@hot_book.category_id).name if @hot_book.category_id%></a>
+					</li>
+				</ul>
+			</div>
+		</article>
+        <h1 class="h1 text-center" id="pageHeaderTitle">Newest Book</h1>
+        <% @newest_books.each do |book|%>
+		<article class="col postcard dark red">
+			<a class="postcard__img_link" href="/books/<%= book.id%>">
+				<img class="postcard__img" src="<%= url_for(book.image) if book.image.present?%>" alt="Image Title" />	
+			</a>
+			<div class="postcard__text">
+				<h1 class="postcard__title red"><a href="/books/<%= book.id%>"><%= book.name%></a></h1>
+				<div class="postcard__subtitle small">
+					<time datetime="2020-05-25 12:00:00">
+						<i class="fas fa-calendar-alt mr-2"></i> <%= book.published_date%>
+					</time>
+				</div>
+				<div class="postcard__bar"></div>
+				<div class="postcard__preview-txt"><%= book.description%></div>
+				<ul class="postcard__tagbox">
+                    <% book.author_books.each do |authorbook|%>
+					<li class="tag__item play red">
+						<a href="/authors/<%= authorbook.author.author_name%>"><i class="fas fa-tag"></i> <%= authorbook.author.author_name%></a>
+					</li>
+                    <%end%>
+					<li class="tag__item play blue">
+						<a href="/publishers/<%= book.publisher_id%>"><i class="fas fa-tag"></i> <%= Publisher.find(book.publisher_id).publisher_name if book.publisher_id%></a>
+					</li>
+                    <li class="tag__item play blue">
+						<a href="/categories/<%= book.category_id%>"><i class="fas fa-tag"></i> <%= Category.find(book.category_id).name if book.category_id%></a>
+					</li>
+				</ul>
+			</div>
+		</article>
+        <%end%>
+	</div>
+</section>
