@@ -2,6 +2,7 @@
  <section class="dark">
 	<div class="container py-4">
         <h1 class="h1 text-center" id="pageHeaderTitle">Most Borrowed Book</h1>
+		<% if @hot_book%>
 		<article class="postcard dark blue">
 			<a class="postcard__img_link" href="/books/<%= @hot_book.id%>">
 				<img class="postcard__img" src="<%= url_for(@hot_book.image) if@hot_book.image.present?%>" alt="Image Title" />
@@ -30,6 +31,7 @@
 				</ul>
 			</div>
 		</article>
+		<%end%>
         <h1 class="h1 text-center" id="pageHeaderTitle">Newest Book</h1>
         <% @newest_books.each do |book|%>
 		<article class="col postcard dark red">
@@ -37,7 +39,7 @@
 				<img class="postcard__img" src="<%= url_for(book.image) if book.image.present?%>" alt="Image Title" />	
 			</a>
 			<div class="postcard__text">
-				<h1 class="postcard__title red"><a href="/books/<%= book.id%>"><%= book.name%></a></h1>
+				<h1 class="postcard__title red"><a href="/books/<%= book.id%>"> <%= book.name%></a></h1>
 				<div class="postcard__subtitle small">
 					<time datetime="2020-05-25 12:00:00">
 						<i class="fas fa-calendar-alt mr-2"></i> <%= book.published_date%>

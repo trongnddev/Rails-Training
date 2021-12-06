@@ -11,7 +11,7 @@ class Book < ApplicationRecord
 
   def self.hotbooks 
     hot_array = Borrow.group(:book_id).count.sort.to_a
-    Book.find(hot_array[0][0])
+    Book.find(hot_array[0][0]) if hot_array.present?
   end
 
   def self.newest
