@@ -53,5 +53,27 @@
  .left-nav .red a{
     color: rgb(221, 170, 170)
  }
+ .dashboard{
+     color: white;
+ }
+ .dashboard .icon{
+     font-size: 32px;
+     padding: 20px;
+ }
+ .dashboard .large-icon{
+    font-size: 96px;
+    padding: 20px;
+}
+ .dashboard .num{
+     font-size: 28px;
+
+ }
+ .dashboard .large-num{
+    font-size: 52px;
+
+}
+.block {
+    margin: 0 10px 10px 0px !important;
+}
 
  
