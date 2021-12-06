@@ -9,18 +9,6 @@ class Book < ApplicationRecord
   has_many :reviews, dependent: :destroy
   accepts_nested_attributes_for :author_books
 
-<<<<<<< HEAD
-  
-  def self.hotbooks 
-    hot_array = Borrow.group(:book_id).count.sort.to_a
-    Book.find(hot_array[0][0])
-  end
-
-  def self.newest
-    Book.all.order("id DESC").limit(3) 
-  end
-
-=======
   def self.hotbooks 
     hot_array = Borrow.group(:book_id).count.sort.to_a
     Book.find(hot_array[0][0])
@@ -32,5 +20,4 @@ class Book < ApplicationRecord
 
 
   
->>>>>>> 1f172fdd58cb2583dbca8ccdfa7f757fab6f6e47
 end
