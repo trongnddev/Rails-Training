@@ -9,6 +9,7 @@
              <div class="list row"></div>
                 <div class="pagination"></div>
         </div>
+        <%@books.each do |book|%>
         <div style="display: none">
         <div id="mygriditem">
 		<article class="postcard dark blue">
@@ -23,7 +24,7 @@
 						<i class="date fas fa-calendar-alt mr-2"></i>
 					</time>
                     <br><i class="fee fas fa-comments-dollar"></i>
-                    <%# <span class="star"><i class="star fa fa-star checked" style="color:yellow"></i></span> %>
+                    <br><i class="star fa fa-star checked" style="color:yellow"> :</i>
 				</div>
 				<div class="postcard__bar"></div>
 				<div class="description postcard__preview-txt"></div>
@@ -38,12 +39,28 @@
 						<a class="publink" href="#"><i class="publisher fas fa-tag"></i></a>
 					</li>
 				</ul>
+          <%= form_for ([book, book.borrows.build]) do |f|%>
+           <%= f.hidden_field :status, value: "waiting accept"%>
+           <%if user_signed_in?%>
+              <% unless current_user.borrows.where( {book_id: book.id, status: ["waiting accept", "accept"]}).exists? || book.quantity_in_stock.nil? %>
+              <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              <% end %>
+              <%end%>
+            <%else%>
+            <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              <% end %>
+            <%end%>
+          <%end%>    
 			</div>
 		</article>
         </div>
         </div>
+         <%end%>
     </div>
 </section>
+
 <script>
 const data = [
    <% @books.each do |book|%>
@@ -61,7 +78,7 @@ const data = [
       publisher: "<%= Publisher.find(book.publisher_id) if book.publisher_id%>",
       catelink: "/categories/<%=book.category_id%>",
       publink: "/publishers/<%=book.publisher_id%>",
-    //   star: "<%= book.rating%>",
+      star: "<%= book.rating%>",
       fee: "<%= book.borrow_fee%>"
     
   }
@@ -78,7 +95,7 @@ const data = [
       publisher: "<%= Publisher.find(book.publisher_id).publisher_name if book.publisher_id%>",
       catelink: "/categories/<%=book.category_id%>",
       publink: "/publishers/<%=book.publisher_id%>",
-    //   star: "<%= book.rating%>",
+      star: "<%= book.rating%>",
       fee: "<%= book.borrow_fee%>"
 
   },
@@ -86,7 +103,6 @@ const data = [
   <%end%>
   <%end%>
 ]
-
 new List('mygrid', {
             valueNames: ['name',
             'date',
@@ -99,8 +115,8 @@ new List('mygrid', {
             'publisher',
             { name: 'catelink', attr: 'href'},
             { name: 'publink', attr: 'href'},
-            'fee',   
-            { name: 'borrow', attr: 'action'}],
+            'fee',
+            'star'],
             item: 'mygriditem',
             page: 6,
             pagination: true

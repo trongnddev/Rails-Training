@@ -33,7 +33,7 @@ class BorrowsController < ApplicationController
   def create
     @borrow = Borrow.new(borrow_params)
     @borrow.user_id = current_user.id
-    @borrow.book_id = params[:book_id]
+     @borrow.book_id = params[:book_id]
     @borrow.borrowed_date = Time.now
     @borrow.appointment_returned_date = 14
     respond_to do |format|
