@@ -8,6 +8,7 @@ class Book < ApplicationRecord
   belongs_to :publisher, optional: true
   has_many :reviews, dependent: :destroy
   accepts_nested_attributes_for :author_books
+  validates_format_of :name, with: /\A(?!^\d+$)^.+$\z/
 
   def self.hotbooks 
     hot_array = Borrow.group(:book_id).count.sort.to_a
@@ -18,6 +19,21 @@ class Book < ApplicationRecord
     Book.all.order("id DESC").limit(3) 
   end
 
+  def self.sort_search_filter(param)
+    if param == "Select"
+      all 
+    elsif param == "Newest books"
+      all.order("published_date desc")
+    elsif param == "Oldest books"
+      all.order("published_date asc")
+    elsif param == "Fee low to high"
+      all.order("borrow_fee asc")
+    elsif param == "Fee high to low"
+      all.order("borrow_fee desc")
+    else
+      all
+    end 
+  end
 
   
 end

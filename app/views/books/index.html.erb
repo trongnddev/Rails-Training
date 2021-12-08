@@ -1,124 +1,62 @@
-<section class="dark">
+<%= stylesheet_link_tag 'home'%>
+ <section class="dark">
 	<div class="container py-4">
-        <div id="mygrid">
-        <div class="col">
-                    Sort by: 
-                    <button class="btn btn-primary sort" data-sort="name">name</button>
-                    <button class="btn btn-primary sort" data-sort="date">date</button>
-        </div>
-             <div class="list row"></div>
-                <div class="pagination"></div>
-        </div>
-        <%@books.each do |book|%>
-        <div style="display: none">
-        <div id="mygriditem">
+    <div class="col">
+		<%= form_tag(books_path, :method => "get", id: "form",local: true) do %>
+		<%= select_tag "sort", options_for_select([
+			'Select',
+			'Newest books',
+			'Oldest books',
+			'Fee low to high',
+			'Fee high to low'	
+		], :selected => params[:sort]), class:"custom-select",onchange: "this.form.submit();"%>
+		<%end%>
+	</div>
+		<%@books.each do |book|%>
 		<article class="postcard dark blue">
-			<a class="link postcard__img_link" href="#">
-				<img class="image postcard__img" src="" alt="Image Title" />
+			<a class="postcard__img_link" href="/books/<%=book.id%>">
+				<img class="postcard__img" src="<%= url_for(book.image) if book.image.present?%>" alt="Image Title" />
 			</a>
 			<div class="postcard__text">
-				<h1 class="name postcard__title blue"></h1>
+				<h1 class="postcard__title blue"><a href="/books/<%=book.id%>"><%= book.name%></a></h1>
 				<div class="postcard__subtitle small">
-
 					<time datetime="2020-05-25 12:00:00">
-						<i class="date fas fa-calendar-alt mr-2"></i>
+						<i class="fas fa-calendar-alt mr-2"></i> <%=book.published_date%>
 					</time>
-                    <br><i class="fee fas fa-comments-dollar"></i>
-                    <br><i class="star fa fa-star checked" style="color:yellow"> :</i>
+					<br><i class="fas fa-comments-dollar"> <%= book.borrow_fee%></i>
+                    <br><i class="star fa fa-star checked" style="color:yellow"> :<%= book.rating%> </i>
 				</div>
 				<div class="postcard__bar"></div>
-				<div class="description postcard__preview-txt"></div>
+				<div class="postcard__preview-txt"><%= book.description%></div>
 				<ul class="postcard__tagbox">
+          <% book.author_books.each do |authorbook| %>
 					<li class="tag__item play blue">
-						<a class="authorlink" href="#"><i class="fas fa-tag"> <span class="author"></span></i></a>
+						<a href="/authors/<%= authorbook.author.id%>"><i class="fas fa-tag"></i> <%= authorbook.author.author_name%></a>
 					</li>
+          <%end%>
 					<li class="tag__item play blue">
-						<a class="catelink" href="#"><i class="category fas fa-tag"></i></a>
+						<a href="/publishers/<%= book.publisher_id%>"><i class="fas fa-tag"></i> <%= Publisher.find(book.publisher_id).publisher_name if book.publisher_id%></a>
 					</li>
                     <li class="tag__item play blue">
-						<a class="publink" href="#"><i class="publisher fas fa-tag"></i></a>
+						<a href="/categories/<%= book.category_id%>"><i class="fas fa-tag"></i> <%= Category.find(book.category_id).name if book.category_id%></a>
 					</li>
 				</ul>
-          <%= form_for ([book, book.borrows.build]) do |f|%>
-           <%= f.hidden_field :status, value: "waiting accept"%>
-           <%if user_signed_in?%>
-              <% unless current_user.borrows.where( {book_id: book.id, status: ["waiting accept", "accept"]}).exists? || book.quantity_in_stock.nil? %>
-              <%= button_tag type: 'submit', class: "btn btn-primary" do %>
-              <i class="fa fa-plus" aria-hidden="true"></i>
-              <% end %>
-              <%end%>
+        <%= form_for ([book, book.borrows.build]) do |f|%>
+          <%= f.hidden_field :status, value: "waiting accept"%>
+            <%if user_signed_in?%>
+                <% unless current_user.borrows.where( {book_id: book.id, status: ["waiting accept", "accept"]}).exists? || book.quantity_in_stock.nil? %>
+                    <%= button_tag type: 'submit', class: "btn btn-primary", data: {confirm: "Do you want borrow #{book.name}"} do %>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    <% end %>
+                <%end%>
             <%else%>
-            <%= button_tag type: 'submit', class: "btn btn-primary" do %>
-              <i class="fa fa-plus" aria-hidden="true"></i>
-              <% end %>
+              <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                <% end %>
             <%end%>
-          <%end%>    
+        <%end%>    
 			</div>
 		</article>
-        </div>
-        </div>
-         <%end%>
+    <%end%>
     </div>
 </section>
-
-<script>
-const data = [
-   <% @books.each do |book|%>
-   <%book.author_books.each do |authors|%>
-   <%if book == @books[-1]%>
-    {
-      name: " <%= book.name%> " ,
-      date : "<%= book.published_date%>",
-      image: "<%= url_for(book.image)%>",
-      link: "books/<%= book.id%>",
-      description: "<%= book.description%>",
-      authorlink: "/authors/<%=authors.author.id%>",
-      author: "<%= authors.author.author_name%>",
-      category: "<%= Category.find(book.category_id) if book.category_id%>",
-      publisher: "<%= Publisher.find(book.publisher_id) if book.publisher_id%>",
-      catelink: "/categories/<%=book.category_id%>",
-      publink: "/publishers/<%=book.publisher_id%>",
-      star: "<%= book.rating%>",
-      fee: "<%= book.borrow_fee%>"
-    
-  }
-   <%else%>
-  {
-      name: " <%= book.name%> " ,
-      date : "<%= book.published_date%>",
-      image: "<%= url_for(book.image)%>",
-      link: "books/<%= book.id%>",
-      description: "<%= book.description%>",
-      authorlink: "/authors/<%=authors.author.id%>",
-      author: "<%= authors.author.author_name%>",
-      category: "<%= Category.find(book.category_id).name if book.category_id%>",
-      publisher: "<%= Publisher.find(book.publisher_id).publisher_name if book.publisher_id%>",
-      catelink: "/categories/<%=book.category_id%>",
-      publink: "/publishers/<%=book.publisher_id%>",
-      star: "<%= book.rating%>",
-      fee: "<%= book.borrow_fee%>"
-
-  },
-  <%end%>
-  <%end%>
-  <%end%>
-]
-new List('mygrid', {
-            valueNames: ['name',
-            'date',
-            { name: 'image', attr: 'src' },
-            { name: 'link', attr: 'href' },
-            'description',
-            { name: 'authorlink', attr: 'href'},
-            'author',
-            'category',
-            'publisher',
-            { name: 'catelink', attr: 'href'},
-            { name: 'publink', attr: 'href'},
-            'fee',
-            'star'],
-            item: 'mygriditem',
-            page: 6,
-            pagination: true
-        }, data);
-</script>

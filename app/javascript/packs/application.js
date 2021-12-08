@@ -16,3 +16,5 @@ require("@nathanvda/cocoon")
 require('datatables.net-bs4')
 import $ from 'jquery';
 global.$ = jQuery;
+import Rails from '@rails/ujs';
+Rails.start();
