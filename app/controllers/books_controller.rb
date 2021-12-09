@@ -5,7 +5,8 @@ class BooksController < ApplicationController
 
   # GET /books or /books.json
   def index
-      @books = Book.all
+    param = params[:sort]
+    @books = Book.sort_search_filter(param)
   end
 
   # GET /books/1 or /books/1.json
@@ -23,14 +24,14 @@ class BooksController < ApplicationController
   def create
     @book = Book.new(book_params)
     @book.created_at = Time.now
+    respond_to do |format|
       if @book.save
-        redirect_to request.referrer
-        flash[:success] = "Book was successfully created! #{view_context.link_to("Do you want check the #{@book.name} book", "#{@book.id}")}"
+        format.html { redirect_to request.referrer,
+        success: "Book was successfully created! #{view_context.link_to("Do you want check the #{@book.name} book", "#{@book.id}")}"}
       else
-        respond_to do |format|
-          format.html{ redirect_to request.referrer, danger: "Something went wrong!"}
-        end
+        format.html { redirect_to request.referrer, status: :unprocessable_entity }
       end
+    end
   end
 
   # PATCH/PUT /books/1 or /books/1.json

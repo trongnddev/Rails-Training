@@ -1,56 +1,62 @@
-<%= stylesheet_link_tag 'book'%>
-        <div id="mygrid" class="card">
-            <div class="row">
-             
-                    Sort by: 
-                    <button class="btn btn-primary sort" data-sort="name">name</button>
-                    <button class="btn btn-primary sort" data-sort="city">city</button>
-                    <button class="btn btn-primary sort" data-sort="ext">extension</button>
-                    <button class="btn btn-primary sort" data-sort="date">start date</button>
-            </div>
-            <div class="list row"></div>
-                <div class="pagination"></div>
-
-        </div>
-        <div style="display: none">
-            <div id="mygriditem" class="col-md-4">
-                <div class="card ">
-                    <img class="image card-img-top" src="" height="350">
-                    <div class="card-body">
-                        <h5 class="name"></h5>
-                        <small class="city text-muted"></strong>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between">
-                        <div class="ext"></div>
-                        <div class="date"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-<script>
-const data = [
-   <% Book.all.each do |book|%>
-   <%if book == @books[-1]%>
-    {
-      name: " <%= book.name%> " ,
-      date : "<%= book.published_date%>",
-      image: "<%= url_for(book.image)%>"
-  }
-   <%else%>
-  {
-      name: " <%= book.name%> " ,
-      date : "<%= book.published_date%>",
-      image: "<%= url_for(book.image)%>"
-  },
-  <%end%>
-  <%end%>
-]
-
-new List('mygrid', {
-            valueNames: ['name','date',{ attr: 'src', name: 'image' }],
-            item: 'mygriditem',
-            page: 5,
-            pagination: true
-        }, data);
-</script>
+<%= stylesheet_link_tag 'home'%>
+ <section class="dark">
+	<div class="container py-4">
+    <div class="col">
+		<%= form_tag(books_path, :method => "get", id: "form",local: true) do %>
+		<%= select_tag "sort", options_for_select([
+			'Select',
+			'Newest books',
+			'Oldest books',
+			'Fee low to high',
+			'Fee high to low'	
+		], :selected => params[:sort]), class:"custom-select",onchange: "this.form.submit();"%>
+		<%end%>
+	</div>
+		<%@books.each do |book|%>
+		<article class="postcard dark blue">
+			<a class="postcard__img_link" href="/books/<%=book.id%>">
+				<img class="postcard__img" src="<%= url_for(book.image) if book.image.present?%>" alt="Image Title" />
+			</a>
+			<div class="postcard__text">
+				<h1 class="postcard__title blue"><a href="/books/<%=book.id%>"><%= book.name%></a></h1>
+				<div class="postcard__subtitle small">
+					<time datetime="2020-05-25 12:00:00">
+						<i class="fas fa-calendar-alt mr-2"></i> <%=book.published_date%>
+					</time>
+					<br><i class="fas fa-comments-dollar"> <%= book.borrow_fee%></i>
+                    <br><i class="star fa fa-star checked" style="color:yellow"> :<%= book.rating%> </i>
+				</div>
+				<div class="postcard__bar"></div>
+				<div class="postcard__preview-txt"><%= book.description%></div>
+				<ul class="postcard__tagbox">
+          <% book.author_books.each do |authorbook| %>
+					<li class="tag__item play blue">
+						<a href="/authors/<%= authorbook.author.id%>"><i class="fas fa-tag"></i> <%= authorbook.author.author_name%></a>
+					</li>
+          <%end%>
+					<li class="tag__item play blue">
+						<a href="/publishers/<%= book.publisher_id%>"><i class="fas fa-tag"></i> <%= Publisher.find(book.publisher_id).publisher_name if book.publisher_id%></a>
+					</li>
+                    <li class="tag__item play blue">
+						<a href="/categories/<%= book.category_id%>"><i class="fas fa-tag"></i> <%= Category.find(book.category_id).name if book.category_id%></a>
+					</li>
+				</ul>
+        <%= form_for ([book, book.borrows.build]) do |f|%>
+          <%= f.hidden_field :status, value: "waiting accept"%>
+            <%if user_signed_in?%>
+                <% unless current_user.borrows.where( {book_id: book.id, status: ["waiting accept", "accept"]}).exists? || book.quantity_in_stock.nil? %>
+                    <%= button_tag type: 'submit', class: "btn btn-primary", data: {confirm: "Do you want borrow #{book.name}"} do %>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    <% end %>
+                <%end%>
+            <%else%>
+              <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                <% end %>
+            <%end%>
+        <%end%>    
+			</div>
+		</article>
+    <%end%>
+    </div>
+</section>

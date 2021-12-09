@@ -1,7 +1,7 @@
 <%= stylesheet_link_tag 'home'%>
  <section class="dark">
 	<div class="container py-4">
-        <h1 class="h1 text-center" id="pageHeaderTitle">Most Borrowed Book</h1>
+        <h1 class="h1 text-center" id="pageHeaderTitle" style="color:#00008B">Most Borrowed Book</h1>
 		<% if @hot_book%>
 		<article class="postcard dark blue">
 			<a class="postcard__img_link" href="/books/<%= @hot_book.id%>">
@@ -32,7 +32,7 @@
 			</div>
 		</article>
 		<%end%>
-        <h1 class="h1 text-center" id="pageHeaderTitle">Newest Book</h1>
+        <h1 class="h1 text-center" id="pageHeaderTitle" style="color:#00008B">Newest Book</h1>
         <% @newest_books.each do |book|%>
 		<article class="col postcard dark red">
 			<a class="postcard__img_link" href="/books/<%= book.id%>">

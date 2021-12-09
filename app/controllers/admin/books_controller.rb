@@ -24,7 +24,7 @@ class Admin::BooksController < AdminController
       flash[:success] = "Book was successfully created! #{view_context.link_to("Do you want check the #{@book.name} book", "#{@book.id}")}"
     else
       respond_to do |format|
-        format.html{ redirect_to new_admin_book_path, danger: "Something went wrong!"}
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
@@ -34,7 +34,7 @@ class Admin::BooksController < AdminController
       if @book.update(book_params)
         format.html {redirect_to admin_books_path, success:"Book was successfully updated!"}
       else
-        format.html { redirect_to request.referrer, danger:"Something went wrong!"}
+        format.html { render :edit, status: :unprocessable_entity }
       end
     end
   end
