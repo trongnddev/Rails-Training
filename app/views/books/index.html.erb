@@ -1,16 +1,27 @@
 <%= stylesheet_link_tag 'home'%>
  <section class="dark">
 	<div class="container py-4">
-    <div class="col">
-		<%= form_tag(books_path, :method => "get", id: "form",local: true) do %>
+    <div class="col" style="padding:20px">
+		<h3 style="color:black">Sort by :</h3>
+		<div style="width:500px">
+		<%= form_tag(booksort_path, :method => "get") do %>
 		<%= select_tag "sort", options_for_select([
 			'Select',
 			'Newest books',
 			'Oldest books',
 			'Fee low to high',
 			'Fee high to low'	
-		], :selected => params[:sort]), class:"custom-select",onchange: "this.form.submit();"%>
+		], :selected => params[:sort]),class:"custom-select",onchange: "this.form.submit();"%>
 		<%end%>
+		</div>
+		<h3 style="color:black">Filter by :</h3>
+		<%= form_tag(bookfilter_path, :method => "get") do%>
+			<%= collection_select params[:name],:author_id, Author.all, :id, :author_name, prompt: 'Select author', :selected => params[:author_id]%>
+			<%= collection_select params[:name],:category_id, Category.all, :id, :name, prompt: 'Select category', :selected => params[:category_id]%>
+			<%= collection_select params[:name],:publisher_id, Publisher.all, :id, :publisher_name, prompt: 'Select publisher', :selected =>  params[:publisher_id]%>
+			<%= submit_tag "See result", class:"btn btn-primary"%>
+		<%end%>	
+			<%= button_to 'Clear filter', books_path,class:"btn btn-success",method: "get"%>
 	</div>
 		<%@books.each do |book|%>
 		<article class="postcard dark blue">
@@ -58,5 +69,8 @@
 			</div>
 		</article>
     <%end%>
+	<%= will_paginate @books%>
     </div>
 </section>
+
+

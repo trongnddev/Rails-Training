@@ -1,12 +1,23 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[show edit update destroy]
-  before_action :authenticate_user!, except: %i[show index]
+  before_action :authenticate_user!, except: %i[show index indexsort indexfilter] 
   add_flash_types :success, :warning, :danger, :info
 
   # GET /books or /books.json
   def index
+    @books = Book.all.paginate(:page => params[:page], :per_page => 6).order("created_at DESC")
+  end
+
+  def indexsort 
     param = params[:sort]
-    @books = Book.sort_search_filter(param)
+    @books = Book.sort(param).paginate(:page => params[:page], :per_page => 6)
+    render :index
+  end
+
+  def indexfilter
+    query = [params[:author_id],params[:category_id],params[:publisher_id]]
+    @books = Book.filter(query).paginate(:page => params[:page], :per_page => 6)
+    render :index
   end
 
   # GET /books/1 or /books/1.json
