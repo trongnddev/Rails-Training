@@ -7,7 +7,7 @@
 
 * Clone and Configuration
 ```console
-git clone git@github.com:phamdat8/Rails-Training.git
+git clone git@github.com:trongnddev/Rails-Training.git
 ```
 
 ```console

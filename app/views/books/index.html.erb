@@ -1,74 +1,56 @@
-<div class="container">
+<%= stylesheet_link_tag 'book'%>
+        <div id="mygrid" class="card">
+            <div class="row">
+             
+                    Sort by: 
+                    <button class="btn btn-primary sort" data-sort="name">name</button>
+                    <button class="btn btn-primary sort" data-sort="city">city</button>
+                    <button class="btn btn-primary sort" data-sort="ext">extension</button>
+                    <button class="btn btn-primary sort" data-sort="date">start date</button>
+            </div>
+            <div class="list row"></div>
+                <div class="pagination"></div>
 
-<h1>Books</h1>
-<select id="dropdown1">
-  <option value="0,asc">Book : A-Z</option>
-  <option value="0,desc">Book : Z-A</option>
-  <option value="6,asc">Borrow fee : Low To High</option>
-  <option value="6,desc">Borrow fee : High To Low</option>
-  <option value="3,desc">Newest</option>
-  <option value="3,asc">Oldest</option>
-</select>
-<table id="example" class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Author</th>
-      <th>Publish an article</th>
-      <th>Published date</th>
-      <th>Publisher</th>
-      <th>Borrow fee</th>
-      <th>Quantity</th>
-      <th>Quantity in stock</th>
-	    <th>Show</th>
-      <th>Borrow</th>
-    </tr>
-  </thead>
+        </div>
+        <div style="display: none">
+            <div id="mygriditem" class="col-md-4">
+                <div class="card ">
+                    <img class="image card-img-top" src="" height="350">
+                    <div class="card-body">
+                        <h5 class="name"></h5>
+                        <small class="city text-muted"></strong>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <div class="ext"></div>
+                        <div class="date"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+<script>
+const data = [
+   <% Book.all.each do |book|%>
+   <%if book == @books[-1]%>
+    {
+      name: " <%= book.name%> " ,
+      date : "<%= book.published_date%>",
+      image: "<%= url_for(book.image)%>"
+  }
+   <%else%>
+  {
+      name: " <%= book.name%> " ,
+      date : "<%= book.published_date%>",
+      image: "<%= url_for(book.image)%>"
+  },
+  <%end%>
+  <%end%>
+]
 
-  <tbody>
-    <% @books.each do |book| %>
-      <tr>
-        <td><%= book.name %></td>
-        <td><%= book.description %></td>
-        <td>
-          <% book.author_books.each do |author_book|%>
-          <li>
-          <%= author_book.author.author_name%>
-          </li>
-          <%end%>
-        </td>
-        <td><%= book.created_at%></td>
-        <td><%= book.published_date %></td>
-        <td><%= Publisher.find(book.publisher_id).publisher_name if book.publisher_id %></td>
-        <td><%= book.borrow_fee %></td>
-        <td><%= book.quantity %></td>
-        <td><%= book.quantity_in_stock %></td>
-        <td><%= link_to 'Show', book %></td>
-          <td>
-            <%= form_for ([book, book.borrows.build]) do |f|%>
-              <%= f.hidden_field :status, value: "waiting accept"%>
-              <%if user_signed_in?%>
-                  <% if current_user.borrows.where( {book_id: book.id, status: ["waiting accept", "accept"]}).exists? || book.quantity_in_stock.nil? %>
-                    <%= f.submit "Borrow",class:"btn btn-success", :disabled => true%>
-                  <% else %>
-                      <%= f.submit "Borrow",class:"btn btn-success",  data: { confirm: "Are you sure to borrow #{book.name} book "}%>
-                  <%end%>
-              <%else%>
-                  <%= f.submit "Borrow",class:"btn btn-success"%>
-              <% end %>
-            <%end%>
-          </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-</div>
-<script type="text/javascript">
- var table = $('#example').DataTable({"bLengthChange": false});
-
-$('#dropdown1').on('change', function () {
-        table.order([(this.value).split(",")]).draw();
-});
-
+new List('mygrid', {
+            valueNames: ['name','date',{ attr: 'src', name: 'image' }],
+            item: 'mygriditem',
+            page: 5,
+            pagination: true
+        }, data);
 </script>

@@ -14,6 +14,5 @@ ActiveStorage.start()
 
 require("@nathanvda/cocoon")
 require('datatables.net-bs4')
-
 import $ from 'jquery';
 global.$ = jQuery;

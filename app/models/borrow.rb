@@ -1,8 +1,10 @@
 class Borrow < ApplicationRecord
     belongs_to :user
     belongs_to :book
-    after_update :update_stock
+    after_update :update_stock, :create_notification
     before_destroy :destroy_update
+    
+    
     def self.search(search)
         if search
             where(status: "#{search}")
@@ -10,6 +12,30 @@ class Borrow < ApplicationRecord
             all
         end
     end
+    def send_notification
+        NotificationBroadcastJob.perform_now(self)
+      end
+
+    def create_notification
+        @notification = Notification.new()
+        @notification.user_id = user_id
+        book = Book.find(book_id)
+        
+        if status.include? "accept"
+            @notification.message = "You was be alowed to borrow a book #{book.name}, at #{Time.now.to_formatted_s(:db)}"
+        elsif status.include? "cancel"
+            @notification.message = "Request to borrow book #{book.name} denied at #{Time.now.to_formatted_s(:db)}"
+        elsif status.include? "returned"
+            @notification.message = "you was returned a book #{book.name} at #{Time.now.to_formatted_s(:db)}"
+        end
+
+        if @notification.message?
+            @notification.save
+        end
+            
+
+    end
+        
 
 
     def update_stock
