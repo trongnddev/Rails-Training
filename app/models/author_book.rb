@@ -8,13 +8,13 @@ class AuthorBook < ApplicationRecord
 
   def book_attributes=(book_attributes)
     book_attributes.values.each do |book_attribute|
-      self.book = Book.find_or_create_by(name: book_attribute)
+      self.book = Book.find_or_create_by(name: book_attribute) 
     end
   end
 
   def author_attributes=(author_attributes)
     author_attributes.values.each do |author_attribute|
-      self.author = Author.find_or_create_by(author_name: author_attribute)
+      self.author = Author.find_or_create_by(author_name: author_attribute) 
     end
   end
 

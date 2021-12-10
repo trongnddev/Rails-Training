@@ -28,4 +28,6 @@ Rails.application.routes.draw do
   get "/about", to: "home#about"
   get "/showborrow", to:"borrows#showborrow"
   get "/showreturn", to:"borrows#showreturn"
+  get "/booksort", to:"books#indexsort"
+  get "/bookfilter", to:"books#indexfilter"
 end

@@ -1,11 +1,23 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[show edit update destroy]
-  before_action :authenticate_user!, except: %i[show index]
+  before_action :authenticate_user!, except: %i[show index indexsort indexfilter] 
   add_flash_types :success, :warning, :danger, :info
 
   # GET /books or /books.json
   def index
-      @books = Book.all
+    @books = Book.all.paginate(:page => params[:page], :per_page => 6).order("created_at DESC")
+  end
+
+  def indexsort 
+    param = params[:sort]
+    @books = Book.sort(param).paginate(:page => params[:page], :per_page => 6)
+    render :index
+  end
+
+  def indexfilter
+    query = [params[:author_id],params[:category_id],params[:publisher_id]]
+    @books = Book.filter(query).paginate(:page => params[:page], :per_page => 6)
+    render :index
   end
 
   # GET /books/1 or /books/1.json
@@ -23,14 +35,14 @@ class BooksController < ApplicationController
   def create
     @book = Book.new(book_params)
     @book.created_at = Time.now
+    respond_to do |format|
       if @book.save
-        redirect_to request.referrer
-        flash[:success] = "Book was successfully created! #{view_context.link_to("Do you want check the #{@book.name} book", "#{@book.id}")}"
+        format.html { redirect_to request.referrer,
+        success: "Book was successfully created! #{view_context.link_to("Do you want check the #{@book.name} book", "#{@book.id}")}"}
       else
-        respond_to do |format|
-          format.html{ redirect_to request.referrer, danger: "Something went wrong!"}
-        end
+        format.html { redirect_to request.referrer, status: :unprocessable_entity }
       end
+    end
   end
 
   # PATCH/PUT /books/1 or /books/1.json
