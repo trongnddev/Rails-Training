@@ -1,7 +1,7 @@
 <%= stylesheet_link_tag 'header'%>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div class="container">
-    <a class="navbar-brand" href="#">Start Bootstrap</a>
+    <%=link_to 'Library',root_path,class:"navbar-brand"%>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -13,20 +13,37 @@
       <% end %>
       <% end %>
       <ul class="navbar-nav ms-auto">
-    </div>
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home</a>
+        <li class="nav-item">
+          <%=link_to 'Books',books_path, class:"nav-link"%>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
+          <%=link_to 'Authors',authors_path, class:"nav-link"%>
+        </li>
+         <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Category
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+            <%Category.all.each do |category|%>
+            <%= link_to "#{category.name}", "/categories/#{category.id}",class:"dropdown-item", style:"color:blue"%>
+            <%end%>
+          </ul>
+        </li>
+  
+        <%if user_signed_in?%>
+        <li class="nav-item">
+          <%=link_to 'Log out',destroy_user_session_path,method: :delete,class:"nav-link"%>
+        </li>
+        <%else%>
+        <li class="nav-item">
+          <%= link_to 'Sign in',new_user_session_path,class:"nav-link"%>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Services</a>
+        <%= link_to 'Sign up',new_user_registration_path,class:"nav-link"%>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
+        <%end%>
       </ul>
+      </div>
     </div>
   </div>
 </nav>
@@ -40,22 +57,22 @@
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
-      <div class="carousel-item active" style="background-image: url('https://source.unsplash.com/RCAhiGJsUUE/1920x1080')">
-        <div class="carousel-caption">
-          <h5>First slide label</h5>
-          <p>Some representative placeholder content for the first slide.</p>
+      <div class="carousel-item active" style="background-image: url('https://wallpaperaccess.com/full/124383.jpg')">
+        <div class="carousel-caption" style="color:cyan">
+          <h1>Digital Library</h1>
+          <h3>Let's use our service and we will bring everything to you!</h3>
         </div>
       </div>
-      <div class="carousel-item" style="background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1920x1080')">
-        <div class="carousel-caption">
-          <h5>Second slide label</h5>
-          <p>Some representative placeholder content for the second slide.</p>
+      <div class="carousel-item" style="background-image: url('https://i.pinimg.com/originals/d8/2d/72/d82d72723724a47fab10c90da326c295.jpg')">
+        <div class="carousel-caption" style="color:cyan">
+         <h1>Variety of books</h1>
+          <h3>We have all the books you need!Let's see it!</h3>
         </div>
       </div>
-      <div class="carousel-item" style="background-image: url('https://source.unsplash.com/lHGeqh3XhRY/1920x1080')">
+      <div class="carousel-item" style="background-image: url('https://1.bp.blogspot.com/-_M_C9G0tdiE/Xnc1nT7abEI/AAAAAAAAEy8/t956U8Xwy5sOsSv68z8pgeQnJ7BxTXyCQCLcBGAsYHQ/w1200-h630-p-k-no-nu/Anime%2BLibrary%2BBackground%2B1.png')">
         <div class="carousel-caption">
-          <h5>Third slide label</h5>
-          <p>Some representative placeholder content for the third slide.</p>
+          <h1>Convienient</h1>
+          <h3>Just by click and you can find all you need</h3>
         </div>
       </div>
     </div>
