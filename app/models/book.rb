@@ -9,6 +9,7 @@ class Book < ApplicationRecord
   has_many :reviews, dependent: :destroy
   accepts_nested_attributes_for :author_books
   validates_format_of :name, with: /\A(?!^\d+$)^.+$\z/
+  before_create {|book| book.name = book.name.titleize }
 
   def self.hotbooks 
     hot_array = Borrow.group(:book_id).count.sort.to_a
@@ -71,4 +72,20 @@ class Book < ApplicationRecord
     end 
   end
   
+  def self.search(query)
+    book_author = Book.includes(:authors).references(:author_books)
+    book_pub = book_author.includes(:publisher)
+    book = book_pub.includes(:category)
+    if query
+      book.where("books.name LIKE '%#{query.titleize}%' OR
+        authors.author_name LIKE '%#{query.titleize}%' OR
+        categories.name LIKE '%#{query.capitalize}%' OR
+        publishers.publisher_name LIKE '%#{query.upcase}%' OR
+        books.description LIKE '%#{query}%'
+        ")
+    else
+      all
+    end
+  end
+
 end
