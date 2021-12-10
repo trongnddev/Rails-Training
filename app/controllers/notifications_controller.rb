@@ -3,12 +3,14 @@ class NotificationsController < ApplicationController
 
   # GET /notifications or /notifications.json
   def index
-    @notifications = Notification.where(user_id: current_user.id)
+    @notifications = Notification.where(user_id: current_user.id).paginate(:page => params[:page], :per_page => 6).order("created_at DESC, seen")
   end
 
   # GET /notifications/1 or /notifications/1.json
   def show
-    Notification.update_seen(@notification.id)
+    if @notification.seen == false
+      Notification.update_seen(@notification.id)
+    end
   end
 
   # DELETE /notifications/1 or /notifications/1.json

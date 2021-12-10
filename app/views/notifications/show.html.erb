@@ -1,19 +1,20 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Message:</strong>
-  <%= @notification.message %>
-</p>
+<h1 class="d-flex justify-content-center" role="alert">Notifications</h1>
 
-<p>
-  <strong>Seen:</strong>
-  <%= @notification.seen %>
-</p>
+<div class="alert alert-primary" role="alert">
+  <p>
+    <strong>Time</strong>
+    <%= @notification.created_at.to_formatted_s(:db) %>
+  </p>
+  <hr>
+  <p>
+    <strong>Notification:</strong>
+    <%= @notification.message %>
+  </p>
+</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @notification.user_id %>
-</p>
+
 
 
 <%= link_to 'Back', notifications_path %>

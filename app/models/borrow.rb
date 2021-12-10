@@ -19,18 +19,19 @@ class Borrow < ApplicationRecord
     def create_notification
         @notification = Notification.new()
         @notification.user_id = user_id
-        book = Book.find(book_id)
+        
         
         if status.include? "accept"
-            @notification.message = "You was be alowed to borrow a book #{book.name}, at #{Time.now.to_formatted_s(:db)}"
+            @notification.message = "You was be alowed to borrow a book #{book.name}"
         elsif status.include? "cancel"
-            @notification.message = "Request to borrow book #{book.name} denied at #{Time.now.to_formatted_s(:db)}"
+            @notification.message = "Request to borrow book #{book.name} be denied"
         elsif status.include? "returned"
-            @notification.message = "you was returned a book #{book.name} at #{Time.now.to_formatted_s(:db)}"
+            @notification.message = "You was returned a book #{book.name}"
         end
 
         if @notification.message?
             @notification.save
+            @notification.update_column( :created_at, Time.now.in_time_zone(+7))
         end
             
 

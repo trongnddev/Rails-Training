@@ -1,31 +1,26 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Notifications</h1>
+<h1 class="d-flex justify-content-center alert alert-primary" role="alert">Notifications</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Message</th>
-      <th>Seen</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="list-group ">
+  <% @notifications.each do |notification| %>
+  <div  class="list-group-item "n>
+    <small>
+       <%=notification.created_at.to_formatted_s(:db)%>
+    </small>
+  
+      <%if notification.seen == false%>
+        <%= link_to notification.message, notification, class:"list-group-item-action font-weight-bold" %>
+      <% else %>
+        <%= link_to notification.message, notification, class:"list-group-item-action"%>
+      <% end %>
+  </div>
+  
+  <% end %>
 
-  <tbody>
-    <% @notifications.each do |notification| %>
-      <tr>
-        <td><%= notification.message %></td>
-        <td><%= notification.seen %></td>
-        <td><%= notification.user_id %></td>
-        <td><%= link_to 'Show', notification %></td>
-        
-        <td><%= link_to 'Destroy', notification, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+</div>
+    <%= will_paginate @books%>
+    
 <br>
 
 
