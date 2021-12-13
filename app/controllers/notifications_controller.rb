@@ -1,5 +1,6 @@
 class NotificationsController < ApplicationController
   before_action :set_notification, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
 
   # GET /notifications or /notifications.json
   def index

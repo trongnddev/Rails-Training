@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     get "/showborrow", to:"borrows#showborrow"
     get "/showreturn", to:"borrows#showreturn"
   end
-  mount ActionCable.server => '/cable'
+
   resources :notifications
   resources :borrows
   resources :publishers
