@@ -3,6 +3,9 @@ class Admin::BorrowsController < AdminController
     before_action :authenticate_user!
     add_flash_types :success, :warning, :danger, :info
 
+    
+
+
     def index
         @borrows = Borrow.where(status: "waiting accept").paginate(:page=> params[:page], :per_page => 10).order("id DESC")
     end

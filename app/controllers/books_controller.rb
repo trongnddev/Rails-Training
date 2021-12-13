@@ -5,7 +5,7 @@ class BooksController < ApplicationController
 
   #authorization with cancancan
   load_and_authorize_resource
-  skip_load_and_authorize_resource only: :index
+  skip_load_and_authorize_resource only: [:index, :show, :indexsort, :indexfilter]
 
   # GET /books or /books.json
   def index

@@ -12,9 +12,8 @@ class Borrow < ApplicationRecord
             all
         end
     end
-    def send_notification
-        NotificationBroadcastJob.perform_now(self)
-      end
+
+    
 
     def create_notification
         @notification = Notification.new()

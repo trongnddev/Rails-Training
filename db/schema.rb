@@ -115,13 +115,10 @@ ActiveRecord::Schema.define(version: 2021_12_07_035956) do
     t.integer "star"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-<<<<<<< HEAD
-=======
     t.bigint "user_id"
     t.bigint "book_id"
     t.index ["book_id"], name: "index_reviews_on_book_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
->>>>>>> develop
   end
 
   create_table "users", force: :cascade do |t|
@@ -133,10 +130,6 @@ ActiveRecord::Schema.define(version: 2021_12_07_035956) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "role"
-<<<<<<< HEAD
-    t.string "string"
-=======
->>>>>>> develop
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

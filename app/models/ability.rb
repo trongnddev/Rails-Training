@@ -5,17 +5,19 @@ class Ability
 
   def initialize(user)
     alias_action :create, :read, :update, :destroy, to: :crud
+    
+    user ||= User.new
 
-    if user.role == "Admin"
+    if user.role == "admin"
       can :manage, :all
-    elsif user.role == "Staff"
-      can :crud, [Author, Book, AuthorBook]
-      can [:read, :update], [User], role: "Customer"
+    elsif user.role == "staff"
+      can :crud, [Author, Book, AuthorBook,Category, Borrow, Publisher,]
+      can [:read, :update], [User], role: "user"
       
-    elsif user.role == "Customer"
+    elsif user.role == "user"
 
         can [:read, :update], User, id: user.id 
-        can :read, [AuthorBook,Book, Author]
+        can [:read,] [AuthorBook,Book, Author, Borrow,Pulisher, Notification,Category]
         
     end
     # Define abilities for the passed in user here. For example:
