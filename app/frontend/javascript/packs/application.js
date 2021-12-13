@@ -12,5 +12,7 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
-require("jquery")
 require("@nathanvda/cocoon")
+require('datatables.net-bs4')
+import $ from 'jquery';
+global.$ = jQuery;

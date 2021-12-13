@@ -1,13 +1,20 @@
-<p id="notice"><%= notice %></p>
-
+<div class="container">
 <h1>Authors</h1>
-
-<table>
+<select id="dropdown1">
+  <option value="0,asc">Author : A-Z</option>
+  <option value="0,desc">Author : Z-A</option>
+</select>
+<table id="author" class="table">
   <thead>
     <tr>
       <th>Author</th>
       <th>Birthday</th>
-      <th colspan="3"></th>
+      <th>Books</th>
+      <th>Show</th>
+      <% if user_signed_in?%>
+      <th>Edit</th>
+      <th>Delete</th>
+      <%end%>
     </tr>
   </thead>
 
@@ -16,6 +23,13 @@
       <tr>
         <td><%= author.author_name %></td>
         <td><%= author.birthday %></td>
+        <td>
+           <% author.author_books.each do  |author_book|%>
+           <li>
+           <%= author_book.book.name%>
+           </li>
+           <%end%>
+        </td>
         <td><%= link_to 'Show', author %></td>
         <%if user_signed_in? && (can? :edit, @author)%>
         <td><%= link_to 'Edit', edit_author_path(author) %></td>
@@ -26,7 +40,17 @@
   </tbody>
 </table>
 
-<br>
-<%if user_signed_in? && (can? :create, @author)%>
+<%if user_signed_in?%>
 <%= link_to 'New Author', new_author_path %>
 <%end%>
+<div class="page">
+  <%= will_paginate @authors%>
+</div>
+</div>
+<script type="text/javascript">
+ var table = $('#author').DataTable({"bLengthChange": false, "bPaginate": false});
+
+$('#dropdown1').on('change', function () {
+        table.order([(this.value).split(",")]).draw();
+});
+</script>

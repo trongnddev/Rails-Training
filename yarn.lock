@@ -1524,10 +1524,17 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
 
+<<<<<<< HEAD
 bootstrap@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.0.0.tgz#97635ac0e0d6cb466700ebf0fd266bfabf352ed2"
   integrity sha512-tmhPET9B9qCl8dCofvHeiIhi49iBt0EehmIsziZib65k1erBW1rHhj2s/2JsuQh5Pq+xz2E9bEbzp9B7xHG+VA==
+=======
+bootstrap@^5.1.3:
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.1.3.tgz#ba081b0c130f810fa70900acbc1c6d3c28fa8f34"
+  integrity sha512-fcQztozJ8jToQWXxVuEyXWW+dSo8AiXWKwiSSrKWsRB/Qt+Ewwza+JWoLKiTuQLaEPhdNAJ7+Dosc9DOIqNy7Q==
+>>>>>>> develop
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -2341,6 +2348,29 @@ cyclist@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
   integrity sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk=
+
+datatables.net-bs4@^1.11.3:
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/datatables.net-bs4/-/datatables.net-bs4-1.11.3.tgz#04817c5d9457f1b9807a1330f12c37a541596328"
+  integrity sha512-UPT2F1nvZZzKJSSHb+3+bTeQy1ULLMT1BexBHCkh5PhMnAZNPbTEZD+6To1RCBfUF1rtPwIJTwJ+Jjjxy86xRw==
+  dependencies:
+    datatables.net ">=1.10.25"
+    jquery ">=1.7"
+
+datatables.net-bs5@^1.11.3:
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/datatables.net-bs5/-/datatables.net-bs5-1.11.3.tgz#939d0e66fbf518718a519534a88fc88cd29405b0"
+  integrity sha512-u0tosKUR1XNpXzxOOt2NInnNYayt7GQoG+OM1xPRhdkZ7ZBD4oNF8S0aKve8yvSUq/ZwTMh4WJeh80GdmrJAdQ==
+  dependencies:
+    datatables.net ">=1.10.25"
+    jquery ">=1.7"
+
+datatables.net@>=1.10.25:
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-1.11.3.tgz#80e691036efcd62467558ee64c07dd566cb761b4"
+  integrity sha512-VMj5qEaTebpNurySkM6jy6sGpl+s6onPK8xJhYr296R/vUBnz1+id16NVqNf9z5aR076OGcpGHCuiTuy4E05oQ==
+  dependencies:
+    jquery ">=1.7"
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"
@@ -3821,7 +3851,7 @@ jest-worker@^26.5.0:
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
 
-jquery@^3.3.1, jquery@^3.6.0:
+jquery@>=1.7, jquery@^3.3.1, jquery@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
   integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
@@ -5566,6 +5596,11 @@ querystringify@^2.1.1:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
   integrity sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==
+
+rails-ujs@^5.2.6:
+  version "5.2.6"
+  resolved "https://registry.yarnpkg.com/rails-ujs/-/rails-ujs-5.2.6.tgz#4193242a108d0cd9ed3595695644755c0bd329eb"
+  integrity sha512-JpUq5RlA4p5XE69dz0ZOIkn1xXQn9H8VDXQJWuVPRtFBOFylWFriaDVpxFmdQuARPo4bm2l67uIMMBpX6KNY+g==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
   version "2.1.0"

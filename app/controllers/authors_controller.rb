@@ -1,14 +1,16 @@
 class AuthorsController < ApplicationController
   before_action :set_author, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: %i[show index]
+  add_flash_types :success, :warning, :danger, :info
   
   #authorization with cancancan
   load_and_authorize_resource
   skip_load_and_authorize_resource only: :index
+  
 
   # GET /authors or /authors.json
   def index
-    @authors = Author.all
+    @authors = Author.all.paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /authors/1 or /authors/1.json
@@ -25,23 +27,23 @@ class AuthorsController < ApplicationController
   # POST /authors or /authors.json
   def create
     @author = Author.new(author_params)
-
-    respond_to do |format|
       if @author.save
-        format.html { redirect_to @author, notice: "Author was successfully created." }
+        redirect_to request.referrer 
+        flash[:success]= "Author was successfully created!  #{view_context.link_to("Do you want check the #{@author.author_name}", "#{@author.id}")}"
       else
-        format.html { render :new, status: :unprocessable_entity }
+        respond_to do |format|
+          format.html {redirect_to request.referrer, danger: "Something went wrong!"}
+        end
       end
-    end
   end
 
   # PATCH/PUT /authors/1 or /authors/1.json
   def update
     respond_to do |format|
       if @author.update(author_params)
-        format.html { redirect_to @author, notice: "Author was successfully updated." }
+        format.html {redirect_to authors_path, success: "Author was successfully updated!"}
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html {redirect_to request.referrer, danger: "Something went wrong!"}
       end
     end
   end
@@ -49,9 +51,8 @@ class AuthorsController < ApplicationController
   # DELETE /authors/1 or /authors/1.json
   def destroy
     @author.destroy
-    respond_to do |format|
-      format.html { redirect_to authors_url, notice: "Author was successfully destroyed." }
-    end
+     redirect_to authors_url
+     flash[:info] = "Author was successfully destroyed!"
   end
 
   private

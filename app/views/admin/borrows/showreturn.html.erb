@@ -1,0 +1,47 @@
+<h1>List returned</h1>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to 'Accept',admin_borrows_path,class:"nav-link"%>
+  </li>
+  <li class="nav-item">
+     <%= link_to 'Borrowing',admin_showborrow_path,class:"nav-link"%>
+  </li>
+  <li class="nav-item">
+     <%= link_to 'Return',admin_showreturn_path,class:"nav-link"%>
+  </li>
+</ul>
+<table id="pubadmin" class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Book</th>
+      <th scope="col">User</th>
+      <th scope="col">Status</th>
+      <th scope="col">Borrowed date</th>
+      <th scope="col">Appointment returned date</th>
+      <th scope="col">Returned date</th>
+      <th scope="col">Penalty fee</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @borrows.each do |borrow| %>
+      <tr>
+        <th scope="row"><%= borrow.id %></th>
+        <td><%= borrow.book.name %></td>
+        <td><%= borrow.user.email %></td>
+        <td><%= borrow.status %></td>
+        <td><%= borrow.borrowed_date %></td>
+        <td><%= borrow.appointment_returned_date + 14 %></td>
+        <td><%= borrow.returned_date %></td>
+        <td><%= borrow.penalty_fee %></td>
+        <td class="px-5" style="text-align: right">
+          <a href="/admin/borrows/<%=borrow.id%>" data-method="delete"><i class="fas fa-trash-alt"></i></a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="page">
+  <%= will_paginate @borrow%>
+</div>

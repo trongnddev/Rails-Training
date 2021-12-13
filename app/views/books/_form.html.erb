@@ -2,7 +2,6 @@
   <% if book.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
-
       <ul>
         <% book.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,6 +9,7 @@
       </ul>
     </div>
   <% end %>
+  
 
   <div class="field form-group">
     <%= form.label :name %>
@@ -19,6 +19,10 @@
   <div class="field form-group">
     <%= form.label :description %>
     <%= form.text_area :description ,class:"form-control"%>
+  </div>
+  <div class="field form-group">
+    <%= form.label :category%>
+    <%= form.collection_select :category_id, Category.all, :id, :name%>
   </div>
  <div class="authorbooks">
   <%= form.fields_for :author_books do |author_books_form| %>
@@ -35,7 +39,7 @@
 
   <div class="field form-group">
     <%= form.label :publisher %>
-    <%= form.text_field :publisher,class:"form-control" %>
+    <%= form.collection_select :publisher_id, Publisher.all, :id, :publisher_name %>
   </div>
 
   <div class="field form-group">
@@ -58,6 +62,6 @@
   </div>
 
   <div class="actions">
-    <%= form.submit class:"btn btn-primary"%>
+    <%= form.submit class:"btn btn-primary" %>
   </div>
 <% end %>

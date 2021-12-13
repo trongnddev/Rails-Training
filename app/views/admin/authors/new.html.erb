@@ -1,0 +1,10 @@
+<h1>Create author</h1>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to 'Authors',admin_authors_path,class:"nav-link"%>
+  </li>
+  <li class="nav-item">
+     <%= link_to 'New author',new_admin_author_path,class:"nav-link"%>
+  </li>
+</ul>
+<%= render 'form', author: @author %>

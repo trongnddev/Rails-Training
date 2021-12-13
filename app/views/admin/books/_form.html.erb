@@ -1,0 +1,69 @@
+<div class="row m-5">
+<%= form_for ([:admin, book]) do |form| %>
+  <% if book.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
+      <ul>
+        <% book.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+
+  <div class="field form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, placeholder:"Book name", class:"form-control" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :description %>
+    <%= form.text_area :description , placeholder:"Description about book", class:"form-control"%>
+  </div>
+  <div class="field form-group">
+    <%= form.label :category%>
+    <%= form.collection_select :category_id, Category.all, :id, :name%>
+  </div>
+ <div class="authorbooks">
+  <%= form.fields_for :author_books do |author_books_form| %>
+    <%= render 'author_book_fields',form: author_books_form%>
+    <% end %>
+     <div class="links">
+  <%= link_to_add_association 'Add author', form, :author_books, wrap_object: Proc.new { |author_book| author_book.build_author; author_book },form_name: 'form',class:"btn btn-info"%>
+  </div>
+  </div>
+  <div class="field form-group">
+    <%= form.label :published_date %>
+    <%= form.date_field :published_date,class:"form-control" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :publisher %>
+    <%= form.collection_select :publisher_id, Publisher.all, :id, :publisher_name %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :borrow_fee %>
+    <%= form.text_field :borrow_fee, placeholder:"Fee borrow book" ,class:"form-control"%>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity, placeholder:"Quanity" ,class:"form-control"%>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :quantity_in_stock %>
+    <%= form.number_field :quantity_in_stock, placeholder:"Quantity in stock" ,class:"form-control"%>
+  </div>
+  <div class="field">
+    <%= form.label :image%>
+    <%= form.file_field :image%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class:"btn btn-primary" %>
+  </div>
+<% end %>
+</div>

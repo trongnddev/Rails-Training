@@ -1,44 +1,76 @@
-<div class="container">
-<p id="notice"><%= notice %></p>
+<%= stylesheet_link_tag 'home'%>
+ <section class="dark">
+	<div class="container py-4">
+    <div class="col" style="padding:20px">
+		<h3 style="color:black">Sort by :</h3>
+		<div style="width:500px">
+		<%= form_tag(booksort_path, :method => "get") do %>
+		<%= select_tag "sort", options_for_select([
+			'Select',
+			'Newest books',
+			'Oldest books',
+			'Fee low to high',
+			'Fee high to low'	
+		], :selected => params[:sort]),class:"custom-select",onchange: "this.form.submit();"%>
+		<%end%>
+		</div>
+		<h3 style="color:black">Filter by :</h3>
+		<%= form_tag(bookfilter_path, :method => "get") do%>
+			<%= collection_select params[:name],:author_id, Author.all, :id, :author_name, prompt: 'Select author', :selected => params[:author_id]%>
+			<%= collection_select params[:name],:category_id, Category.all, :id, :name, prompt: 'Select category', :selected => params[:category_id]%>
+			<%= collection_select params[:name],:publisher_id, Publisher.all, :id, :publisher_name, prompt: 'Select publisher', :selected =>  params[:publisher_id]%>
+			<%= submit_tag "See result", class:"btn btn-primary"%>
+		<%end%>	
+			<%= button_to 'Clear filter', books_path,class:"btn btn-success",method: "get"%>
+	</div>
+		<%@books.each do |book|%>
+		<article class="postcard dark blue">
+			<a class="postcard__img_link" href="/books/<%=book.id%>">
+				<img class="postcard__img" src="<%= url_for(book.image) if book.image.present?%>" alt="Image Title" />
+			</a>
+			<div class="postcard__text">
+				<h1 class="postcard__title blue"><a href="/books/<%=book.id%>"><%= book.name%></a></h1>
+				<div class="postcard__subtitle small">
+					<time datetime="2020-05-25 12:00:00">
+						<i class="fas fa-calendar-alt mr-2"></i> <%=book.published_date%>
+					</time>
+					<br><i class="fas fa-comments-dollar"> <%= book.borrow_fee%></i>
+                    <br><i class="star fa fa-star checked" style="color:yellow"> :<%= book.rating%> </i>
+				</div>
+				<div class="postcard__bar"></div>
+				<div class="postcard__preview-txt"><%= book.description%></div>
+				<ul class="postcard__tagbox">
+          <% book.author_books.each do |authorbook| %>
+					<li class="tag__item play blue">
+						<a href="/authors/<%= authorbook.author.id%>"><i class="fas fa-tag"></i> <%= authorbook.author.author_name%></a>
+					</li>
+          <%end%>
+					<li class="tag__item play blue">
+						<a href="/publishers/<%= book.publisher_id%>"><i class="fas fa-tag"></i> <%= Publisher.find(book.publisher_id).publisher_name if book.publisher_id%></a>
+					</li>
+                    <li class="tag__item play blue">
+						<a href="/categories/<%= book.category_id%>"><i class="fas fa-tag"></i> <%= Category.find(book.category_id).name if book.category_id%></a>
+					</li>
+				</ul>
+        <%= form_for ([book, book.borrows.build]) do |f|%>
+          <%= f.hidden_field :status, value: "waiting accept"%>
+            <%if user_signed_in?%>
+                <% unless current_user.borrows.where( {book_id: book.id, status: ["waiting accept", "accept"]}).exists? || book.quantity_in_stock.nil? %>
+                    <%= button_tag type: 'submit', class: "btn btn-primary", data: {confirm: "Do you want borrow #{book.name}"} do %>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    <% end %>
+                <%end%>
+            <%else%>
+              <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                <% end %>
+            <%end%>
+        <%end%>    
+			</div>
+		</article>
+    <%end%>
+	<%= will_paginate @books%>
+    </div>
+</section>
 
-<h1>Books</h1>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Published date</th>
-      <th>Publisher</th>
-      <th>Borrow fee</th>
-      <th>Quantity</th>
-      <th>Quantity in stock</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @books.each do |book| %>
-      <tr>
-        <td><%= book.name %></td>
-        <td><%= book.description %></td>
-        <td><%= book.published_date %></td>
-        <td><%= book.publisher %></td>
-        <td><%= book.borrow_fee %></td>
-        <td><%= book.quantity %></td>
-        <td><%= book.quantity_in_stock %></td>
-        <td><%= link_to 'Show', book %></td>
-        <% if user_signed_in? %>
-        <td><%= link_to 'Edit', edit_book_path(book) %></td>
-        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-<%if user_signed_in? %>
-<%= link_to 'New Book', new_book_path %>
-<%end%>
-</div>

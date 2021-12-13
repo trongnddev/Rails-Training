@@ -33,8 +33,16 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'rubocop', '~> 1.22', require: false
 
 gem 'devise'
+
 gem 'cocoon'
 gem "cancancan"
+
+gem 'will_paginate'
+
+gem 'will_paginate-bootstrap4'
+
+gem 'mechanize'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
