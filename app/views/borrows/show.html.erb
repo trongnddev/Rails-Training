@@ -1,16 +1,44 @@
-<p>
-  <strong>Returned date:</strong>
-  <%= @borrow.returned_date %>
-</p>
-
-<p>
-  <strong>Appointment returned date:</strong>
-  <%= @borrow.appointment_returned_date %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @borrow.status %>
-</p>
-
-<%= link_to 'Back', borrows_path %>
+<div class="container" style="padding-top:20px">
+<dt>
+<span class="label label-info">
+    Book
+</span>
+<div class="p-4 bg-light">
+    <%= Book.find(@borrow.book_id).name %>
+</div>
+<%if @borrow.status.include? "accept"%>
+<span class="label label-info">
+    Borrow fee
+</span>
+<div class="p-4 bg-light">
+    <%= Book.find(@borrow.book_id).borrow_fee %>
+</div>
+<span class="label label-info">
+    Appointment return date
+</span>
+<div class="p-4 bg-light">
+    <%= @borrow.borrowed_date + 14%>
+</div>
+<%elsif @borrow.status.include? "returned"%>
+<span class="label label-info">
+    Appointment return date
+</span>
+<div class="p-4 bg-light">
+    <%= @borrow.borrowed_date + 14%>
+</div>
+<span class="label label-info">
+   Returned date
+</span>
+<div class="p-4 bg-light">
+    <%= @borrow.returned_date%>
+</div>
+<span class="label label-info">
+    Penalty fee
+</span>
+<div class="p-4 bg-light">
+    <%= @borrow.penalty_fee%>
+</div>
+<%end%>
+</dt>
+<%=link_to '<i class="fas fa-long-arrow-alt-left"> Back</i> '.html_safe, :back, class:"btn btn-primary"%>
+</div>

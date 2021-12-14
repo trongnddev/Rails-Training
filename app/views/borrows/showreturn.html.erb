@@ -1,5 +1,15 @@
 <div class="container">
-<h1>User return book</h1>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" aria-current="page" href="/borrows"><i class="fas fa-history"></i> All history</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/showborrow"><i class="fas fa-book-reader"></i> Borrowing</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="/showreturn"><i class="fas fa-exchange-alt"></i> Returned</a>
+  </li>
+</ul>
 
 <table class="table">
   <thead>
@@ -30,4 +40,5 @@
   </tbody>
 </table>
 <br>
+<%= will_paginate @borrows%>
 </div>

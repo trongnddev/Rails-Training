@@ -32,12 +32,12 @@
         <%if user_signed_in?%>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Account 
+            Personal
           </a>
           <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
             <li><a class="dropdown-item notification" style="color:blue" href="/notifications"><i class="fa fa-bell"></i> Notifications <span class="badge"><%=Notification.count_notice_user(current_user.id) unless Notification.count_notice_user(current_user.id).zero?  %></span></a></li>
-            <%=link_to '<i class="fa fa-sign-out"></i> Log out'.html_safe,destroy_user_session_path,method: :delete, class:"dropdown-item", style:"color:blue"%>
             <%=link_to '<i class="fa fa-tasks"></i> Activitys'.html_safe,borrows_path, class:"dropdown-item", style:"color:blue"%>
+             <%=link_to '<i class="fa fa-sign-out"></i> Log out'.html_safe,destroy_user_session_path,method: :delete, class:"dropdown-item", style:"color:blue"%>
           </ul>
         </li>
         <%else%>

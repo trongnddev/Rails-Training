@@ -19,8 +19,10 @@ class Borrow < ApplicationRecord
         unless notification.nil?
             if status.include? "accept"
                 notification.update_column(:message, "You was be allowed to borrow a book #{book.name}")
+                notification.update_column(:borrow_id, id)
             elsif status.include? "cancel"
                 notification.update_column(:message, "Request to borrow book #{book.name} be denied")
+                notification.update_column(:borrow_id, id)
             end
             notification.update_column( :created_at, Time.now.in_time_zone(+7))
         end
@@ -28,9 +30,11 @@ class Borrow < ApplicationRecord
 
     def after_returned_notification
         if status.include? "returned" 
-            notification = Notification.find_by(:user_id => user_id)
-            notification.update_column(:message, "You was returned a book #{book.name}") unless notification.nil?
-            notification.update_column( :created_at, Time.now.in_time_zone(+7))
+            notification = Notification.new(:message => "You was returned a book #{book.name}",
+                :user_id => user_id,
+                :created_at => Time.now.in_time_zone(+7),
+                :borrow_id => id)
+            notification.save
         end
     end
 
