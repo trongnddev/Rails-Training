@@ -1,20 +1,20 @@
 class Admin::BorrowsController < AdminController
     before_action :set_borrow, only: %i[show edit update destroy]
-    before_action :authenticate_user! 
+    # before_action :authenticate_user! 
     before_action :check_staff
     add_flash_types :success, :warning, :danger, :info
 
     
-    
     def check_staff
       user ||= current_user
       
-        if user.role in ["admin", "staff"]
+        if user.role == "user" || !user.role.present?
           redirect_to root_path
+          flash[:danger] = "Couldn't find resource."
         end
       
     end
-
+    
 
     def index
         @borrows = Borrow.where(status: "waiting accept").paginate(:page=> params[:page], :per_page => 10).order("id DESC")
@@ -82,5 +82,8 @@ class Admin::BorrowsController < AdminController
       def borrow_params
         params.require(:borrow).permit(:status)
       end
+
+      
+  
   end
   

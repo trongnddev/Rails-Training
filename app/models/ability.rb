@@ -8,7 +8,7 @@ class Ability
     
     user ||= User.new
 
-    if user.role == "admin"
+    if user.role == "admin" 
       can :manage, :all
     elsif user.role == "staff"
       can :crud, [Author, Book, AuthorBook,Category, Borrow, Publisher,]
