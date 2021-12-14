@@ -13,7 +13,6 @@ class Borrow < ApplicationRecord
         end
     end
 
-    
 
     def create_notification
         @notification = Notification.new()
@@ -33,11 +32,9 @@ class Borrow < ApplicationRecord
             @notification.update_column( :created_at, Time.now.in_time_zone(+7))
         end
             
-
     end
-        
-
-
+      
+    
     def update_stock
         book = Book.find(book_id)
         if status.include? "accept"

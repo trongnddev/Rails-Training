@@ -1,6 +1,6 @@
 class Admin::PublishersController < AdminController
     before_action :set_publisher, only: %i[show edit update destroy]
-    before_action :authenticate_user!, except: %i[show index]
+    before_action :authenticate_user!
     add_flash_types :success, :warning, :danger, :info
 
     def index
