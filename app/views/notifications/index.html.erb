@@ -1,10 +1,11 @@
+<div class="container">
 <p id="notice"><%= notice %></p>
 
 <h1 class="d-flex justify-content-center alert alert-primary" role="alert">Notifications</h1>
 
 <div class="list-group ">
   <% @notifications.each do |notification| %>
-  <div  class="list-group-item "n>
+  <div  class="list-group-item ">
     <small>
        <%=notification.created_at.to_formatted_s(:db)%>
     </small>
@@ -22,5 +23,5 @@
     <%= will_paginate @books%>
     
 <br>
-
+</div>
 
