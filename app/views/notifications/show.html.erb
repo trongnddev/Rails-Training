@@ -1,0 +1,17 @@
+<div class="container">
+<h1 class="d-flex justify-content-center" role="alert">Notification</h1>
+
+<div class="alert alert-primary" role="alert">
+  <p>
+    <strong>Time</strong>
+    <%= @notification.created_at.to_formatted_s(:db) %>
+  </p>
+  <hr>
+  <p>
+    <strong>Notification:</strong>
+    <%= @notification.message %>
+    <%= link_to "Click the link to see specific","/borrows/#{@notification.borrow_id}"%>
+  </p>
+</div>
+<%=link_to '<i class="fas fa-long-arrow-alt-left"> Back</i> '.html_safe, notifications_path, class:"btn btn-primary"%>
+</div>

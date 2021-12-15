@@ -6,11 +6,14 @@ class User < ApplicationRecord
   has_many :borrows, dependent: :destroy
   has_many :books, through: :borrows
   has_many :reviews, dependent: :destroy
+  has_many :notifications, dependent: :destroy
+
   def self.search(search)
     if search
         where("email  LIKE ? OR id = #{search}", "%#{search}%")
     else
         all
     end
-end
+  end
+
 end

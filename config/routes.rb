@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  namespace :admin do
+    
+    namespace :admin do
     resources :users
     resources :books
     resources :authors
@@ -12,6 +13,8 @@ Rails.application.routes.draw do
     get "/showborrow", to:"borrows#showborrow"
     get "/showreturn", to:"borrows#showreturn"
   end
+
+  resources :notifications
   resources :borrows
   resources :publishers
   resources :categories

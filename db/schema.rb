@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_25_101408) do
+ActiveRecord::Schema.define(version: 2021_12_14_075723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,16 @@ ActiveRecord::Schema.define(version: 2021_11_25_101408) do
     t.string "profile"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string "message"
+    t.boolean "seen", default: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "borrow_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "overall_averages", force: :cascade do |t|
     t.string "rateable_type"
     t.bigint "rateable_id"
@@ -175,6 +185,7 @@ ActiveRecord::Schema.define(version: 2021_11_25_101408) do
   add_foreign_key "books", "publishers"
   add_foreign_key "borrows", "books"
   add_foreign_key "borrows", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "reviews", "books"
   add_foreign_key "reviews", "users"
 end

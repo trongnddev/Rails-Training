@@ -1,4 +1,31 @@
-<strong><%= review.username%>:</strong>
-<%= review.comment%>
-<%= link_to "Delete",book_review_path(review.book.id,review.id),method: :delete%><br>
+<% reviews = reviews.paginate(:page => params[:page], :per_page => 2) %>
+<%= stylesheet_link_tag 'comment'%>
+<div class="row d-flex justify-content">
+        <div class="col-md-8">
+            <div class="headings d-flex justify-content-between align-items-center mb-3">
+                <h5>Comments</h5>
+            </div>
+            <% reviews.each do |review|%>
+            <div class="card p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="user d-flex flex-row align-items-center"> <img src="https://i.imgur.com/hczKIze.jpg" width="30" class="user-img rounded-circle mr-2"> <span><small class="font-weight-bold text-primary"><%= review.username%></small> <small class="font-weight-bold"><%= review.comment%></small></span> </div> <small><%= review.created_at%></small>
+                </div>
+                <div class="action d-flex justify-content-between mt-2 align-items-center">
+                    <div class="reply px-4"> <small><%= link_to "Delete",book_review_path(review.book.id,review.id),method: :delete%><br></small> </div>
+                    <div class="icons align-items-center"><%review.star.times do%>
+                     <i class="fa fa-star text-warning"></i>
+                     <%end%> 
+                     <i class="fa fa-check-circle-o check-icon"></i> </div>
+                </div>
+            </div>
+            <%end%>
+             <%= will_paginate reviews%>
+        </div>
+</div>
+
+
+
+
+
+
 
