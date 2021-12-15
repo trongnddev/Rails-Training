@@ -33,7 +33,8 @@ class Borrow < ApplicationRecord
             notification = Notification.new(:message => "You was returned a book #{book.name}",
                 :user_id => user_id,
                 :created_at => Time.now.in_time_zone(+7),
-                :borrow_id => id)
+                :borrow_id => id,
+                :book_id => book_id)
             notification.save
         end
     end

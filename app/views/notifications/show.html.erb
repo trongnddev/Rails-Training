@@ -9,8 +9,9 @@
   <hr>
   <p>
     <strong>Notification:</strong>
-    <%= @notification.message %>
-    <%= link_to "Click the link to see specific","/borrows/#{@notification.borrow_id}"%>
+    <%= @notification.message %><br>
+    <%= link_to "Click the link to see specific","/borrows/#{@notification.borrow_id}"%><br>
+    <%= link_to "Go to rate the book", "/books/#{@notification.book_id}"%> 
   </p>
 </div>
 <%=link_to '<i class="fas fa-long-arrow-alt-left"> Back</i> '.html_safe, notifications_path, class:"btn btn-primary"%>
