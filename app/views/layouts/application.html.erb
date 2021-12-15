@@ -20,8 +20,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
      <%= render 'home/header' %>
-     <%= yield %>
-     <%= render 'home/footer'%>
      <div class="container">
      <% flash.each do |key, value| %>
        <div id="flash" class="alert alert-<%= key %>">
@@ -30,6 +28,8 @@
        </div>
      <% end %>
      </div>
+     <%= yield %>
+     <%= render 'home/footer'%>
   <script type="text/javascript">
     $(document).ready(function(){
       setTimeout(function(){

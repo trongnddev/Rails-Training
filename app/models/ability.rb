@@ -17,8 +17,11 @@ class Ability
     elsif user.role == "user"
 
         can [:read, :update], User, id: user.id 
-        can [:read,] [AuthorBook,Book, Author, Borrow,Pulisher, Notification,Category]
-        
+        can [:read,  ], [Book, Author, Borrow,Publisher, Notification,Category, Review]
+        can :create, [Borrow, Review]
+        can [:update,:destroy], [Review, Borrow], user_id = user.id 
+        can [:showborrow, :showreturn],  Borrow
+
     end
     # Define abilities for the passed in user here. For example:
     #

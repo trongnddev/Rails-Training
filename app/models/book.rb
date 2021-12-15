@@ -9,6 +9,7 @@ class Book < ApplicationRecord
   has_many :reviews, dependent: :destroy
   accepts_nested_attributes_for :author_books
   validates_format_of :name, with: /\A(?!^\d+$)^.+$\z/
+  validates :borrow_fee, numericality: { greater_than: 0 }, allow_nil: true
   before_create {|book| book.name = book.name.titleize }
 
   def self.hotbooks 

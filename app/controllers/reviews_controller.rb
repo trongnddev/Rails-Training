@@ -4,6 +4,10 @@ class ReviewsController < ApplicationController
     add_flash_types :success, :warning, :danger, :info
     
     
+    #authorization with cancancan
+    load_and_authorize_resource
+
+
     def create
       @review = Review.new(review_params)
       @review.user_id = current_user.id

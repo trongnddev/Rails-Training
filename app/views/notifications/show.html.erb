@@ -1,6 +1,5 @@
-<p id="notice"><%= notice %></p>
-
-<h1 class="d-flex justify-content-center" role="alert">Notifications</h1>
+<div class="container">
+<h1 class="d-flex justify-content-center" role="alert">Notification</h1>
 
 <div class="alert alert-primary" role="alert">
   <p>
@@ -10,11 +9,10 @@
   <hr>
   <p>
     <strong>Notification:</strong>
-    <%= @notification.message %>
+    <%= @notification.message %><br>
+    <%= link_to "Click the link to see specific","/borrows/#{@notification.borrow_id}"%><br>
+    <%= link_to "Go to rate the book", "/books/#{@notification.book_id}"%> 
   </p>
 </div>
-
-
-
-
-<%= link_to 'Back', notifications_path %>
+<%=link_to '<i class="fas fa-long-arrow-alt-left"> Back</i> '.html_safe, notifications_path, class:"btn btn-primary"%>
+</div>

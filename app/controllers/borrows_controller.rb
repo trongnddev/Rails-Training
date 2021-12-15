@@ -8,15 +8,15 @@ class BorrowsController < ApplicationController
 
   # GET /borrows or /borrows.json
   def index
-      @borrows = Borrow.where(user_id: current_user.id).order("id DESC")
+      @borrows = Borrow.where(user_id: current_user.id).paginate(:page => params[:page], :per_page => 10).order("id DESC")
   end
 
   def showborrow
-      @borrows = Borrow.where(user_id: current_user.id).order("id DESC")
+      @borrows = Borrow.where(user_id: current_user.id, status: "accept").paginate(:page => params[:page], :per_page => 10).order("id DESC")
   end
 
   def showreturn
-      @borrows = Borrow.where({user_id: current_user.id, status:  "returned"}).order("id DESC")
+      @borrows = Borrow.where(user_id: current_user.id, status:  "returned").paginate(:page => params[:page], :per_page => 10).order("id DESC")
   end
 
   # GET /borrows/1 or /borrows/1.json

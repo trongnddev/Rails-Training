@@ -3,6 +3,9 @@ class Admin::PublishersController < AdminController
     before_action :authenticate_user!
     add_flash_types :success, :warning, :danger, :info
 
+    #authorization with cancancan
+    load_and_authorize_resource
+
     def index
       @publishers = Publisher.all.paginate(:page=> params[:page], :per_page => 10).order('created_at desc')
     end

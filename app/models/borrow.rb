@@ -1,8 +1,9 @@
 class Borrow < ApplicationRecord
     belongs_to :user
     belongs_to :book
-    after_update :update_stock, :create_notification
+    after_update :update_stock, :create_notification, :after_returned_notification
     before_destroy :destroy_update
+    after_create :notification_staff
     
     
     def self.search(search)
@@ -13,30 +14,38 @@ class Borrow < ApplicationRecord
         end
     end
 
-
-    def create_notification
-        @notification = Notification.new()
-        @notification.user_id = user_id
-        
-        
-        if status.include? "accept"
-            @notification.message = "You was be alowed to borrow a book #{book.name}"
-        elsif status.include? "cancel"
-            @notification.message = "Request to borrow book #{book.name} be denied"
-        elsif status.include? "returned"
-            @notification.message = "You was returned a book #{book.name}"
+    def create_notification     
+        notification = Notification.find_by(:message => "for staff", :user_id => user_id)
+        unless notification.nil?
+            if status.include? "accept"
+                notification.update_column(:message, "You was be allowed to borrow a book #{book.name}")
+                notification.update_column(:borrow_id, id)
+            elsif status.include? "cancel"
+                notification.update_column(:message, "Request to borrow book #{book.name} be denied")
+                notification.update_column(:borrow_id, id)
+            end
+            notification.update_column( :created_at, Time.now.in_time_zone(+7))
         end
+    end
 
-        if @notification.message?
-            @notification.save
-            @notification.update_column( :created_at, Time.now.in_time_zone(+7))
+    def after_returned_notification
+        if status.include? "returned" 
+            notification = Notification.new(:message => "You was returned a book #{book.name}",
+                :user_id => user_id,
+                :created_at => Time.now.in_time_zone(+7),
+                :borrow_id => id,
+                :book_id => book_id)
+            notification.save
         end
-            
+    end
+
+    def notification_staff
+        notification = Notification.new(:message => "for staff", :user_id => user_id)
+        notification.save 
     end
       
     
     def update_stock
-        book = Book.find(book_id)
         if status.include? "accept"
             book.update_column(:quantity_in_stock, book.quantity_in_stock - 1)
             update_column(:borrowed_date, Time.now)
@@ -54,7 +63,6 @@ class Borrow < ApplicationRecord
     end
 
     def destroy_update
-        book = Book.find(book_id)
         if status.include?"accept"
             book.update_column(:quantity_in_stock, book.quantity_in_stock + 1)
         end

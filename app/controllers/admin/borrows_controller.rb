@@ -5,7 +5,8 @@ class Admin::BorrowsController < AdminController
     add_flash_types :success, :warning, :danger, :info
 
     
-    
+    #authorization with cancancan
+    load_and_authorize_resource
     
 
     def index

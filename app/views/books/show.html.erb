@@ -1,76 +1,48 @@
-<p>
-  <strong>Name:</strong>
-  <%= @book.name %>
-</p>
-<p>
-  <strong>Category:</strong>
-  <%= Category.find(@book.category_id).name if @book.category_id %>
-</p>
-<p>
-  <strong>Description:</strong>
-  <%= @book.description %>
-</p>
-
-<p>
-  <strong>Published date:</strong>
-  <%= @book.published_date %>
-</p>
-
-<p>
-  <strong>Publisher:</strong>
-  <%= Publisher.find(@book.publisher_id).publisher_name if @book.publisher_id %>
-</p>
-
-<p>
-  <strong>Borrow fee:</strong>
-  <%= @book.borrow_fee %>
-</p>
-
-<p>
-  <strong>Quantity:</strong>
-  <%= @book.quantity %>
-</p>
-
-<p>
-  <strong>Quantity in stock:</strong>
-  <%= @book.quantity_in_stock %>
-</p>
-<p>
-  <strong>Authors:</strong>
-  <% @book.author_books.each do |author_book| %>
-    <li>
-      <%= author_book.author.author_name %>
-    </li>
-  <% end %>
-</p>
-  <%= image_tag(@book.image) if @book.image.present?%>
-</p>
- <%= form_for ([@book, @book.borrows.build]) do |f|%>
-    <%= f.hidden_field :status, value: "waiting accept"%>
-    <%if user_signed_in?%>
-                  <% if current_user.borrows.where( {book_id: @book.id, status: ["waiting accept", "accept"]}).exists?  %>
-                    <%= f.submit "Borrow",class:"btn btn-success", :disabled => true%>
-                  <% else %>
-                      <%= f.submit "Borrow",class:"btn btn-success",  data: { confirm: "Are you sure to borrow #{@book.name} book "}%>
-                  <%end%>
-    <%else%>
-        <%= f.submit "Borrow",class:"btn btn-success"%>
-    <% end %>
-<%end%>
-<h2>Rating :
-  <%if @book.rating.present?%> 
-    <% @book.rating.times do%>
-      <i class="fa fa-star checked" style="color:yellow"></i>
-    <%end%>    
-  <%end%>         
-</h2>
-<br><%= render @book.reviews%>
+<%= stylesheet_link_tag 'bookcard'%>
+<div class="container">
+ <div class="wrapper">
+    <div class="product-img">
+      <img src="<%= url_for(@book.image) if @book.image.present?%>" height="700" width="550">
+    </div>
+    <div class="product-info">
+      <div class="product-text">
+        <h1><%=@book.name%></h1>
+        <h2>
+        <%if @book.rating.present?%> 
+        <%@book.rating.times do%>
+        <i class="fa fa-star checked" style="color:yellow"></i>
+        <%end%>    
+        <%end%>     
+        </h2>
+        <h2>In stock : <%=@book.quantity_in_stock%></h2>
+        <p><%=@book.description%></p>
+      </div>
+      <div class="product-price-btn">
+        <p><span><%=@book.borrow_fee%></span> VND</p><br>
+      <%=form_for ([@book, @book.borrows.build]) do |f|%>
+        <%= f.hidden_field :status, value: "waiting accept"%>
+          <%if user_signed_in?%>
+            <% unless current_user.borrows.where( {book_id: @book.id, status: ["waiting accept", "accept"]}).exists? || @book.quantity_in_stock.nil? %>
+                <%= button_tag type: 'submit', data: {confirm: "Do you want borrow #{@book.name}"} do %>
+                        Borrow now
+                <% end %>
+            <%end%>
+          <%else%>
+            <%= button_tag type: 'submit' do %>
+              Borrow now
+            <% end %>
+          <%end%>
+      <%end%>    
+      </div>
+    </div>
+  </div>
+<br><%= render 'reviews/review', reviews: @book.reviews%>
 <%if user_signed_in?%>
-<%if Borrow.where(user_id: current_user.id, book_id: @book.id).present?%>
+<%if Borrow.where(status: "returned", user_id: current_user.id, book_id: @book.id).present?%>
+<%unless Review.where(user_id: current_user.id, book_id: @book.id).present?%>
     <%= render "reviews/form"%>
 <%end%>
 <%end%>
-<% if user_signed_in? %>
-  <%= link_to 'Edit', edit_book_path(@book) %> |
 <%end%>
-<%= link_to 'Back', books_path %>
+<%=link_to '<i class="fas fa-long-arrow-alt-left"> Back</i> '.html_safe, :back, class:"btn btn-primary",style: "margin:20px"%>
+</div>

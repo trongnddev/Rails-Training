@@ -20,5 +20,6 @@ class User < ApplicationRecord
     else
         all
     end
-end
+  end
+
 end
