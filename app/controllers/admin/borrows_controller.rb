@@ -1,19 +1,11 @@
 class Admin::BorrowsController < AdminController
     before_action :set_borrow, only: %i[show edit update destroy]
-    # before_action :authenticate_user! 
-    before_action :check_staff
+    before_action :authenticate_user! 
+   
     add_flash_types :success, :warning, :danger, :info
 
     
-    def check_staff
-      user ||= current_user
-      
-        if user.role == "user" || !user.role.present?
-          redirect_to root_path
-          flash[:danger] = "Couldn't find resource."
-        end
-      
-    end
+    
     
 
     def index
