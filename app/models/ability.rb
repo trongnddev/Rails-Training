@@ -19,9 +19,9 @@ class Ability
         can [:read, :update], User, id: user.id 
         can [:read,  ], [Book, Author, Borrow,Publisher, Notification,Category, Review]
         can :create, [Borrow, Review]
-        can [:update,:destroy], [Review, Borrow], user_id = user.id 
+        can [:update,:destroy], Borrow, user_id = user.id 
         can [:showborrow, :showreturn],  Borrow
-
+        can :destroy, Review, user_id = user.id   
     end
     # Define abilities for the passed in user here. For example:
     #

@@ -24,7 +24,7 @@ class ReviewsController < ApplicationController
 
     def destroy
       @review.destroy
-      redirect_to request.referrer
+      redirect_to books_path(params[:book_id])
       flash[:info] = "Deleted!"
     end
 
