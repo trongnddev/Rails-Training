@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :publishers
   resources :categories
   resources :authors
+  
   resources :books do
     resources :borrows
     resources :reviews

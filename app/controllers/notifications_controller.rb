@@ -2,6 +2,10 @@ class NotificationsController < ApplicationController
   before_action :set_notification, only: %i[show edit update destroy]
   before_action :authenticate_user!
 
+
+  #authorization with cancancan
+  load_and_authorize_resource
+
   # GET /notifications or /notifications.json
   def index
     @notifications = Notification.where(user_id: current_user.id).paginate(:page => params[:page], :per_page => 10).order("created_at DESC, seen")

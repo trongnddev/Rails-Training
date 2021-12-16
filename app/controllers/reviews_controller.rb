@@ -1,9 +1,22 @@
 class ReviewsController < ApplicationController
     before_action :authenticate_user!
-    before_action :set_review,only: %i[destroy]
     add_flash_types :success, :warning, :danger, :info
     
     
+    #authorization with cancancan
+    load_and_authorize_resource 
+
+   def show
+    
+    @book = Book.find(params[:book_id])
+    @review = @book.reviews.find(params[:id])
+    @review.destroy
+    flash[:info] = "Delete review successfully" 
+    redirect_to book_path(@book)
+   end
+     
+   
+
     def create
       @review = Review.new(review_params)
       @review.user_id = current_user.id
@@ -18,19 +31,18 @@ class ReviewsController < ApplicationController
       end
     end
 
-    def destroy
-      @review.destroy
-      redirect_to request.referrer
-      flash[:info] = "Deleted!"
-    end
+    # def destroy
+    #   @review = Review.find(params[:id])
+    #   @review.destroy
+    #   redirect_to books_path(params[:book_id])
+    #   flash[:info] = "Deleted!"
+    # end
 
 
 
     private
 
-    def set_review
-      @review = Review.find(params[:id])
-    end
+   
 
     def review_params
       params.require(:review).permit(:comment, :star)
