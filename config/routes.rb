@@ -3,16 +3,16 @@
 Rails.application.routes.draw do
     
     namespace :admin do
-    resources :users
-    resources :books
-    resources :authors
-    get '/dashboard', to: 'dashboard#home'
-    resources :categories
-    resources :publishers
-    resources :borrows
-    get "/showborrow", to:"borrows#showborrow"
-    get "/showreturn", to:"borrows#showreturn"
-  end
+      resources :users
+      resources :books
+      resources :authors
+      get '/dashboard', to: 'dashboard#home'
+      resources :categories
+      resources :publishers
+      resources :borrows
+      get "/showborrow", to:"borrows#showborrow"
+      get "/showreturn", to:"borrows#showreturn"
+   end
 
   resources :notifications
   resources :borrows
