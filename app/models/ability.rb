@@ -13,6 +13,7 @@ class Ability
     elsif user.role == "staff"
       can :crud, [Author, Book, AuthorBook,Category, Borrow, Publisher,]
       can [:read, :update], [User], role: "user"
+      can [:showborrow, :showreturn], Borrow
       
     elsif user.role == "user"
 

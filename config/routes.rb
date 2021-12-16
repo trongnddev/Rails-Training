@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   
   resources :books do
     resources :borrows
-    resources :reviews
+    resources :reviews, :only => [:create, :destroy]
   end
   devise_for :users
   root to: "home#index"
