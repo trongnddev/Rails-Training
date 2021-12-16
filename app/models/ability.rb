@@ -11,18 +11,19 @@ class Ability
     if user.role == "admin" 
       can :manage, :all
     elsif user.role == "staff"
-      can :crud, [Author, Book, AuthorBook,Category, Borrow, Publisher,]
-      can [:read, :update], [User], role: "user"
+      can :crud, [Author, Book, AuthorBook,Category, Borrow, Publisher,Review]
+      can [:read, :update], [User,], role: "user"
       can [:showborrow, :showreturn], Borrow
       
     elsif user.role == "user"
 
         can [:read, :update], User, id: user.id 
-        can :read, [Book, Author, Borrow,Publisher, Notification,Category, Review]
+        can :read, [Book, Author, Borrow, Publisher, Notification,Category,]
         can :create, [Borrow, Review]
-        can [:update,:destroy], Borrow, user_id = user.id 
+        can [:update,:destroy], Borrow, user_id: user.id 
         can [:showborrow, :showreturn],  Borrow
-        can :destroy, Review, user_id = user.id   
+        can :index, Review
+        can [:show, :destroy], Review, user_id: user.id   
     end
     # Define abilities for the passed in user here. For example:
     #

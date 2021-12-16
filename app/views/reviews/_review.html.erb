@@ -11,7 +11,10 @@
                     <div class="user d-flex flex-row align-items-center"> <img src="https://i.imgur.com/hczKIze.jpg" width="30" class="user-img rounded-circle mr-2"> <span><small class="font-weight-bold text-primary"><%= review.username%></small> <small class="font-weight-bold"><%= review.comment%></small></span> </div> <small><%= review.created_at%></small>
                 </div>
                 <div class="action d-flex justify-content-between mt-2 align-items-center">
-                    <div class="reply px-4"> <small><%= link_to "Delete",book_review_path(review.book.id,review.id),method: :delete %><br></small> </div>
+                
+                  <div class="reply px-4"> <small><%= link_to "Delete",book_review_path(review.book.id,review.id),method: :delete %><br></small> </div>>
+                
+                    
                     <div class="icons align-items-center"><%review.star.times do%>
                      <i class="fa fa-star text-warning"></i>
                      <%end%> 

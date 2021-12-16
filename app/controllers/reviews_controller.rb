@@ -4,8 +4,17 @@ class ReviewsController < ApplicationController
     
     
     #authorization with cancancan
-    load_and_authorize_resource
+    load_and_authorize_resource 
 
+   def show
+    
+    @book = Book.find(params[:book_id])
+    @review = @book.reviews.find(params[:id])
+    @review.destroy
+    flash[:info] = "Delete review successfully" 
+    redirect_to book_path(@book)
+   end
+     
    
 
     def create
@@ -22,12 +31,12 @@ class ReviewsController < ApplicationController
       end
     end
 
-    def destroy
-      @review = Review.find(params[:id])
-      @review.destroy
-      redirect_to books_path(params[:book_id])
-      flash[:info] = "Deleted!"
-    end
+    # def destroy
+    #   @review = Review.find(params[:id])
+    #   @review.destroy
+    #   redirect_to books_path(params[:book_id])
+    #   flash[:info] = "Deleted!"
+    # end
 
 
 

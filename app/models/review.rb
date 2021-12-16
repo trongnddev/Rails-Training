@@ -13,6 +13,8 @@ class Review < ApplicationRecord
 
     def update_rating
       review_book = Review.where(book_id: book_id)
-      book.update(rating: (review_book.sum(:star).to_i)/ review_book.count.to_i) 
+      book.update(rating: (review_book.sum(:star).to_i)/ review_book.count.to_i) unless review_book.empty?
+        
+      
     end
 end
