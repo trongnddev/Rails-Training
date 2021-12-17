@@ -2,23 +2,23 @@
 <div class="signup">
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
-  <div class="field">
+  <div class="field-signup">
   <h2>Sign up</h2>
   </div>
-  <div class="field">
+  <div class="field-signup">
     <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "example@email.com" %>
   </div>
 
-  <div class="field">
+  <div class="field-signup">
     <%= f.password_field :password, autocomplete: "new-password", placeholder:"Password ( minimum six characters )"%>
   </div>
 
-  <div class="field">
+  <div class="field-signup">
     <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm password" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "Sign up", class:"btn btn-primary", style:"margin-left:150px" %>
   </div>
   <div class="link">
   <%- if controller_name != 'sessions' %>

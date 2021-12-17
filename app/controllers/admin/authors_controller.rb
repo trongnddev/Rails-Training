@@ -57,7 +57,8 @@ class Admin::AuthorsController < AdminController
     def author_params
       params.require(:author).permit(
         :author_name,
-        :birthday, 
+        :birthday,
+        :image,         
         author_books_attributes: [:id, book_attributes: [:id, :name]]
         )
     end

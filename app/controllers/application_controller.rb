@@ -21,7 +21,6 @@ class ApplicationController < ActionController::Base
             flash[:danger] = "Couldn't find resource."
             redirect_to root_url
         end
-    
 
     
     

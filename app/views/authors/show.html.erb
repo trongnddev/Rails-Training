@@ -1,21 +1,34 @@
-<p>
-  <strong>Author:</strong>
-  <%= @author.author_name %>
-</p>
+<% books = @author.author_books.paginate(:page => params[:page], :per_page => 12)%>
+<div class="container">
+<%=link_to '<i class="fas fa-long-arrow-alt-left"> Back</i> '.html_safe, :back, class:"btn btn-primary",style: "margin:20px"%>
 
-<p>
-  <strong>Birthday:</strong>
-  <%= @author.birthday %>
-</p>
-<p>
-  <strong>Books:</strong>
-   <% @author.author_books.each do |author_book| %>
-    <li>
-      <%= author_book.book.name %> 
-    </li>
-  <% end %>
-</p>
-<%if user_signed_in? && (can? :update, @author)%>
-<%= link_to 'Edit', edit_author_path(@author) %> |
+<div class="row">
+<%books.each do |book|%>
+<div class="col-4">
+<div class="card" style="width: 18rem;margin:20px;">
+  <div class="card-body">
+    <h5 class="card-title" style="color:black"><%= book.book.name%></h5>
+    <p class="card-text">Borrow fee: <%=book.book.borrow_fee%> VND</p>
+    <p class="card-text">Number of borrowings : <%=Borrow.where(:book_id => book.book.id).count%></p>
+     <%= form_for ([book.book, book.book.borrows.build]) do |f|%>
+          <%= f.hidden_field :status, value: "waiting accept"%>
+            <%if user_signed_in?%>
+                <% unless current_user.borrows.where( {book_id: book.book.id, status: ["waiting accept", "accept"]}).exists? || book.book.quantity_in_stock.nil? %>
+                    <%= button_tag type: 'submit', class: "btn btn-primary", data: {confirm: "Do you want borrow #{book.book.name}"} do %>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    <% end %>
+                <%end%>
+            <%else%>
+              <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                <% end %>
+            <%end%>
+        <%end%>    
+  </div>
+</div>
+</div>
 <%end%>
-<%= link_to 'Back', authors_path %>
+</div>
+<%=will_paginate books%>
+</div>
+
