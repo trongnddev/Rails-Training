@@ -6,6 +6,7 @@ class Ability
   def initialize(user)
     alias_action :create, :read, :update, :destroy, to: :crud
     
+    can :read, [Book, Category, Author, ]
     user ||= User.new
 
     if user.role == "admin" 
@@ -18,10 +19,11 @@ class Ability
     elsif user.role == "user"
 
         can [:read, :update], User, id: user.id 
-        can :read, [Book, Author, Borrow, Publisher, Notification,Category,]
+        can :read, [Book, Author, Publisher,Category,]
         can :create, [Borrow, Review]
         can [:update,:destroy], Borrow, user_id: user.id 
-        can [:showborrow, :showreturn],  Borrow
+        can :read, Notification, user_id: user.id 
+        can [:read,:showborrow, :showreturn],  Borrow
         can :index, Review
         can [:show, :destroy], Review, user_id: user.id   
     end

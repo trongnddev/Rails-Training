@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
     rescue_from CanCan::AccessDenied, with: :cancan_access_denied
     rescue_from ActiveRecord::RecordNotFound, with: :active_record_record_not_found
     before_action :store_user_location!, if: :storable_location?
-    before_action :authenticate_user!
+   
 
     def after_sign_in_path_for(resource)
         stored_location_for(resource) || root_path
