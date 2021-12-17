@@ -1,0 +1,22 @@
+select {
+    background-color:lightsteelblue;
+    border-radius: 5px;
+    height: 50px;
+    margin-left: 17px;
+}
+.card {
+    border-radius: 25px;
+    background-color: darkslateblue;
+    transition: transform .2s;
+}
+.card-title {
+    color: floralwhite;
+}
+.card-img-top {
+    border-radius:25px 25px 0 0;
+    height: 300px;
+    
+}
+.card:hover{
+    transform: scale(1.05);
+}

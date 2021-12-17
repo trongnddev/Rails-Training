@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
         def active_record_record_not_found
             flash[:danger] = "Couldn't find resource."
             redirect_to root_url
-    
+        end
 
     
     

@@ -13,7 +13,7 @@ class Notification < ApplicationRecord
 
 
   def self.count_notice_user(user_id)
-    Notification.where(:user => user_id, :seen => false).count
+    Notification.where("user_id = #{user_id} AND seen = 'false' AND message != 'for staff'").count
   end
   
 end

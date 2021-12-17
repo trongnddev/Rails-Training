@@ -21,7 +21,7 @@
 			<%= collection_select params[:name],:publisher_id, Publisher.all, :id, :publisher_name, prompt: 'Select publisher', :selected =>  params[:publisher_id]%>
 			<%= submit_tag "See result", class:"btn btn-primary"%>
 		<%end%>	
-			<%= button_to 'Clear filter', books_path,class:"btn btn-success",method: "get"%>
+		<%=link_to '<i class="fas fa-long-arrow-alt-left"> Back</i> '.html_safe, :back, class:"btn btn-primary"%>
 	</div>
 		<%@books.each do |book|%>
 		<article class="postcard dark blue">
