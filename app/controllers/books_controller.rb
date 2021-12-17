@@ -3,6 +3,10 @@ class BooksController < ApplicationController
   before_action :authenticate_user!, except: %i[show index indexsort indexfilter] 
   add_flash_types :success, :warning, :danger, :info
 
+  #authorization with cancancan
+  load_and_authorize_resource
+  skip_load_and_authorize_resource only: [:index, :show, :indexsort, :indexfilter]
+
   # GET /books or /books.json
   def index
     @books = Book.search(params[:search]).paginate(:page => params[:page], :per_page => 6)
@@ -83,4 +87,5 @@ class BooksController < ApplicationController
        :category_id,
        author_books_attributes: [:id, author_attributes: [:id, :author_name]])
   end
+  #as
 end

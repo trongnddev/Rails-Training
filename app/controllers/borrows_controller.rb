@@ -3,6 +3,9 @@ class BorrowsController < ApplicationController
   before_action :authenticate_user!
   add_flash_types :success, :warning, :danger, :info
 
+  #authorization with cancancan
+  load_and_authorize_resource
+
   # GET /borrows or /borrows.json
   def index
       @borrows = Borrow.where(user_id: current_user.id).paginate(:page => params[:page], :per_page => 10).order("id DESC")

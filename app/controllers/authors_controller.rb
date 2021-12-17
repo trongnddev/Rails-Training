@@ -2,6 +2,11 @@ class AuthorsController < ApplicationController
   before_action :set_author, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: %i[show index]
   add_flash_types :success, :warning, :danger, :info
+  
+  #authorization with cancancan
+  load_and_authorize_resource
+  skip_load_and_authorize_resource only: :index
+  
 
   # GET /authors or /authors.json
   def index
@@ -14,7 +19,6 @@ class AuthorsController < ApplicationController
   # GET /authors/new
   def new
     @author = Author.new
-  
   end
 
   # GET /authors/1/edit
@@ -55,11 +59,15 @@ class AuthorsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_author
-    @author = Author.find(params[:id])    
+    @author = Author.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def author_params
-    params.require(:author).permit(:author_name, :birthday, author_books_attributes: [:id, book_attributes: [:id, :name]])
+    params.require(:author).permit(
+      :author_name,
+      :birthday,
+      author_books_attributes: [:id, book_attributes: [:id, :name]]
+    )
   end
 end

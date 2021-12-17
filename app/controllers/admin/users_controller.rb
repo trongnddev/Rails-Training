@@ -1,6 +1,11 @@
 class Admin::UsersController < AdminController
+  before_action :authenticate_user!
   before_action :set_user, only: %i[ show edit update destroy ]
   before_action :set_users
+  add_flash_types :success, :warning, :danger, :info
+
+  #authorization with cancancan
+  load_and_authorize_resource
 
   def index
   end

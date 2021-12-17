@@ -1,7 +1,13 @@
 class Admin::BorrowsController < AdminController
     before_action :set_borrow, only: %i[show edit update destroy]
-    before_action :authenticate_user!
+    before_action :authenticate_user! 
+   
     add_flash_types :success, :warning, :danger, :info
+
+    
+    #authorization with cancancan
+    load_and_authorize_resource
+    
 
     def index
         @borrows = Borrow.where(status: "waiting accept").paginate(:page=> params[:page], :per_page => 10).order("id DESC")
@@ -69,5 +75,8 @@ class Admin::BorrowsController < AdminController
       def borrow_params
         params.require(:borrow).permit(:status)
       end
+
+      
+  
   end
   
