@@ -35,6 +35,7 @@ gem 'rubocop', '~> 1.22', require: false
 gem 'devise'
 
 gem 'cocoon'
+gem "cancancan"
 
 gem 'will_paginate'
 

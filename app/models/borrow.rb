@@ -43,9 +43,8 @@ class Borrow < ApplicationRecord
         notification = Notification.new(:message => "for staff", :user_id => user_id)
         notification.save 
     end
-        
-
-
+      
+    
     def update_stock
         if status.include? "accept"
             book.update_column(:quantity_in_stock, book.quantity_in_stock - 1)

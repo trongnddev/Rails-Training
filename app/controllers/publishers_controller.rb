@@ -2,6 +2,11 @@ class PublishersController < ApplicationController
   before_action :set_publisher, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: %i[show index]
   add_flash_types :success, :warning, :danger, :info
+
+
+  #authorization with cancancan
+  load_and_authorize_resource
+
   # GET /publishers or /publishers.json
   def index
     @publishers = Publisher.all
