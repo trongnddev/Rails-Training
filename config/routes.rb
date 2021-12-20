@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resources :borrows
       get "/showborrow", to:"borrows#showborrow"
       get "/showreturn", to:"borrows#showreturn"
+      root to: 'dashboard#home'
    end
 
   resources :notifications

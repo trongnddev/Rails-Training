@@ -22,6 +22,7 @@ class Admin::UsersController < AdminController
 
   def create
     @user = User.new(user_params)
+    @user.role = "staff"
     respond_to do |format|
       if @user.save
         format.html { render :index, notice: "User was successfully created." }

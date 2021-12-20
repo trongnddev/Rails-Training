@@ -22,19 +22,23 @@
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Email</th>
+      <th scope="col">Role</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <% @users.each do |user| %>
       <tr>
+        <%unless user.role == "admin"%>
         <th scope="row"><%= user.id %></th>
         <td><%= user.email %></td>
+        <td><%= user.role %></td> 
         <td class="px-5" style="text-align: right">
           <a href="/admin/users/<%=user.id%>"><i class="fas fa-info-circle"></i></a>
           <a href="/admin/users/<%=user.id%>/edit"><i class="far fa-edit"></i></a>
           <a href="/admin/users/<%=user.id%>" data-method="delete"><i class="fas fa-trash-alt"></i></a>
         </td>
+         <%end%>
       </tr>
     <% end %>
   </tbody>
