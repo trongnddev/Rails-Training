@@ -7,7 +7,11 @@ class ApplicationController < ActionController::Base
    
 
     def after_sign_in_path_for(resource)
-        stored_location_for(resource) || root_path
+        if current_user.role == "admin" || current_user.role == "staff"
+            admin_root_path
+        elsif current_user.role = "user"
+            stored_location_for(resource) || root_path
+        end
     end
 
     private
