@@ -55,7 +55,7 @@ class Admin::UsersController < AdminController
     end
 
     def set_users
-      @users = User.search(params[:search]).paginate(:page => params[:page], :per_page => 10).order("created_at DESC")
+      @users = User.all
     end
 
     def user_params

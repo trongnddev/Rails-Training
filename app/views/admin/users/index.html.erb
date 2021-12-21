@@ -28,8 +28,8 @@
   </thead>
   <tbody>
     <% @users.each do |user| %>
+    <%unless user.role == "admin"%>
       <tr>
-        <%unless user.role == "admin"%>
         <th scope="row"><%= user.id %></th>
         <td><%= user.email %></td>
         <td><%= user.role %></td> 
@@ -38,16 +38,13 @@
           <a href="/admin/users/<%=user.id%>/edit"><i class="far fa-edit"></i></a>
           <a href="/admin/users/<%=user.id%>" data-method="delete"><i class="fas fa-trash-alt"></i></a>
         </td>
-         <%end%>
       </tr>
+       <%end%>
     <% end %>
   </tbody>
 </table>
-<div class="page">
-  <%= will_paginate @users %>
-</div>
 <script type="text/javascript">
- var table = $('#useradmin').DataTable({"bLengthChange": false,"bPaginate": false,sDom: 'lrtip'});
+ var table = $('#useradmin').DataTable({"bLengthChange": false, "sPaginationType": "full_numbers","pageLength": 10,sDom: 'lrtip'});
 $('#userinput').keyup(function(){
       table.search($(this).val()).draw() ;
 })

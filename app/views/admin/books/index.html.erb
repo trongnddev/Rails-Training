@@ -49,11 +49,8 @@
     <% end %>
   </tbody>
 </table>
-<div class="page">
-  <%= will_paginate @book%>
-</div>
 <script type="text/javascript">
- var table = $('#bookadmin').DataTable({"bLengthChange": false,"bPaginate": false,sDom: 'lrtip'});
+ var table = $('#bookadmin').DataTable({"bLengthChange": false, "sPaginationType": "full_numbers","pageLength": 5,sDom: 'lrtip'});
 $('#bookinput').keyup(function(){
       table.search($(this).val()).draw() ;
 })
