@@ -39,11 +39,8 @@
     <% end %>
   </tbody>
 </table>
-<div class="page">
-  <%= will_paginate @publisher%>
-</div>
 <script type="text/javascript">
- var table = $('#pubadmin').DataTable({"bLengthChange": false,"bPaginate": false,sDom: 'lrtip'});
+ var table = $('#pubadmin').DataTable({"bLengthChange": false, "sPaginationType": "full_numbers","pageLength": 10, sDom: 'lrtip'});
 $('#pubinput').keyup(function(){
       table.search($(this).val()).draw() ;
 })

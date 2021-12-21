@@ -7,7 +7,7 @@ class Admin::PublishersController < AdminController
     load_and_authorize_resource
 
     def index
-      @publishers = Publisher.all.paginate(:page=> params[:page], :per_page => 10).order('created_at desc')
+      @publishers = Publisher.all
     end
   
     def show; end

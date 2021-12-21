@@ -7,7 +7,7 @@ class Admin::BooksController < AdminController
   load_and_authorize_resource     
 
   def index 
-    @book = Book.all.paginate(:page => params[:page], :per_page => 10).order('created_at desc')
+    @book = Book.all
   end
 
   def show
