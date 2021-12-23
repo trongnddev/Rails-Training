@@ -59,17 +59,6 @@ ActiveRecord::Schema.define(version: 2021_12_16_083007) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "average_caches", force: :cascade do |t|
-    t.bigint "rater_id"
-    t.string "rateable_type"
-    t.bigint "rateable_id"
-    t.float "avg", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["rateable_type", "rateable_id"], name: "index_average_caches_on_rateable"
-    t.index ["rater_id"], name: "index_average_caches_on_rater_id"
-  end
-
   create_table "books", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -80,8 +69,8 @@ ActiveRecord::Schema.define(version: 2021_12_16_083007) do
     t.date "created_at", null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "publisher_id"
-    t.bigint "category_id"
     t.integer "rating"
+    t.bigint "category_id", null: false
     t.index ["category_id"], name: "index_books_on_category_id"
     t.index ["publisher_id"], name: "index_books_on_publisher_id"
   end
@@ -106,15 +95,6 @@ ActiveRecord::Schema.define(version: 2021_12_16_083007) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "info", id: false, comment: "This process take : 9.968777503", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "phone"
-    t.string "address"
-    t.string "day_of_birth"
-    t.string "profile"
-  end
-
   create_table "notifications", force: :cascade do |t|
     t.string "message"
     t.boolean "seen", default: false
@@ -126,31 +106,10 @@ ActiveRecord::Schema.define(version: 2021_12_16_083007) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
-  create_table "overall_averages", force: :cascade do |t|
-    t.string "rateable_type"
-    t.bigint "rateable_id"
-    t.float "overall_avg", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["rateable_type", "rateable_id"], name: "index_overall_averages_on_rateable"
-  end
-
   create_table "publishers", force: :cascade do |t|
     t.string "publisher_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "rating_caches", force: :cascade do |t|
-    t.string "cacheable_type"
-    t.bigint "cacheable_id"
-    t.float "avg", null: false
-    t.integer "qty", null: false
-    t.string "dimension"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["cacheable_id", "cacheable_type"], name: "index_rating_caches_on_cacheable_id_and_cacheable_type"
-    t.index ["cacheable_type", "cacheable_id"], name: "index_rating_caches_on_cacheable"
   end
 
   create_table "reviews", force: :cascade do |t|
