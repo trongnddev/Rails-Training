@@ -10,7 +10,8 @@
 			'Newest books',
 			'Oldest books',
 			'Fee low to high',
-			'Fee high to low'	
+			'Fee high to low',
+			'Most borrow'	
 		], :selected => params[:sort]),class:"custom-select",onchange: "this.form.submit();"%>
 		<%end%>
 		</div>
@@ -34,8 +35,13 @@
 					<time datetime="2020-05-25 12:00:00">
 						<i class="fas fa-calendar-alt mr-2"></i> <%=book.published_date%>
 					</time>
-					<br><i class="fas fa-comments-dollar"> <%= book.borrow_fee%></i>
-                    <br><i class="star fa fa-star checked" style="color:yellow"> :<%= book.rating%> </i>
+					<br><i class="fas fa-comments-dollar"> <%= book.borrow_fee%></i><br>
+                    <%if book.rating.present?%> 
+        				<%book.rating.times do%>
+        				<i class="fa fa-star checked" style="color:yellow"></i>
+        				<%end%>    
+        			<%end%>   
+					<br><span>Total borrow : <%= book.total_borrow%></span>
 				</div>
 				<div class="postcard__bar"></div>
 				<div class="postcard__preview-txt"><%= book.description%></div>

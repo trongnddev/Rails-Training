@@ -10,7 +10,17 @@
      <%= link_to 'Return',admin_showreturn_path,class:"nav-link"%>
   </li>
 </ul>
-<table  class="table table-striped">
+<div class="p-4 bg-light">
+    <%= form_tag admin_borrows_path, method: 'get', class:"input-group" do %>
+        <input id="borrowinput" class="form-control input-small" name="search" placeholder="Search" type="search">
+        <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit">
+            Search
+            </button>
+        </span>
+    <% end %>
+</div>
+<table id="showborrow" class="table table-striped">
   <thead>
     <tr>
       <th scope="col">ID</th>
@@ -19,6 +29,7 @@
       <th scope="col">Status</th>
       <th scope="col">Borrowed date</th>
       <th scope="col">Appointment returned date</th>
+      <th></th>
       <th></th>
     </tr>
   </thead>
@@ -43,6 +54,9 @@
     <% end %>
   </tbody>
 </table>
-<div class="page">
-  <%= will_paginate @borrow%>
-</div>
+<script>
+ var table = $('#showborrow').DataTable({"bLengthChange": false, "sPaginationType": "full_numbers","pageLength": 10,sDom: 'lrtip'});
+$('#borrowinput').keyup(function(){
+      table.search($(this).val()).draw() ;
+})
+</script>

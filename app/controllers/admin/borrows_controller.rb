@@ -10,15 +10,15 @@ class Admin::BorrowsController < AdminController
     
 
     def index
-        @borrows = Borrow.where(status: "waiting accept").paginate(:page=> params[:page], :per_page => 10).order("id DESC")
+        @borrows = Borrow.where(status: "waiting accept")
     end
   
     def showborrow
-        @borrows = Borrow.search("accept").paginate(:page => params[:page], :per_page => 10).order("id DESC")
+        @borrows = Borrow.search("accept")
     end
   
     def showreturn
-        @borrows = Borrow.search("returned").paginate(:page => params[:page], :per_page => 10).order("id DESC")
+        @borrows = Borrow.search("returned")
     end
   
     def show

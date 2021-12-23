@@ -13,8 +13,7 @@ class Book < ApplicationRecord
   before_create {|book| book.name = book.name.titleize }
 
   def self.hotbooks 
-    hot_array = Borrow.group(:book_id).count.sort.to_a
-    Book.find(hot_array[0][0]) if hot_array.present?
+    all.order("total_borrow DESC")[0]
   end
 
   def self.newest
@@ -32,6 +31,8 @@ class Book < ApplicationRecord
       all.order("borrow_fee asc")
     elsif param == "Fee high to low"
       all.order("borrow_fee desc")
+    elsif param == "Most borrow"
+      all.order("total_borrow desc")
     else
       all
     end 

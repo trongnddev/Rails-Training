@@ -41,11 +41,8 @@
     <% end %>
   </tbody>
 </table>
-<div class="page">
-  <%= will_paginate @author%>
-</div>
 <script type="text/javascript">
- var table = $('#authoradmin').DataTable({"bLengthChange": false,"bPaginate": false,sDom: 'lrtip'});
+ var table = $('#authoradmin').DataTable({"bLengthChange": false, "sPaginationType": "full_numbers","pageLength": 10,sDom: 'lrtip'});
 $('#authorinput').keyup(function(){
       table.search($(this).val()).draw() ;
 })

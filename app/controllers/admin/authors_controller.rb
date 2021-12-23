@@ -8,7 +8,7 @@ class Admin::AuthorsController < AdminController
     load_and_authorize_resource
 
     def index
-      @authors = Author.search(params[:search]).paginate(:page => params[:page], :per_page => 10).order('created_at desc')
+      @authors = Author.all
     end
   
     def show; end

@@ -41,11 +41,8 @@
     <% end %>
   </tbody>
 </table>
-<div class="page">
-  <%= will_paginate @category%>
-</div>
 <script type="text/javascript">
- var table = $('#cateadmin').DataTable({"bLengthChange": false,"bPaginate": false,sDom: 'lrtip'});
+ var table = $('#cateadmin').DataTable({"bLengthChange": false, "sPaginationType": "full_numbers","pageLength": 10,sDom: 'lrtip'});
 $('#cateinput').keyup(function(){
       table.search($(this).val()).draw() ;
 })
