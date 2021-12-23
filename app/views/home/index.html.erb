@@ -12,6 +12,13 @@
 				<div class="postcard__subtitle small">
 					<time datetime="2020-05-25 12:00:00">
 						<i class="fas fa-calendar-alt mr-2"></i> <%= @hot_book.created_at%>
+						<br><i class="fas fa-comments-dollar"> <%= @hot_book.borrow_fee%></i><br>
+                    	<%if @hot_book.rating.present?%> 
+        				<%@hot_book.rating.times do%>
+        				<i class="fa fa-star checked" style="color:yellow"></i>
+        				<%end%>    
+        			<%end%>   
+					<br><span>Total borrow : <%= @hot_book.total_borrow%></span>
 					</time>
 				</div>
 				<div class="postcard__bar"></div>
@@ -29,6 +36,20 @@
 						<a href="/categories/<%= @hot_book.category_id%>"><i class="fas fa-tag"></i> <%= Category.find(@hot_book.category_id).name if @hot_book.category_id%></a>
 					</li>
 				</ul>
+				<%= form_for ([@hot_book, @hot_book.borrows.build]) do |f|%>
+          			<%= f.hidden_field :status, value: "waiting accept"%>
+                <%if user_signed_in?%>
+                	<% unless current_user.borrows.where( {book_id: @hot_book.id, status: ["waiting accept", "accept"]}).exists? || @hot_book.quantity_in_stock.nil? %>
+                    	<%= button_tag type: 'submit', class: "btn btn-primary", data: {confirm: "Do you want borrow #{@hot_book.name}"} do %>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    	<% end %>
+                	<%end%>
+            	<%else%>
+              		<%= button_tag type: 'submit', class: "btn btn-primary" do %>
+                  	<i class="fa fa-plus" aria-hidden="true"></i>
+                	<% end %>
+            	<%end%>
+        		<%end%>    
 			</div>
 		</article>
 		<%end%>
@@ -43,6 +64,13 @@
 				<div class="postcard__subtitle small">
 					<time datetime="2020-05-25 12:00:00">
 						<i class="fas fa-calendar-alt mr-2"></i> <%= book.published_date%>
+						<br><i class="fas fa-comments-dollar"> <%= book.borrow_fee%></i><br>
+                    	<%if book.rating.present?%> 
+        				<%book.rating.times do%>
+        				<i class="fa fa-star checked" style="color:yellow"></i>
+        				<%end%>    
+        				<%end%>   
+					<br><span>Total borrow : <%= book.total_borrow%></span>
 					</time>
 				</div>
 				<div class="postcard__bar"></div>
@@ -60,6 +88,20 @@
 						<a href="/categories/<%= book.category_id%>"><i class="fas fa-tag"></i> <%= Category.find(book.category_id).name if book.category_id%></a>
 					</li>
 				</ul>
+				<%= form_for ([book, book.borrows.build]) do |f|%>
+          			<%= f.hidden_field :status, value: "waiting accept"%>
+            			<%if user_signed_in?%>
+                			<% unless current_user.borrows.where( {book_id: book.id, status: ["waiting accept", "accept"]}).exists? || book.quantity_in_stock.nil? %>
+                    		<%= button_tag type: 'submit', class: "btn btn-primary", data: {confirm: "Do you want borrow #{book.name}"} do %>
+                        	<i class="fa fa-plus" aria-hidden="true"></i>
+                    		<% end %>
+                		<%end%>
+            			<%else%>
+              			<%= button_tag type: 'submit', class: "btn btn-primary" do %>
+                  		<i class="fa fa-plus" aria-hidden="true"></i>
+                		<% end %>
+            		<%end%>
+        		<%end%>    
 			</div>
 		</article>
         <%end%>

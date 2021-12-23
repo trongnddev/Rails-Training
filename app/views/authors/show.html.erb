@@ -1,7 +1,7 @@
 <% books = @author.author_books.paginate(:page => params[:page], :per_page => 12)%>
 <div class="container">
 <%=link_to '<i class="fas fa-long-arrow-alt-left"> Back</i> '.html_safe, :back, class:"btn btn-primary",style: "margin:20px"%>
-
+<h3 style="text-align:center">Author <%= @author.author_name%></h3>
 <div class="row">
 <%books.each do |book|%>
 <div class="col-4">
@@ -9,7 +9,7 @@
   <div class="card-body">
     <h5 class="card-title" style="color:black"><%= book.book.name%></h5>
     <p class="card-text">Borrow fee: <%=book.book.borrow_fee%> VND</p>
-    <p class="card-text">Number of borrowings : <%=Borrow.where(:book_id => book.book.id).count%></p>
+    <p class="card-text">Number of borrowings : <%=book.book.total_borrow%></p>
      <%= form_for ([book.book, book.book.borrows.build]) do |f|%>
           <%= f.hidden_field :status, value: "waiting accept"%>
             <%if user_signed_in?%>

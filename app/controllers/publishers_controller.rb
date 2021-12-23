@@ -9,7 +9,7 @@ class PublishersController < ApplicationController
 
   # GET /publishers or /publishers.json
   def index
-    @publishers = Publisher.all
+    @publishers = Publisher.all.paginate(:page => params[:page], :per_page => 12).order("publisher_name ASC")
   end
 
   # GET /publishers/1 or /publishers/1.json
