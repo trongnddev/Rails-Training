@@ -1,21 +1,35 @@
-<p>
-  <strong>Name:</strong>
-  <%= @category.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @category.description %>
-</p>
-<p>
-  <strong>Books:</strong>
-  <% @category.books.each do |book|%>
-  <li>
-  <%= link_to "#{book.name}", "/books/#{book.id}"%>
-  </li>
-  <%end%>
-</p>
-<%if user_signed_in?%>
-<%= link_to 'Edit', edit_category_path(@category) %> |
+<% books = @category.books.paginate(:page => params[:page], :per_page => 12)%>
+<div class="container">
+<%=link_to '<i class="fas fa-long-arrow-alt-left"> Back</i> '.html_safe, :back, class:"btn btn-primary",style: "margin:20px"%>
+<h3 style="text-align:center">Category <%= @category.name%></h3>
+<div class="row">
+<%books.each do |book|%>
+<div class="col-4">
+<div class="card" style="width: 18rem;margin:20px;">
+  <div class="card-body">
+    <h5 class="card-title" style="color:black"><%= book.name%></h5>
+    <p class="card-text">Borrow fee: <%=book.borrow_fee%> VND</p>
+    <p class="card-text">Number of borrowings : <%=book.total_borrow%></p>
+     <%= form_for ([book, book.borrows.build]) do |f|%>
+          <%= f.hidden_field :status, value: "waiting accept"%>
+            <%if user_signed_in?%>
+                <% unless current_user.borrows.where( {book_id: book.id, status: ["waiting accept", "accept"]}).exists? || book.quantity_in_stock.nil? %>
+                    <%= button_tag type: 'submit', class: "btn btn-primary", data: {confirm: "Do you want borrow #{book.name}"} do %>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    <% end %>
+                <%end%>
+            <%else%>
+              <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                <% end %>
+            <%end%>
+        <%end%>    
+  </div>
+</div>
+</div>
 <%end%>
-<%= link_to 'Back', categories_path %>
+</div>
+<%=will_paginate books%>
+</div>
+
+

@@ -1,7 +1,7 @@
 class Borrow < ApplicationRecord
     belongs_to :user
     belongs_to :book
-    after_update :update_stock, :create_notification, :after_returned_notification
+    after_update :update_stock, :create_notification, :after_returned_notification, :book_total_borrow
     before_destroy :destroy_update
     after_create :notification_staff
     
@@ -44,6 +44,12 @@ class Borrow < ApplicationRecord
         notification.save 
     end
       
+    def book_total_borrow
+        if status.include? "returned"
+            total = Borrow.where(:book_id => book_id).count 
+            book.update_column(:total_borrow,total)
+        end
+    end
     
     def update_stock
         if status.include? "accept"
