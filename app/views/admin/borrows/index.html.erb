@@ -20,6 +20,7 @@
         </span>
     <% end %>
 </div>
+<%= link_to '<i class="fas fa-file-csv"> Export CSV</i> '.html_safe,admin_borrows_path(format: "csv"),class:"btn btn-primary"%>
 <table id="borrowadmin" class="table table-striped">
   <thead>
     <tr>

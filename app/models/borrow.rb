@@ -1,3 +1,4 @@
+require 'csv'
 class Borrow < ApplicationRecord
     belongs_to :user
     belongs_to :book
@@ -76,6 +77,23 @@ class Borrow < ApplicationRecord
     def destroy_update
         if status.include?"accept"
             book.update_column(:quantity_in_stock, book.quantity_in_stock + 1)
+        end
+    end
+    def self.returned_to_csv
+        CSV.generate do |csv|
+            csv << ['ID','Borrowed date','Returned date','Book','User','Borrow fee','Penalty fee']
+            Borrow.where(:status => "returned").each do |borrow_returned|
+                csv << [borrow_returned.id,borrow_returned.borrowed_date,borrow_returned.returned_date,borrow_returned.book.name,borrow_returned.user.email,borrow_returned.book.borrow_fee,borrow_returned.penalty_fee]
+            end
+        end
+    end
+
+    def self.book_order_csv
+        CSV.generate do |csv|
+            csv << ['ID','Book','User','Borrow date','Appointment returned date','Borrow fee']
+            Borrow.where(:status => "waiting accept").each do |order|
+                csv << [order.id,order.book.name,order.user.email,order.borrowed_date,order.borrowed_date+14,order.book.borrow_fee]
+            end
         end
     end
 end
