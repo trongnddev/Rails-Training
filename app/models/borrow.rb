@@ -4,6 +4,7 @@ class Borrow < ApplicationRecord
     after_update :update_stock, :create_notification, :after_returned_notification, :book_total_borrow
     before_destroy :destroy_update
     after_create :notification_staff
+    before_create
     
     
     def self.search(search)
@@ -12,6 +13,10 @@ class Borrow < ApplicationRecord
         else
             all
         end
+    end
+
+    def check_user
+        
     end
 
     def create_notification     

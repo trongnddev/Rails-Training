@@ -1,5 +1,6 @@
 class Notification < ApplicationRecord
   belongs_to :user
+  validates :message, presence: true
   
 
   def self.update_seen(id)
