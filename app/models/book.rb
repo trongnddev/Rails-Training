@@ -90,4 +90,12 @@ class Book < ApplicationRecord
     end
   end
 
+  def self.exist_quantity
+    totals = 0
+    Book.all.each do |book|
+      totals += book.quantity_in_stock
+    end
+    totals
+  end
+
 end
