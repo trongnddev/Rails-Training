@@ -1,6 +1,10 @@
 <div class="left-nav">
     <div class="admin-nav <%= active_class("admin/dashboard") %>"><a href="/admin/dashboard"><i class="fas fa-chart-line mx-4"></i>Dashboard</a></div>
-    <div class="admin-nav <%= active_class("admin/user") %>"><a href="/admin/users"><i class="fas fa-users mx-4"></i>Users</a></div>
+    
+    <% if current_user.role == "admin" %>
+      <div class="admin-nav <%= active_class("admin/user") %>"><a href="/admin/users"><i class="fas fa-users mx-4"></i>Users</a></div>
+    <% end %>
+    
     <div class="admin-nav <%= active_class("admin/book") %>"><a href="/admin/books"><i class="fas fa-book mx-4"></i> Books</a></div>
     <div class="admin-nav <%= active_class("admin/author") %>"><a href="/admin/authors"><i class="fas fa-user-tag mx-4"></i>Authors</a></div>
     <div class="admin-nav <%= active_class("admin/categor") %>"><a href="/admin/categories"><i class="fas fa-list mx-4"></i>Categories</a></div>

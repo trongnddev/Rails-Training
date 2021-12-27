@@ -2,6 +2,7 @@ class Admin::UsersController < AdminController
   before_action :authenticate_user!
   before_action :set_user, only: %i[ show edit update destroy ]
   before_action :set_users
+  before_action :check_admin
   add_flash_types :success, :warning, :danger, :info
 
   #authorization with cancancan
@@ -57,12 +58,19 @@ class Admin::UsersController < AdminController
     def set_users
       @users = User.all
     end
-
-    def user_params
-      params.require(:user).permit(
-        :email,
-        :password,
-        :password_confirmation
-        )
+  
+  private
+    def check_admin
+      if current_user.role == "staff"
+        redirect_to  admin_root_path
+      end
     end
+
+  def user_params
+    params.require(:user).permit(
+      :email,
+      :password,
+      :password_confirmation
+      )
+  end
 end
