@@ -5,9 +5,15 @@ class Borrow < ApplicationRecord
     after_update :update_stock, :create_notification, :after_returned_notification, :book_total_borrow
     before_destroy :destroy_update
     after_create :notification_staff
-    before_create
     
-    
+    scope :year, lambda{|year|
+        where(" EXTRACT(YEAR FROM borrowed_date) = ? ", year ) if year.present?  
+    }
+    scope :month, lambda{|month|
+        where(" EXTRACT(MONTH FROM borrowed_date) = ? ", month ) if month.present?  
+    }
+    scope :group_by_month,   -> { group("EXTRACT(MONTH FROM borrowed_date) ") }
+
     def self.search(search)
         if search
             where(status: "#{search}")
@@ -96,4 +102,21 @@ class Borrow < ApplicationRecord
             end
         end
     end
+
+    def self.count_by_year(y)
+        @quantity_borrow = Borrow.where({status: "returned"}).year(y).count
+    end
+    # @return a hash has key is month, value is quantity 
+    def self.count_by_group_month(y)
+        @quantity_borrow = Borrow.where.not(status: "waiting accept").year(y).group_by_month.count
+    end
+
+ 
+
+    # def self.count_by_month(m,y)
+    #     @quantity_borrow = Borrow.where(status: "returned").year(y).month(m).count
+    # end
+
+
+
 end

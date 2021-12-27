@@ -12,6 +12,6 @@ class Admin::DashboardController < AdminController
         @new_publishers = Publisher.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).count
         @total_categories = Category.all.count
         @new_categories = Category.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).count
-        
+        @count_borrows = Borrow.count_by_group_month(2021)
     end
 end
