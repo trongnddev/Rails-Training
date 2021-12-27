@@ -11,6 +11,10 @@ class Admin::BorrowsController < AdminController
 
     def index
         @borrows = Borrow.where(status: "waiting accept")
+        respond_to do |format|
+          format.html
+          format.csv { send_data @borrows.book_order_csv, filename: "Orders-#{Date.today}.csv" }
+        end
     end
   
     def showborrow
@@ -19,6 +23,10 @@ class Admin::BorrowsController < AdminController
   
     def showreturn
         @borrows = Borrow.search("returned")
+        respond_to do |format|
+          format.html
+          format.csv { send_data @borrows.returned_to_csv, filename: "returned-#{Date.today}.csv" }
+        end
     end
   
     def show
@@ -60,7 +68,7 @@ class Admin::BorrowsController < AdminController
     def destroy
       @borrow.destroy
       respond_to do |format|
-        format.html { redirect_to admin_borrows_path, notice: "Book was successfully destroyed." }
+        format.html { redirect_to request.referrer, notice: "Book was successfully destroyed." }
       end
         
     end

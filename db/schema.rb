@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2021_12_23_073540) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "publisher_id"
     t.integer "rating"
-    t.bigint "category_id", null: false
+    t.bigint "category_id"
     t.integer "total_borrow", default: 0
     t.index ["category_id"], name: "index_books_on_category_id"
     t.index ["publisher_id"], name: "index_books_on_publisher_id"
