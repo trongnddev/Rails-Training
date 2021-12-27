@@ -45,7 +45,7 @@ class Admin::BooksController < AdminController
 
   def destroy
     @book.destroy
-    redirect_to admin_books_path
+    redirect_to request.referrer
     flash[:info] = "Book was successfully destroyed!"
   end
 

@@ -47,7 +47,7 @@ class Admin::CategoriesController < AdminController
 
   def destroy
     @category.destroy
-    redirect_to admin_categories_path
+    redirect_to request.referrer
     flash[:info] = "Category was successfully destroyed!"
   end
 
