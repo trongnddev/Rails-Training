@@ -128,7 +128,23 @@ class Borrow < ApplicationRecord
             .group("authors.id").order("count_all DESC").limit(3).count
     end
 
+    # @return a hash with key is month and value is turnover
+    def self.count_turnover_by_month(year = Time.now.year)
+        @sum_fees =  Borrow.joins(:book).year(year).where(status: "returned").group_by_month.sum("borrow_fee")
+        @sum_fees1 = @sum_fees.map{|k,v| [k.to_i,v]}.to_h
+        @sum_penalty_fees =  Borrow.year(year).where(status: "returned").group_by_month.sum("penalty_fee")
+        @sum_penalty_fees1 =  @sum_penalty_fees.map{|k,v| [k.to_i,v]}.to_h
 
+        @results = {}
+        for i in 1..12
+            if @sum_fees1.has_key?(i) and @sum_penalty_fees1.has_key?(i)
+                @results[i] = @sum_penalty_fees1[i] + @sum_fees1[i]
+            end
+        end
+        @results
+    end 
+
+    
     def self.proceeds_in_day
         total_proceeds = 0
         Borrow.where(updated_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day, status: "returned").each do |borrow|
