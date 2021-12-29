@@ -19,5 +19,8 @@ class Admin::DashboardController < AdminController
         @exist_quantity_book = Book.exist_quantity
         @warning_quantity_book = Book.where("quantity_in_stock < '20'").count
         @authors_list = Author.all.order("created_at DESC").limit(5)
+        @borrows_per_month = Borrow.count_by_group_month
+        @top_books = Borrow.get_top_three_book
+        @top_users = Borrow.get_top_three_user
     end
 end

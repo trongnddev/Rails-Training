@@ -14,11 +14,13 @@
     <span class="label label-info">
        Publisher
     </span>
+    <%books = @publisher.books.paginate(:page => params[:page], :per_page => 10)%>
     <div class="p-4 bg-light">
-        <% @publisher.books.each do |book|%>
+        <% books.each do |book|%>
         <li>
             <%= link_to "#{book.name}", "/admin/books/#{book.id}"%>
         </li>
         <%end%>
     </div>
+    <%= will_paginate books%>
 </dt>
