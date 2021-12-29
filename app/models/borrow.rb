@@ -5,9 +5,17 @@ class Borrow < ApplicationRecord
     after_update :update_stock, :create_notification, :after_returned_notification, :book_total_borrow
     before_destroy :destroy_update
     after_create :notification_staff
-    before_create
     
+    scope :year, lambda{|year|
+        where(" EXTRACT(YEAR FROM borrows.borrowed_date) = ? ", year ) if year.present?  
+    }
+    scope :month, lambda{|month|
+        where(" EXTRACT(MONTH FROM borrowed_date) = ? ", month ) if month.present?  
+    }
+    scope :group_by_month,   -> { group("EXTRACT(MONTH FROM borrowed_date) ") }
+    scope :group_by_year,   -> { group("EXTRACT(YEAR FROM borrowed_date) ") }
     
+
     def self.search(search)
         if search
             where(status: "#{search}")
@@ -96,6 +104,34 @@ class Borrow < ApplicationRecord
             end
         end
     end
+
+    def self.count_by_year(year_start, year_end)
+        @quantity_borrow = Borrow.where(" EXTRACT(YEAR FROM borrowed_date) between ? and ? ", year_start,year_end ).where.not({status: "waiting accept"}).group_by_year.count
+    end
+    # @return a hash has key is month, value is quantity 
+    def self.count_by_group_month(y)
+        @quantity_borrow = Borrow.where.not(status: "waiting accept").year(y).group_by_month.count
+    end
+
+    def self.get_top_three_user(year = Time.now.year, month = (Time.now.month - 1))
+        @users = Borrow.joins(:user).year(year).month(month).group('users.id')
+
+        # hash_result 
+    end
+
+    def self.get_top_three_book(year = Time.now.year, month = (Time.now.month - 1))
+        @books = Borrow.joins(:book).year(year).month(month).group('books.id').order("count_all DESC").limit(3).count
+    end
+    
+    # def self.get_top_three_author(year = Time.now.year, month = (Time.now.month - 1))
+    #     @authors = Borrow.joins(:book).joins(:author).year(year).month(month).group('authors.id').order("count_all DESC").limit(3).count
+    # end
+
+    # def self.count_by_month(m,y)
+    #     @quantity_borrow = Borrow.where(status: "returned").year(y).month(m).count
+    # end
+
+
 
     def self.proceeds_in_day
         total_proceeds = 0
