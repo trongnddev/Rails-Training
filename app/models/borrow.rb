@@ -38,7 +38,7 @@ class Borrow < ApplicationRecord
                 notification.update_column(:message, "Request to borrow book #{book.name} be denied")
                 notification.update_column(:borrow_id, id)
             end
-            notification.update_column( :created_at, Time.now.in_time_zone(+7))
+            notification.update_column( :created_at, Time.now)
         end
     end
 
@@ -46,7 +46,7 @@ class Borrow < ApplicationRecord
         if status.include? "returned" 
             notification = Notification.new(:message => "You was returned a book #{book.name}",
                 :user_id => user_id,
-                :created_at => Time.now.in_time_zone(+7),
+                :created_at => Time.now,
                 :borrow_id => id,
                 :book_id => book_id)
             notification.save
@@ -133,4 +133,11 @@ class Borrow < ApplicationRecord
 
 
 
+    def self.proceeds_in_day
+        total_proceeds = 0
+        Borrow.where(updated_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day, status: "returned").each do |borrow|
+            total_proceeds += Book.find(borrow.book_id).borrow_fee + borrow.penalty_fee
+        end
+        total_proceeds
+    end
 end

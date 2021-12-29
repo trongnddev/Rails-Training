@@ -20,9 +20,28 @@
             <hr/>
             <span><%= @new_authors %> NEW AUTHORS TODAY</span>
         </div>
+
+        <div class="p-4 row block" style="background-color: #008080">
+            <i class="fa fa-shopping-cart col-3"  style="font-size:36px"></i>
+            <div class="col">
+                <div class="num"><%= @total_borrows %></div>
+                <span>TOTAL BORROWS</span>
+            </div>
+            <hr/>
+            <span><%= @borrow_in_day %> NEW BORROWS TODAY</span>
+        </div>
+        <div class="p-4 row block" style="background-color: #6A5ACD">
+            <i class="fas fa-balance-scale col-3" style="font-size:36px"></i>
+            <div class="col">
+                <div class="num"><%= @return_in_day %></div>
+                <span>TOTAL RETURNS IN DAY</span>
+            </div>
+            <hr/>
+            <span><%= @total_proceeds_in_day %> (VND) - TOTAL PROCEEDS IN DAY</span>
+        </div>
     </div>
     <div class="col-3 p-0">
-        <div class="p-4 row block text-center" style="background-color: #CC3F44">
+        <div class="p-4 row block text-center" style="background-color: #778899">
             <i class="fas fa-book large-icon col-12"></i>
             <div class="col">
                 <div class="large-num"><%= @total_books %></div>
@@ -30,6 +49,15 @@
             </div>
             <hr/>
             <span><%= @new_books %> NEW BOOKS TODAY</span>
+        </div>
+        <div class="p-4 row block text-center" style="background-color: #CC3F44;height:347px">
+            <i class="fa fa-book large-icon col-12"></i>
+            <div class="col">
+                <div class="large-num"><%= @exist_quantity_book %></div>
+                <span>EXIST QUANTITY OF BOOKS</span>
+            </div>
+            <hr/>
+            <span><%= @warning_quantity_book %> BOOKS NEED TO SUPPLY </span>
         </div>
     </div>
     <div class="col-3 p-0">
@@ -43,7 +71,7 @@
             <span><%= @new_publishers %> NEW PUBLISHERS TODAY</span>
         </div>
 
-        <div class="p-4 row block text-center" style="background-color: #55ACEE">
+        <div class="p-4 row block text-center" style="background-color: #55ACEE;height:514px">
             <h2>New books</h2>
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
@@ -75,5 +103,50 @@
             <hr/>
             <span><%= @new_categories %> NEW CATEGORIES TODAY</span>
         </div>
+         <div class="p-4 row block text-center" style="background-color: #9400D3;height:514px">
+            <h2>New authors</h2>
+            <div id="carouselControls" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <% @authors_list.each_with_index do |author, index| %>
+                        <div class="carousel-item <%= "active" if index == 0%>">
+                            <%if author.image.present?%>
+                            <%= image_tag author.image, class: "d-block w-100"%>
+                            <%end%>
+                        </div>
+                    <% end %>
+                </div>
+                <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
     </div>
+    <canvas id="myChart" style="width:100%"></canvas>
 </div>
+<script>
+var xValues = ["January", "February", "March", "April", "May","June","July","August","September","October","November","December"];
+var yValues = [55, 49, 44, 24, 20,42,34,14,56,25,34,42];
+var colorBar = ['aqua','blue','crimson','gold','green','indigo','moccasin','orchid','peru','pink','tomato','olive']
+new Chart("myChart", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: colorBar,
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "Total borrows in per month"
+    }
+  }
+});
+</script>

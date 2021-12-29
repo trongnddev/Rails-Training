@@ -46,7 +46,7 @@ class Admin::UsersController < AdminController
   def destroy
     @user.destroy
     flash[:info] = "User was successfully destroyed!"
-    render :index
+    redirect_to request.referrer
     
   end
 

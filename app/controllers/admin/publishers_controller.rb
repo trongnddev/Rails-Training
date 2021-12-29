@@ -43,7 +43,7 @@ class Admin::PublishersController < AdminController
 
     def destroy
       @publisher.destroy
-       redirect_to admin_publishers_path
+       redirect_to request.referrer
        flash[:info] = "Publisher was successfully destroyed!"
     end
   

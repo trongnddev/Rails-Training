@@ -44,7 +44,7 @@ class Admin::AuthorsController < AdminController
   
     def destroy
       @author.destroy
-       redirect_to admin_authors_path
+       redirect_to request.referrer
        flash[:info] = "Author was successfully destroyed!"
     end
   
