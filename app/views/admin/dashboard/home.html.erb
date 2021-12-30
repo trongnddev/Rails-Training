@@ -131,7 +131,10 @@
     <div class="col"><canvas id="topUser" style="width:100%"></canvas></div>
     <div class="col"><canvas id="topAuthor" style="width:100%"></canvas></div>
     </div>
-    <canvas id="topBook" style="width:100%"></canvas>
+    <div class="row">
+    <div class="col"><canvas id="topBook" style="width:100%"></canvas></div>
+    <div class="col"><canvas id="newUser" style="width:100%"></canvas></div>
+    </div>
 
 </div>
 <script>
@@ -183,6 +186,10 @@ new Chart("topUser",{
 // chart top author in month
 var xAuthor = [];
 var yAuthor = [];
+<%@top_authors.each do |k,v|%>
+    xAuthor.push("<%=Author.find(k).author_name%>");
+    yAuthor.push("<%=v%>");
+<%end%>
 new Chart("topAuthor",{
     type: "bar",
     data: {
@@ -222,6 +229,27 @@ new Chart("topBook",{
     title: {
       display: true,
       text: "Top book in last month"
+    }
+  }
+});
+
+// new user in per month
+var xnewUser = ["January", "February", "March", "April", "May","June","July","August","September","October","November","December"];
+var ynewUser = <%=@user_per_month%>;
+new Chart("newUser",{
+    type: "bar",
+    data: {
+    labels: xnewUser,
+    datasets: [{
+      backgroundColor: colorBar,
+      data: ynewUser
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "New user in per month"
     }
   }
 });

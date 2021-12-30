@@ -31,9 +31,11 @@ class User < ApplicationRecord
     end
   end
 
-  def self.count_user_by_month(y)
+  def self.count_user_by_month(y = Time.now.year)
+    new_users = Array.new(12,0)
     @hash_quantity_user = User.where(role: "user").year(y).group_by_month.count
-
+    @hash_quantity_user.each {|k,v| new_users[k-1] = v}
+    new_users
   end
 
   

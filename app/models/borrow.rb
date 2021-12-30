@@ -119,11 +119,6 @@ class Borrow < ApplicationRecord
         @users = Borrow.joins(:user).year(year).month(month).group('users.id').order("count_all DESC").limit(3).count
         # hash_result 
     end
-
-    def self.get_top_three_book(year = Time.now.year, month = (Time.now.month ))
-        @books = Borrow.joins(:book).year(year).month(month).group('books.id').order("count_all DESC").limit(3).count
-    end
-
      
 
     def self.get_top_three_book(year = Time.now.year, month = (Time.now.month - 1))
