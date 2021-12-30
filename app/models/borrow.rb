@@ -107,12 +107,12 @@ class Borrow < ApplicationRecord
     
     # @return a hash has key is month, value is quantity borrow
     def self.count_by_group_month(y = Time.now.year )
-        values_borrows = Array.new(12,0)
+        @values_borrows = Array.new(12,0)
         @quantity_borrow = Borrow.where.not(status: "waiting accept").year(y).group_by_month.count
         @quantity_borrow.each do |k,v|
-            values_borrows[k-1] = v
+            @values_borrows[k-1] = v
         end
-        values_borrows
+        @values_borrows
     end
 
     def self.get_top_three_user(year = Time.now.year, month = (Time.now.month - 1))
@@ -134,16 +134,10 @@ class Borrow < ApplicationRecord
     # @return a hash with key is month and value is turnover
     def self.count_turnover_by_month(year = Time.now.year)
         @sum_fees =  Borrow.joins(:book).year(year).where(status: "returned").group_by_month.sum("borrow_fee")
-        @sum_fees1 = @sum_fees.map{|k,v| [k.to_i,v]}.to_h
         @sum_penalty_fees =  Borrow.year(year).where(status: "returned").group_by_month.sum("penalty_fee")
-        @sum_penalty_fees1 =  @sum_penalty_fees.map{|k,v| [k.to_i,v]}.to_h
-
-        @results = {}
-        for i in 1..12
-            if @sum_fees1.has_key?(i) and @sum_penalty_fees1.has_key?(i)
-                @results[i] = @sum_penalty_fees1[i] + @sum_fees1[i]
-            end
-        end
+        @sum_fees.merge(@sum_penalty_fees) {|k,value_fee,value_penalty| value_fee + value_penalty}
+        @results = Array.new(12,0)
+        @sum_fees.each {|k,v| @results[k-1] = v}
         @results
     end 
 

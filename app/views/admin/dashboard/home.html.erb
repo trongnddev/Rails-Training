@@ -126,7 +126,10 @@
             </div>
         </div>
     </div>
-    <canvas id="myChart" style="width:100%"></canvas>
+    <div class="row">
+    <div class="col"><canvas id="myChart" style="width:100%"></canvas></div>
+    <div class="col"><canvas id="proceeds" style="width:100%"></canvas></div>
+    </div>
     <div class="row">
     <div class="col"><canvas id="topUser" style="width:100%"></canvas></div>
     <div class="col"><canvas id="topAuthor" style="width:100%"></canvas></div>
@@ -250,6 +253,28 @@ new Chart("newUser",{
     title: {
       display: true,
       text: "New user in per month"
+    }
+  }
+});
+//chart proceeds per month
+var yProceed = <%=@proceeds_per_month%>;
+new Chart("proceeds", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      fill: false,
+      lineTension: 0,
+      backgroundColor: "rgba(0,0,255,1.0)",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: yProceed
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "Proceeds in per month (VND)"
     }
   }
 });

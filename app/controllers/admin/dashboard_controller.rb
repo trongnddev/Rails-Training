@@ -24,5 +24,6 @@ class Admin::DashboardController < AdminController
         @top_users = Borrow.get_top_three_user
         @top_authors = Borrow.get_top_three_author
         @user_per_month = User.count_user_by_month
+        @proceeds_per_month = Borrow.count_turnover_by_month
     end
 end
