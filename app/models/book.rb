@@ -17,7 +17,7 @@ class Book < ApplicationRecord
   end
 
   def self.newest
-    Book.all.order("id DESC").limit(3) 
+    all.order("id DESC").limit(3) 
   end
 
   def self.sort(param)
@@ -92,7 +92,7 @@ class Book < ApplicationRecord
 
   def self.exist_quantity
     totals = 0
-    Book.all.each do |book|
+    all.each do |book|
       totals += book.quantity_in_stock
     end
     totals
