@@ -129,7 +129,7 @@ class Borrow < ApplicationRecord
     end
 
     # @return a hash with key is month and value is turnover
-    def self.count_turnover_by_month(year = Time.now.year)
+    def self.count_turnover_by_month(year = (Time.now.year - 1))
         @sum_fees =  Borrow.joins(:book).year(year).where(status: "returned").group_by_month.sum("borrow_fee")
         @sum_fees1 = @sum_fees.map{|k,v| [k.to_i,v]}.to_h
         @sum_penalty_fees =  Borrow.year(year).where(status: "returned").group_by_month.sum("penalty_fee")
@@ -144,7 +144,7 @@ class Borrow < ApplicationRecord
         @results
     end 
 
-    
+
     def self.proceeds_in_day
         total_proceeds = 0
         Borrow.where(updated_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day, status: "returned").each do |borrow|
